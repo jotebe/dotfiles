@@ -1,0 +1,34 @@
+.kateconfig
+*.kate-swp
+.project
+*.lck
+*~
+
+# KDE Dingleberries
+.directory
+
+# Windows Dingleberries
+Thumbs.db
+
+# Mac OSX dingleberries
+.DS_Store
+.~lock.*
+
+.redcar/
+
+/Dropbox
+Dropbox
+
+*.sublime-project
+*.sublime-workspace
+
+*.sassc
+
+Notes
+
+database.yml
+
+atlassian-ide-plugin.xml
+.idea/
+*.iws
+.rbenv-version
