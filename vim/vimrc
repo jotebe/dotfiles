@@ -23,9 +23,9 @@ nnoremap ; :
   Bundle 'mileszs/ack.vim'
   Bundle 'matchit.zip'
 
-  Bundle 'vim-textobj-user'
-  Bundle 'vim-textobj-rubyblock'
-  " Bundle 'lucapette/vim-textobj-underscore'
+  Bundle 'textobj-user'
+  Bundle 'textobj-rubyblock'
+  Bundle 'lucapette/vim-textobj-underscore'
   Bundle 'vim-indent-object'
 
   Bundle 'terryma/vim-multiple-cursors'
@@ -57,10 +57,6 @@ nnoremap ; :
 
   nnoremap <leader><leader> <c-^>
 
-  if has("gui_macvim")
-    map <D-t> :CommandT<CR>
-  endif
-
   let g:CommandTTagIncludeFilenames=1
   let g:CommandTMaxHeight=20
   nnoremap <leader>t :CommandT<cr>
@@ -90,11 +86,6 @@ nnoremap <Leader>y :YRShow<CR>
 set clipboard=unnamed
 
 " Commentary {
-if has("gui_macvim")
-  " Command-/ to toggle comments
-  nmap <D-/> <plug>CommentaryLine<CR>
-  vmap <D-/> <plug>Commentary<CR>
-endif
 nmap <leader>/ <plug>CommentaryLine<CR>
 vmap <leader>/ <plug>Commentary<CR>
 
