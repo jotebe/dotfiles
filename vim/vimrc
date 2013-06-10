@@ -285,3 +285,8 @@ for keychars in pairs
   execute "nnoremap ya".key." f".ekey."lyF".key
   execute "nnoremap va".key." f".ekey."lvF".key
 endfor
+
+" Auto collapse/zoom panes based on focus
+set winheight=7
+set winminheight=7
+set winheight=999
