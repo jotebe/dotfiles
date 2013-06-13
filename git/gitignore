@@ -32,3 +32,8 @@ atlassian-ide-plugin.xml
 .idea/
 *.iws
 .rbenv-version
+
+# ctags config file
+.ctags
+.__ctags
+

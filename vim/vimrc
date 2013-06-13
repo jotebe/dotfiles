@@ -65,8 +65,8 @@ nnoremap ; :
 " }
 
 " Looks {
-  color solarized
-  set background=dark
+  " color solarized
+  " set background=dark
   set winwidth=84
   set showmode                  " display the current mode
   set cursorline " highlight current line
@@ -83,6 +83,7 @@ let g:syntastic_quiet_warnings=1
 nnoremap <Leader>u :GundoToggle<CR>
 " Open Show yank ring buffer
 nnoremap <Leader>y :YRShow<CR>
+
 set clipboard=unnamed
 
 " Commentary {
@@ -127,9 +128,9 @@ augroup END
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 map <C-\> :tnext<CR>
 
-au BufWritePost *.rb silent! !ctags --extra=+f -R &
-" au BufWritePost *.coffee silent! !ctags --extra=+f -R &
-" au BufWritePost *.js silent! !ctags --extra=+f -R &
+au BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 
 " JavaScript {
   vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
@@ -290,3 +291,6 @@ endfor
 set winheight=7
 set winminheight=7
 set winheight=999
+
+" remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
