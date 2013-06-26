@@ -5,7 +5,6 @@ syntax on
 filetype off     " required by vundle
 
 let mapleader=' '
-nnoremap ; :
 
 " Bundles {
   set rtp+=~/.vim/bundle/vundle/
@@ -31,9 +30,9 @@ nnoremap ; :
   Bundle 'terryma/vim-multiple-cursors'
   Bundle 'bitc/vim-bad-whitespace'
   Bundle 'henrik/vim-qargs'
-  Bundle 'joshuabates/vim-execrus'
-  Bundle 'benmills/vimux'
-  Bundle 'christoomey/vim-tmux-navigator'
+  " Bundle 'joshuabates/vim-execrus'
+  " Bundle 'benmills/vimux'
+  " Bundle 'christoomey/vim-tmux-navigator'
 
   Bundle 'vim-ruby/vim-ruby'
   Bundle 'vim-scripts/blockle.vim'
@@ -294,3 +293,5 @@ set winheight=999
 
 " remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+set mouse=a
