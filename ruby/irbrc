@@ -1,59 +1,37 @@
-__END__
-require 'rubygems'
+if defined?(::Bundler) and ENV['GEM_PATH']
+  class Bundler::SideLoader
+    def initialize
+      @gem_dirs_pattern = "{#{ENV['GEM_PATH'].split(':').join(?,)}}/gems"
+      unless Dir.glob(@gem_dirs_pattern).length > 0
+        $stderr.puts "WARN: No gem dirs found for bypassing bundler (in #{__FILE__})"
+      end
+    end
 
-
-unless IRB.version.include?('DietRB')
-  IRB::Irb.class_eval do
-    def output_value
-      ap @context.last_value
+    def require gem_name
+      gem_regexp = %r!/#{gem_name}-[\d.]+/lib\z!
+      libs = Dir.glob(File.join(@gem_dirs_pattern, "#{gem_name}-*/lib")).grep(gem_regexp) # extra grep is to match only different versions of named gem, instead of matching 'pry-remote' when 'pry' was given
+      raise "Gem #{gem_name} not found" unless libs.length > 0
+      unless $LOAD_PATH.grep(gem_regexp).length > 0
+        $LOAD_PATH.push libs.sort.last # greatest version
+      end
+      ::Kernel.require gem_name
     end
   end
-else # MacRuby
-  IRB.formatter = Class.new(IRB::Formatter) do
-    def inspect_object(object)
-      object.ai
-    end
-  end.new
+
+  gems_to_sideload = %w[
+    pry
+    pry-doc
+    pry-remote
+    pry-debugger
+    binding_of_caller
+    pry-stack_explorer
+  ]
+  sideloader = Bundler::SideLoader.new
+
+  $stderr.print "[irbrc] Side-loading gems: "
+  gems_to_sideload.each do |gem_name|
+    $stderr.print "#{gem_name} "
+    sideloader.require gem_name
+  end
+  $stderr.print "\n"
 end
-
-begin
-  #require "awesome_print"
-
-  # load wirble
-  require 'wirble'
-  # start wirble (with color)
-  Wirble.init
-  Wirble.colorize
-
-
-  # Load hirb
-  require 'hirb'
-
-  Hirb::View.enable
-
-rescue LoadError => e
-  # be silent
-  warn "Couldn't load: #{e}"
-end
-
-
-# Tell IRB to save 2000 lines of history
-IRB.conf[:SAVE_HISTORY] = 2000
-
-# Set up a better prompt
-
-# This prompt includes some color, and enables auto-indent
-# prompt_prefix = "\n\033[1;32m%T\033[m(%N)\033[1;35m %m#{$rails_root}\n\033[1;31m%03n:%i" #+`__git_ps1`
-# That one doesn't work that well with IRB currently, so use a simpler one:
-prompt_prefix = "#{$rails_root} %03n:%i"
-
-IRB.conf[:PROMPT][:MY_PROMPT] = {
-  :PROMPT_I => "#{prompt_prefix} > ",
-  :PROMPT_N => "#{prompt_prefix} > ",
-  :PROMPT_S => "#{prompt_prefix} %l ",
-  :PROMPT_C => "#{prompt_prefix} * ",
-  :RETURN => " #=> %s\n",
-  :AUTO_INDENT => true
-}
-# # Tell IRB to use mine
-IRB.conf[:PROMPT_MODE] = :MY_PROMPT

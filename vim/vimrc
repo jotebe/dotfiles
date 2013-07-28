@@ -14,7 +14,7 @@ let mapleader=' '
   Bundle 'wincent/Command-T'
   Bundle "ervandew/supertab"
   Bundle 'SirVer/ultisnips'
-  Bundle "altercation/vim-colors-solarized"
+  Bundle 'tpope/vim-vividchalk'
   Bundle 'IndexedSearch'
   Bundle 'scrooloose/syntastic'
   Bundle "sjl/gundo.vim"
@@ -30,9 +30,6 @@ let mapleader=' '
   Bundle 'terryma/vim-multiple-cursors'
   Bundle 'bitc/vim-bad-whitespace'
   Bundle 'henrik/vim-qargs'
-  " Bundle 'joshuabates/vim-execrus'
-  " Bundle 'benmills/vimux'
-  " Bundle 'christoomey/vim-tmux-navigator'
 
   Bundle 'vim-ruby/vim-ruby'
   Bundle 'vim-scripts/blockle.vim'
@@ -50,6 +47,8 @@ let mapleader=' '
 
   Bundle 'pangloss/vim-javascript'
   Bundle 'kchmck/vim-coffee-script'
+  Bundle 'rizzatti/funcoo.vim'
+  Bundle 'rizzatti/dash.vim'
 
   filetype plugin indent on  " Automatically detect file types. (must turn on after Vundle)
 " }
@@ -58,14 +57,15 @@ let mapleader=' '
 
   let g:CommandTTagIncludeFilenames=1
   let g:CommandTMaxHeight=20
+  let g:CommandTAcceptSelectionSplitMap='<C-s>'
   nnoremap <leader>t :CommandT<cr>
-  " nnoremap <leader>] :CommandTTag<cr>
+  nnoremap <leader>] :CommandTTag<cr>
   " nnoremap <leader>j :CommandTJump<cr><cr>
 " }
 
 " Looks {
-  " color solarized
-  " set background=dark
+  color vividchalk
+  set background=dark
   set winwidth=84
   set showmode                  " display the current mode
   set cursorline " highlight current line
@@ -74,6 +74,11 @@ let mapleader=' '
   hi CursorColumn ctermbg=black " highlight cursor
   nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 " }
+"
+" Absolute line numbers in insert mode, and relative in normal mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+set relativenumber
 
 let g:syntastic_enable_signs=1
 let g:syntastic_quiet_warnings=1
@@ -138,26 +143,9 @@ au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
   au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 " }
 
-function! ExecrusTmux(...)
-  let lane = "default"
-
-  if a:0 > 0
-    let lane = a:000[0]
-  end
-
-  call system('tmux select-pane -t :.+')
-  call system('tmux send-keys "clear" "Enter"')
-  call system('tmux last-pane')
-  call g:Execrus(lane)
-endfunction
-
-map <C-e> :call ExecrusTmux()<CR>
-map <Leader>e :call ExecrusTmux('alternative')<CR>
-map <Leader>l :VimuxRunLastCommand<CR>
-
-let g:execrus_runner='vimux'
-let g:VimuxOrientation = "h"
-let VimuxUseNearestPane = 1
+" Dash.vim {
+  :nmap <silent> <leader>d <Plug>DashSearch
+" }
 
 " MatchIt
 " % to bounce from do to end etc.
@@ -174,22 +162,20 @@ set softtabstop=2
 set expandtab
 
 " Searching
-set gdefault
 set hlsearch
 set incsearch
-set showmatch
 set ignorecase
 set smartcase
 nnoremap N Nzz
 nnoremap n nzz
 
 " move the current line up and down
-" nnoremap <leader>J      :m+<CR>==
-" nnoremap <leader>J      :m-2<CR>==
+nnoremap <C-J>      :m+<CR>==
+nnoremap <C-K>      :m-2<CR>==
 
 " Tab completion
 set wildmode=list:longest,list:full
-" set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz
 
 " Status bar
 set laststatus=2
@@ -209,9 +195,6 @@ set backspace=indent,eol,start
 set modeline
 set modelines=10
 
-" set winminheight=0
-" set winheight=999
-
 " Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
@@ -222,8 +205,9 @@ augroup myvimrc
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-" Exit insert mode with jk
+" Exit insert mode by mashing j and k
 inoremap jk <esc>
+inoremap kj <esc>
 " inoremap <esc> <nop>
 nmap <leader>w :w<cr>
 map <F1> <nop>
@@ -253,17 +237,17 @@ nmap <leader>k :cp<CR>
 nmap <leader>J :cN<CR>
 nmap <leader>H :cP<CR>
 
-fu! CloseQuickFixOrBuffer()
-    for i in range(1, winnr('$'))
-        let bnum = winbufnr(i)
-        if getbufvar(bnum, '&buftype') == 'quickfix'
-            cclose
-            return
-        endif
-    endfor
-    :q
-endfunction
-nmap <Leader>c :call CloseQuickFixOrBuffer()<cr>
+" fu! CloseQuickFixOrBuffer()
+"     for i in range(1, winnr('$'))
+"         let bnum = winbufnr(i)
+"         if getbufvar(bnum, '&buftype') == 'quickfix'
+"             cclose
+"             return
+"         endif
+"     endfor
+"     :q
+" endfunction
+" nmap <Leader>c :call CloseQuickFixOrBuffer()<cr>
 
 " Add extra block object mods (eg ci/ )
 let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]
@@ -288,7 +272,7 @@ endfor
 
 " Auto collapse/zoom panes based on focus
 set winheight=7
-set winminheight=7
+set winminheight=5
 set winheight=999
 
 " remove trailing whitespace on save

@@ -1,0 +1,19 @@
+load File.join(File.dirname(__FILE__), '.irbrc')
+
+app = File.join Dir.getwd, 'config', 'environment.rb'
+
+if File.exist?(app) && ENV['SKIP_RAILS'].nil?
+  require app
+
+  require 'rails/console/app'
+  require 'rails/console/helpers'
+  if defined?(Rails) && Rails.env
+    extend Rails::ConsoleMethods
+  end
+end
+
+Pry.commands.alias_command "@", "whereami"
+Pry.commands.alias_command 'c', 'continue'
+Pry.commands.alias_command 's', 'step'
+Pry.commands.alias_command 'n', 'next'
+Pry.commands.alias_command 'f', 'finish'
