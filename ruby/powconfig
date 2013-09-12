@@ -1,2 +1,2 @@
 export PATH=$(rbenv root)/shims:$(rbenv root)/bin:$PATH
-export POW_TIMEOUT=3600
+export POW_TIMEOUT=86400
