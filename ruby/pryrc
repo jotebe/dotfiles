@@ -1,9 +1,14 @@
+gem 'ansi'
+require 'ansi/code'
+
 load File.join(File.dirname(__FILE__), '.irbrc')
 
-app = File.join Dir.getwd, 'config', 'environment.rb'
 
-if File.exist?(app) && ENV['SKIP_RAILS'].nil?
-  require app
+environment = File.join Dir.getwd, 'config', 'environment.rb'
+
+if File.exist?(environment) && ENV['SKIP_RAILS'].nil?
+  warn ANSI.blue { 'Loading Rails application...' }
+  require environment
 
   require 'rails/console/app'
   require 'rails/console/helpers'
