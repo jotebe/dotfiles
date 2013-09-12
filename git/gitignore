@@ -32,7 +32,9 @@ database.yml
 atlassian-ide-plugin.xml
 .idea/
 *.iws
+
 .rbenv-version
+.rbenv-vars
 
 # ctags config file
 .ctags
