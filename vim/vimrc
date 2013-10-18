@@ -1,3 +1,5 @@
+set nocompatible
+
 " Bundles {
   filetype off " required by vundle
 
@@ -46,6 +48,7 @@
   Bundle 'rizzatti/dash.vim'
   Bundle 'sjl/vitality.vim'
   Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'ekalinin/Dockerfile.vim'
 
   Bundle 'freitass/todo.txt-vim'
 
@@ -99,6 +102,7 @@
   set expandtab
   " remove trailing whitespace on save
   autocmd BufWritePre * :%s/\s\+$//e
+  set smartindent
 " }
 
 
@@ -126,7 +130,7 @@ nnoremap <C-K>      :m-2<CR>==
 set wildmode=list:longest,list:full
 
 " Ignored filetypes/directories
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz,public/assets/*,public/uploads/*
 
 " always show status line for all windows
 set laststatus=2
@@ -148,14 +152,15 @@ au BufLeave * silent! wa
 set autowrite
 
 " Wrapping {
-  set wrap linebreak " soft-wrapjj
+  set wrap linebreak " soft-wrap
   set nolist " list disables linebreak
   set cpoptions+=n " use line-numbers column for wrap indicator
   let &showbreak="+++ " " wrap indicator
 
   " don't do auto-hard-wrapping, except for comments
   set formatoptions+=l " don't break long lines in insert mode
-  set formatoptions+=r " insert comment leader after <Enter> in insert mode
+  " set formatoptions+=r " insert comment leader after <Enter> in insert mode
+  set formatoptions+=n " recognize numbered lists and use for autoindent
   set formatoptions+=o " insert comment leader on 'o' or 'O'
   set formatoptions+=c " auto-wrap comments
   set formatoptions+=q " allow formatting comments with 'gq'
@@ -207,7 +212,7 @@ map <F1> <nop>
   " Syntastic {
     let g:syntastic_enable_signs=1
     let g:syntastic_quiet_warnings=0
-    let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/coffeescript-style-guide/coffeelint_config.json'
+    let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
     let g:syntastic_ruby_checkers=['mri', 'rubocop']
   " }
 
@@ -276,7 +281,7 @@ map <F1> <nop>
     map <leader>C :CoffeeCompile vert<CR>
     vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
     " command! -nargs=1 C CoffeeCompile | :<args>
-    au BufNewFile,BufReadPost *.coffee setl foldmethod=indent "nofoldenable
+    au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent "nofoldenable
   " }
 " }
 
@@ -309,6 +314,8 @@ map <F1> <nop>
 
   " Force hamlc templates to syntax highlight (ghetto)
   au BufRead,BufNewFile *.hamlc set ft=haml
+
+  au BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
 
   augroup vimrc
     au BufReadPre * setlocal foldmethod=indent

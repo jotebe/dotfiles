@@ -1,22 +1,21 @@
 --type-add=ruby:ext:haml,builder,rake,cucumber
 --type-add=ruby:is:Gemfile,Rakefile
---ruby
 
 --type-add=css:ext:sass,scss,less
---css
 
 --type-add=js:ext:coffee
---js
 
 --type-add=html:ext:haml,hamlc
---html
 
 --type-set=markdown:ext:markdown,md,mdown
---markdown
 
 --type-set=rdoc:ext:rdoc
 
 --ignore-dir=coverage
 --ignore-dir=tmp
+--ignore-dir=log
+--ignore-dir=public/assets
+--ignore-dir=public/uploads
+--ignore-dir=vendor/bundle
 
 --smart-case
