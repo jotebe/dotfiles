@@ -1,21 +1,18 @@
-gem 'ansi'
-require 'ansi/code'
-
 load File.join(File.dirname(__FILE__), '.irbrc')
 
 
-environment = File.join Dir.getwd, 'config', 'environment.rb'
+# environment = File.join Dir.getwd, 'config', 'environment.rb'
 
-if File.exist?(environment) && ENV['SKIP_RAILS'].nil?
-  warn ANSI.blue { 'Loading Rails application...' }
-  require environment
+# if !defined?(Rails) and File.exist?(environment) and ENV['SKIP_RAILS'].nil?
+#   warn ANSI.blue { 'Loading Rails application...' }
+#   require environment
 
-  require 'rails/console/app'
-  require 'rails/console/helpers'
-  if defined?(Rails) && Rails.env
-    extend Rails::ConsoleMethods
-  end
-end
+#   require 'rails/console/app'
+#   require 'rails/console/helpers'
+#   if defined?(Rails) && Rails.env
+#     extend Rails::ConsoleMethods
+#   end
+# end
 
 Pry.commands.alias_command "@", "whereami"
 Pry.commands.alias_command 'c', 'continue'
