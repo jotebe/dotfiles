@@ -145,7 +145,6 @@ set laststatus=2
   set noequalalways
 " }
 
-
 " autosave
 au FocusLost * silent! wa
 au BufLeave * silent! wa
