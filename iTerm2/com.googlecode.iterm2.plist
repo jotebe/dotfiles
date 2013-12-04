@@ -576,6 +576,8 @@
 	<false/>
 	<key>HideActivityIndicator</key>
 	<false/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
@@ -613,7 +615,7 @@
 	<key>NSFontPanelAttributes</key>
 	<string>1, 4</string>
 	<key>NSNavLastRootDirectory</key>
-	<string>~</string>
+	<string>~/Code</string>
 	<key>NSNavPanelExpandedStateForSaveMode</key>
 	<true/>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -650,8 +652,10 @@
 		<key>TB Size Mode</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>950 47 445 270 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>309 200 605 485 0 0 1440 900 </string>
+	<string>372 317 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 0 1440 900 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
@@ -2215,7 +2219,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-09-12T02:02:08Z</date>
+	<date>2013-11-21T00:48:30Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -5403,6 +5407,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20130624</string>
+	<string>1.0.0.20131116</string>
 </dict>
 </plist>
