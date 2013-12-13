@@ -201,8 +201,6 @@ map <F1> <nop>
   " CommandT {
     let g:CommandTTagIncludeFilenames=1
     let g:CommandTMatchWindowReverse=1
-    " let g:CommandTMaxHeight=20
-    let g:CommandTAcceptSelectionSplitMap='<C-s>'
     nnoremap <leader>t :CommandT<cr>
     nnoremap <leader>] :CommandTTag<cr>
     nnoremap <leader>j :CommandTJump<cr><cr>
@@ -280,7 +278,7 @@ map <F1> <nop>
     map <leader>C :CoffeeCompile vert<CR>
     vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
     " command! -nargs=1 C CoffeeCompile | :<args>
-    au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent 
+    au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
   " }
 " }
 
