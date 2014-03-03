@@ -1,9 +1,16 @@
-if defined?(::Bundler) and ENV['GEM_PATH']
+__END__
+$LOAD_PATH.unshift '/Users/ryanlong/.rbenv/versions/1.9.3-p448/lib/ruby/gems/1.9.1/gems/ansi-1.4.3/lib'
+require 'ansi'
+require 'ansi/code'
+require 'active_support/core_ext/kernel/reporting'
+require 'bundler/setup'
+
+if ENV['BUNDLE_GEMFILE'] and ENV['GEM_PATH'] #.tap{|v| warn "GEM_PATH=#{v.inspect}" }
   class Bundler::SideLoader
     def initialize
       @gem_dirs_pattern = "{#{ENV['GEM_PATH'].split(':').join(?,)}}/gems"
       unless Dir.glob(@gem_dirs_pattern).length > 0
-        $stderr.puts "WARN: No gem dirs found for bypassing bundler (in #{__FILE__})"
+        $stderr.puts ANSI.red { "WARN: No gem dirs found for bypassing bundler (in #{__FILE__})" }
       end
     end
 
@@ -14,7 +21,9 @@ if defined?(::Bundler) and ENV['GEM_PATH']
       unless $LOAD_PATH.grep(gem_regexp).length > 0
         $LOAD_PATH.push libs.sort.last # greatest version
       end
-      ::Kernel.require gem_name
+      ::Kernel.silence_warnings do
+        ::Kernel.require gem_name
+      end
     end
   end
 
@@ -22,16 +31,21 @@ if defined?(::Bundler) and ENV['GEM_PATH']
     pry
     pry-doc
     pry-remote
+    pry-rails
     pry-debugger
+    pry-rescue
     binding_of_caller
     pry-stack_explorer
   ]
+  $__sideloaded_gems ||= []
+  gems_to_sideload -= $__sideloaded_gems
   sideloader = Bundler::SideLoader.new
 
-  $stderr.print "[irbrc] Side-loading gems: "
+  $stderr.print ANSI.green { "[irbrc] Side-loading gems: " }
   gems_to_sideload.each do |gem_name|
-    $stderr.print "#{gem_name} "
+    $stderr.print ANSI.yellow { "#{gem_name} " }
     sideloader.require gem_name
+    $__sideloaded_gems << gem_name
   end
   $stderr.print "\n"
 end

@@ -1,12 +1,8 @@
-set number
-set ruler
-syntax on
-
-filetype off     " required by vundle
-
-let mapleader=' '
+set nocompatible
 
 " Bundles {
+  filetype off " required by vundle
+
   set rtp+=~/.vim/bundle/vundle/
   call vundle#rc()
 
@@ -21,6 +17,7 @@ let mapleader=' '
   Bundle "vim-scripts/YankRing.vim"
   Bundle 'mileszs/ack.vim'
   Bundle 'matchit.zip'
+  Bundle 'taglist.vim'
 
   Bundle 'textobj-user'
   Bundle 'textobj-rubyblock'
@@ -49,125 +46,81 @@ let mapleader=' '
   Bundle 'kchmck/vim-coffee-script'
   Bundle 'rizzatti/funcoo.vim'
   Bundle 'rizzatti/dash.vim'
+  Bundle 'sjl/vitality.vim'
+  Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'ekalinin/Dockerfile.vim'
+
+  Bundle 'freitass/todo.txt-vim'
 
   filetype plugin indent on  " Automatically detect file types. (must turn on after Vundle)
 " }
 
-  nnoremap <leader><leader> <c-^>
+" Primary key setup {
+  let mapleader=' ' " leader key is <space>
 
-  let g:CommandTTagIncludeFilenames=1
-  let g:CommandTMaxHeight=20
-  let g:CommandTAcceptSelectionSplitMap='<C-s>'
-  nnoremap <leader>t :CommandT<cr>
-  nnoremap <leader>] :CommandTTag<cr>
-  " nnoremap <leader>j :CommandTJump<cr><cr>
+  " <space><space> to go back to previous buffer
+  nnoremap <leader><leader> <c-^>
 " }
 
 " Looks {
   color vividchalk
   set background=dark
-  set winwidth=84
-  set showmode                  " display the current mode
-  set cursorline " highlight current line
-  set cursorcolumn " highlight current line
-  hi cursorline ctermbg=black " highlight bg color of current line
-  hi CursorColumn ctermbg=black " highlight cursor
+  set showmode     " display the current mode
+
+  set cursorline   " highlight current line
+  autocmd ColorScheme * hi CursorLine ctermbg=234 " highlight bg color of current line
+  set cursorcolumn " highlight current column
+  autocmd ColorScheme * hi CursorColumn ctermbg=234 " highlight cursor
+  " toggle cursor highlighting
   nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-" }
-"
-" Absolute line numbers in insert mode, and relative in normal mode
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
-set relativenumber
 
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
-
-" Open undo tree buffer
-nnoremap <Leader>u :GundoToggle<CR>
-" Open Show yank ring buffer
-nnoremap <Leader>y :YRShow<CR>
-
-set clipboard=unnamed
-
-" Commentary {
-nmap <leader>/ <plug>CommentaryLine<CR>
-vmap <leader>/ <plug>Commentary<CR>
-
-" Utilsnips {
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  let g:UltiSnipsDontReverseSearchPath="1" " Allows removing unwanted snippets when using Vundle
-"  }
-
-" Fugitve {
-  nmap <leader>gb :Gblame<CR>
-  nmap <leader>gs :Gstatus<CR>
-  nmap <leader>gd :Gdiff<CR>
-  nmap <leader>gl :Glog<CR>
-  nmap <leader>gc :Gcommit<CR>
-  nmap <leader>gp :Git push<CR>
+  " Show lines on 80 and 100 chars
+  set colorcolumn=80,100
+  autocmd ColorScheme * hi ColorColumn ctermbg=52
 " }
 
-" Rails.vim {
-  nnoremap <leader>a :A<CR>  " Go to alternate file
+" Basic config {
+  set ruler " show cursor position in the status bar
+  syntax on " enable syntax highlighting
+
+  set mouse=a
+
+  " Absolute line numbers in insert mode, and relative in normal mode
+  set number relativenumber
+  autocmd InsertEnter * :set number norelativenumber
+  autocmd InsertLeave * :set number relativenumber
+
+  set encoding=utf-8
+
+  set clipboard=unnamed
 " }
 
-" Ruby {
-  " Alternate between do; end and { } blocks in ruby
-  let g:blockle_mapping = '<Leader>{'
-  autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-  autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" Whitespace {
+  set tabstop=2
+  set shiftwidth=2
+  set softtabstop=2
+  set expandtab
+  " remove trailing whitespace on save
+  autocmd BufWritePre * :%s/\s\+$//e
+  set smartindent
 " }
 
-augroup filetypedetect
-  au! BufRead,BufNewFile *_spec.rb    set filetype=rspec.ruby
-augroup END
 
-" CTags
-" Retag all files in project
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
-map <C-\> :tnext<CR>
+" Searching {
+  set hlsearch
+  set incsearch
+  set ignorecase
+  set smartcase
+  nnoremap N Nzz
+  nnoremap n nzz
 
-au BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
-au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
-au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
-
-" JavaScript {
-  vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
-  map <leader>C :CoffeeCompile vert<CR>
-  command! -nargs=1 C CoffeeCompile | :<args>
-  au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+  " unset the "last search pattern" register by hitting return
+  nnoremap <CR> :noh<CR><CR>
 " }
 
-" Dash.vim {
-  :nmap <silent> <leader>d <Plug>DashSearch
-" }
-
-" MatchIt
-" % to bounce from do to end etc.
-runtime! macros/matchit.vim
-
-" Set encoding
-set encoding=utf-8
-
-" Whitespace stuff
-set nowrap
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
-" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-nnoremap N Nzz
-nnoremap n nzz
+" retain visual selection on < or > indent commands
+vnoremap > >gv
+vnoremap < <gv
 
 " move the current line up and down
 nnoremap <C-J>      :m+<CR>==
@@ -175,23 +128,50 @@ nnoremap <C-K>      :m-2<CR>==
 
 " Tab completion
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz
 
-" Status bar
+" Ignored filetypes/directories
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz,public/assets/*,public/uploads/*
+
+" always show status line for all windows
 set laststatus=2
 
-" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+" Windows {
+  " Auto collapse/zoom panes based on focus
+  set winheight=7
+  set winminheight=5
+  set winheight=999
 
-au BufRead,BufNewFile *.conf set ft=nginx
+  set winwidth=84
+  set noequalalways
+" }
 
-" Get hamlc templates to syntax highlight (ghetto)
-au BufRead,BufNewFile *.hamlc set ft=haml
+" autosave
+au FocusLost * silent! wa
+au BufLeave * silent! wa
+set autowrite
+
+" Wrapping {
+  set wrap linebreak " soft-wrap
+  set nolist " list disables linebreak
+  set cpoptions+=n " use line-numbers column for wrap indicator
+  let &showbreak="+++ " " wrap indicator
+
+  " don't do auto-hard-wrapping, except for comments
+  set formatoptions+=l " don't break long lines in insert mode
+  " set formatoptions+=r " insert comment leader after <Enter> in insert mode
+  set formatoptions+=n " recognize numbered lists and use for autoindent
+  set formatoptions+=o " insert comment leader on 'o' or 'O'
+  set formatoptions+=c " auto-wrap comments
+  set formatoptions+=q " allow formatting comments with 'gq'
+  set formatoptions+=j " remove comment leader in between joined lines
+  set formatoptions-=t " don't use textwidth to auto-wrap text
+  set textwidth=80 " wrap things at 80 chars
+" }
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" Use modeline overrides
+" Use modeline overrides, check the first 10 lines of files for such directives
 set modeline
 set modelines=10
 
@@ -199,83 +179,179 @@ set modelines=10
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-" Autoreload when .vimrc files change
-augroup myvimrc
-  au!
-  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-augroup END
-
-" Exit insert mode by mashing j and k
-inoremap jk <esc>
-inoremap kj <esc>
-" inoremap <esc> <nop>
-nmap <leader>w :w<cr>
-map <F1> <nop>
-
-" Jumpstack navigation
-" nnoremap <leader>] <C-o>
-" nnoremap <leader>[ <C-i>
 
 " When on, the ":substitute" flag 'g' is default on.  This means that
 " all matches in a line are substituted instead of one.
 set gdefault
+
 " When a bracket is inserted, briefly jump to the matching one.  The
 " jump is only done if the match can be seen on the screen.  The time to
 " show the match can be set with 'matchtime'.
 set showmatch
 
-"This unsets the "last search pattern" register by hitting return
-nnoremap <CR> :noh<CR><CR>
+" Exit insert mode by mashing j and k
+inoremap jk <esc>
+inoremap kj <esc>
 
+nmap <leader>w :w<cr>
+map <F1> <nop>
+
+
+" Plugin configs {
+  " CommandT {
+    let g:CommandTTagIncludeFilenames=1
+    let g:CommandTMatchWindowReverse=1
+    nnoremap <leader>t :CommandT<cr>
+    nnoremap <leader>] :CommandTTag<cr>
+    nnoremap <leader>j :CommandTJump<cr><cr>
+  " }
+
+  " Syntastic {
+    let g:syntastic_enable_signs=1
+    let g:syntastic_quiet_warnings=0
+    let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
+    let g:syntastic_ruby_checkers=['mri', 'rubocop']
+  " }
+
+  " Gundo {
+    " Open undo tree buffer
+    nnoremap <Leader>u :GundoToggle<CR>
+  " }
+
+  " YankRing {
+    " Open Show yank ring buffer
+    nnoremap <Leader>y :YRShow<CR>
+  " }
+
+  " Commentary {
+    nmap <leader>/ <plug>CommentaryLine<CR>
+    vmap <leader>/ <plug>Commentary<CR>
+  " }
+
+  " Utilsnips {
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+    let g:UltiSnipsDontReverseSearchPath="1" " Allows removing unwanted snippets when using Vundle
+  "  }
+
+  " Fugitve {
+    nmap <leader>gb :Gblame<CR>
+    nmap <leader>gs :Gstatus<CR>
+    nmap <leader>gd :Gdiff<CR>
+    nmap <leader>gl :Glog<CR>
+    nmap <leader>gc :Gcommit<CR>
+    nmap <leader>gp :Git push<CR>
+  " }
+
+  " Rails.vim {
+    nnoremap <leader>a :A<CR>  " Go to alternate file
+  " }
+
+  " Ruby {
+    " Alternate between do; end and { } blocks in ruby
+    let g:blockle_mapping = '<Leader>{'
+    autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+  " }
+
+  " IndentGuides {
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_default_mapping = 0
+    let g:indent_guides_auto_colors = 0
+    autocmd ColorScheme * hi IndentGuidesOdd  guibg=red   ctermbg=233
+    autocmd ColorScheme * hi IndentGuidesEven guibg=green ctermbg=234
+  " }
+
+  " Dash.vim {
+    nmap <silent> <leader>d <Plug>DashSearch
+  " }
+
+  " MatchIt {
+    " % to bounce from do to end etc.
+    runtime! macros/matchit.vim
+  " }
+
+  " Coffeescript {
+    map <leader>C :CoffeeCompile vert<CR>
+    vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
+    " command! -nargs=1 C CoffeeCompile | :<args>
+    au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
+  " }
+" }
+
+
+
+" CTags {
+  " Retag all files in project
+  map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+  map <C-\> :tnext<CR>
+
+  au BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+  au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+  au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+" }
+
+
+
+
+
+" Filetypes {
+  augroup filetypedetect
+    au! BufRead,BufNewFile *_spec.rb    set filetype=rspec.ruby
+  augroup END
+
+  " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+  au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+  " Nginx config
+  au BufRead,BufNewFile *.conf set ft=nginx
+
+  " Force hamlc templates to syntax highlight (ghetto)
+  au BufRead,BufNewFile *.hamlc set ft=haml
+
+  au BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
+
+  augroup vimrc
+    au BufReadPre * setlocal foldmethod=indent
+  augroup END
+
+  " Autoreload when .vimrc files change
+  augroup myvimrc
+    au!
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  augroup END
+" }
+
+
+" / for the current word in the current buffer
 nmap <Leader>n /<C-r><C-w><cr>
+" Ack for the current work
 nmap <Leader>f :Ack <C-r><C-w><cr>
+" replace the current word in the buffer
 nmap <Leader>r :%s/<C-r><C-w>//gc<Left><Left><Left>
-nmap <Leader>R :Qdo %s/<C-r><C-w>//gc | update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-nmap <leader>j :cn<CR>
-nmap <leader>k :cp<CR>
-nmap <leader>J :cN<CR>
-nmap <leader>H :cP<CR>
 
-" fu! CloseQuickFixOrBuffer()
-"     for i in range(1, winnr('$'))
-"         let bnum = winbufnr(i)
-"         if getbufvar(bnum, '&buftype') == 'quickfix'
-"             cclose
-"             return
-"         endif
-"     endfor
-"     :q
-" endfunction
-" nmap <Leader>c :call CloseQuickFixOrBuffer()<cr>
+" Add extra block object mods (eg ci/ ) {
+  let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]
+  for keychars in pairs
+    let keys = map(split(keychars), "substitute(v:val, '^\s*\(.\{-}\)\s*$', '\1', '')")
+    let key = keys[0]
+    let ekey = key
 
-" Add extra block object mods (eg ci/ )
-let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]
-for keychars in pairs
-  let keys = map(split(keychars), "substitute(v:val, '^\s*\(.\{-}\)\s*$', '\1', '')")
-  let key = keys[0]
-  let ekey = key
+    if len(keys) > 1
+      let ekey = keys[1]
+    endif
 
-  if len(keys) > 1
-    let ekey = keys[1]
-  endif
-
-  execute "nnoremap ci".key." f".ekey."cT".key
-  execute "nnoremap di".key." f".ekey."dT".key
-  execute "nnoremap yi".key." f".ekey."yT".key
-  execute "nnoremap vi".key." f".ekey."vT".key
-  execute "nnoremap ca".key." f".ekey."lcF".key
-  execute "nnoremap da".key." f".ekey."ldF".key
-  execute "nnoremap ya".key." f".ekey."lyF".key
-  execute "nnoremap va".key." f".ekey."lvF".key
-endfor
-
-" Auto collapse/zoom panes based on focus
-set winheight=7
-set winminheight=5
-set winheight=999
-
-" remove trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
-
-set mouse=a
+    execute "nnoremap ci".key." f".ekey."cT".key
+    execute "nnoremap di".key." f".ekey."dT".key
+    execute "nnoremap yi".key." f".ekey."yT".key
+    execute "nnoremap vi".key." f".ekey."vT".key
+    execute "nnoremap ca".key." f".ekey."lcF".key
+    execute "nnoremap da".key." f".ekey."ldF".key
+    execute "nnoremap ya".key." f".ekey."lyF".key
+    execute "nnoremap va".key." f".ekey."lvF".key
+  endfor
+" }

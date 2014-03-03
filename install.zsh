@@ -36,3 +36,5 @@ if [[ ! -e "$HOME/.vim/bundle/vundle" ]]; then
 	git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle && \
 		vim +BundleInstall +qall
 fi
+
+create_link 'tools/selecta/selecta' '.bin/selecta'
