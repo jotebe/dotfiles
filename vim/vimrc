@@ -6,29 +6,43 @@ set nocompatible
   set rtp+=~/.vim/bundle/vundle/
   call vundle#rc()
 
+  " Awesome management of Vim plugins
   Bundle 'gmarik/vundle'
+  " Reverse-incremental file finding
   Bundle 'wincent/Command-T'
+  " massive collection of colorschemes
+  Bundle 'flazz/vim-colorschemes'
+  " autocomplete
   Bundle "ervandew/supertab"
-  Bundle 'SirVer/ultisnips'
-  Bundle 'tpope/vim-vividchalk'
+  " shows M of N search results for /,?,n,N,*,# searching
   Bundle 'IndexedSearch'
+  " syntax checking/warnings
   Bundle 'scrooloose/syntastic'
+  " Git-like undo history
   Bundle "sjl/gundo.vim"
+  " Shows all yanks past
   Bundle "vim-scripts/YankRing.vim"
+  " Ack integration with Vim
   Bundle 'mileszs/ack.vim'
+  " find matching delimiter with %
   Bundle 'matchit.zip'
+  " ctags-code navigation
   Bundle 'taglist.vim'
-
+  " User-defined text objects
   Bundle 'textobj-user'
+  " ir/ar ruby block objects
   Bundle 'textobj-rubyblock'
+  " text object with a_ / i_
   Bundle 'lucapette/vim-textobj-underscore'
+  " indentation-based objects ii/ai/iI/aI
   Bundle 'vim-indent-object'
-
-  Bundle 'terryma/vim-multiple-cursors'
+  " highlight trailing or inconsistent whitespace
   Bundle 'bitc/vim-bad-whitespace'
+  " set the current *args* based on the files listed in the QuickFix list
   Bundle 'henrik/vim-qargs'
-
+  "
   Bundle 'vim-ruby/vim-ruby'
+  "
   Bundle 'vim-scripts/blockle.vim'
   Bundle 'tpope/vim-rails'
   Bundle 'tpope/vim-rake'
@@ -36,21 +50,17 @@ set nocompatible
   Bundle "tpope/vim-cucumber"
   Bundle "tpope/vim-endwise"
   Bundle 'tpope/vim-haml'
-
   Bundle 'tpope/vim-commentary'
   Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-fugitive'
   Bundle "tpope/vim-unimpaired"
-
   Bundle 'pangloss/vim-javascript'
   Bundle 'kchmck/vim-coffee-script'
   Bundle 'rizzatti/funcoo.vim'
   Bundle 'rizzatti/dash.vim'
   Bundle 'sjl/vitality.vim'
-  Bundle 'nathanaelkane/vim-indent-guides'
   Bundle 'ekalinin/Dockerfile.vim'
-
-  Bundle 'freitass/todo.txt-vim'
+  Bundle 'jnwhiteh/vim-golang'
 
   filetype plugin indent on  " Automatically detect file types. (must turn on after Vundle)
 " }
@@ -63,20 +73,16 @@ set nocompatible
 " }
 
 " Looks {
-  color vividchalk
-  set background=dark
+  colorscheme Monokai
+  " set background=dark
   set showmode     " display the current mode
 
-  set cursorline   " highlight current line
-  autocmd ColorScheme * hi CursorLine ctermbg=234 " highlight bg color of current line
-  set cursorcolumn " highlight current column
-  autocmd ColorScheme * hi CursorColumn ctermbg=234 " highlight cursor
+  set nocursorline   " highlight current line
   " toggle cursor highlighting
-  nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+  nnoremap <Leader>c :set cursorline!<CR>
 
   " Show lines on 80 and 100 chars
   set colorcolumn=80,100
-  autocmd ColorScheme * hi ColorColumn ctermbg=52
 " }
 
 " Basic config {
@@ -163,7 +169,7 @@ set autowrite
   set formatoptions+=o " insert comment leader on 'o' or 'O'
   set formatoptions+=c " auto-wrap comments
   set formatoptions+=q " allow formatting comments with 'gq'
-  set formatoptions+=j " remove comment leader in between joined lines
+  " set formatoptions+=j " remove comment leader in between joined lines
   set formatoptions-=t " don't use textwidth to auto-wrap text
   set textwidth=80 " wrap things at 80 chars
 " }
@@ -179,7 +185,6 @@ set modelines=10
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-
 " When on, the ":substitute" flag 'g' is default on.  This means that
 " all matches in a line are substituted instead of one.
 set gdefault
@@ -193,9 +198,11 @@ set showmatch
 inoremap jk <esc>
 inoremap kj <esc>
 
+" Save with leader-W
 nmap <leader>w :w<cr>
-map <F1> <nop>
 
+" Disable F1 for help
+map <F1> <nop>
 
 " Plugin configs {
   " CommandT {
@@ -208,9 +215,10 @@ map <F1> <nop>
 
   " Syntastic {
     let g:syntastic_enable_signs=1
-    let g:syntastic_quiet_warnings=0
+    let g:syntastic_quiet_messages = {'level': 'warnings'}
     let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
     let g:syntastic_ruby_checkers=['mri', 'rubocop']
+    let g:syntastic_go_checkers=['go', 'gofmt', 'govet']
   " }
 
   " Gundo {
@@ -227,13 +235,6 @@ map <F1> <nop>
     nmap <leader>/ <plug>CommentaryLine<CR>
     vmap <leader>/ <plug>Commentary<CR>
   " }
-
-  " Utilsnips {
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-    let g:UltiSnipsDontReverseSearchPath="1" " Allows removing unwanted snippets when using Vundle
-  "  }
 
   " Fugitve {
     nmap <leader>gb :Gblame<CR>
@@ -269,16 +270,15 @@ map <F1> <nop>
     nmap <silent> <leader>d <Plug>DashSearch
   " }
 
-  " MatchIt {
-    " % to bounce from do to end etc.
-    runtime! macros/matchit.vim
-  " }
-
   " Coffeescript {
     map <leader>C :CoffeeCompile vert<CR>
     vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
     " command! -nargs=1 C CoffeeCompile | :<args>
     au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
+  " }
+
+  " Go {
+    autocmd FileType go autocmd BufWritePre <buffer> Fmt
   " }
 " }
 
@@ -293,7 +293,6 @@ map <F1> <nop>
   au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
   au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 " }
-
 
 
 
@@ -325,6 +324,7 @@ map <F1> <nop>
   augroup END
 " }
 
+au BufRead,BufNewFile * normal zR
 
 " / for the current word in the current buffer
 nmap <Leader>n /<C-r><C-w><cr>
