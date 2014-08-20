@@ -2,7 +2,10 @@
 *.kate-swp
 .project
 *.lck
+*.bak
 *~
+/.pt
+/.pt.yaml
 
 # KDE Dingleberries
 .directory

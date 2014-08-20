@@ -1,67 +1,74 @@
 set nocompatible
 
 " Bundles {
-  filetype off " required by vundle
+  if exists("g:did_load_filetypes")
+    filetype off " required by vundle
+    filetype plugin indent off
+  endif
 
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/Vundle.vim/
+  set rtp+=/usr/local/Cellar/go/1.2.2/libexec/misc/vim
+  call vundle#begin()
 
   " Awesome management of Vim plugins
-  Bundle 'gmarik/vundle'
+  Plugin 'gmarik/Vundle.vim'
   " Reverse-incremental file finding
-  Bundle 'wincent/Command-T'
+  Plugin 'wincent/Command-T'
   " massive collection of colorschemes
-  Bundle 'flazz/vim-colorschemes'
+  Plugin 'flazz/vim-colorschemes'
   " autocomplete
-  Bundle "ervandew/supertab"
+  Plugin 'ervandew/supertab'
   " shows M of N search results for /,?,n,N,*,# searching
-  Bundle 'IndexedSearch'
+  Plugin 'IndexedSearch'
   " syntax checking/warnings
-  Bundle 'scrooloose/syntastic'
+  Plugin 'scrooloose/syntastic'
   " Git-like undo history
-  Bundle "sjl/gundo.vim"
-  " Shows all yanks past
-  Bundle "vim-scripts/YankRing.vim"
+  Plugin 'sjl/gundo.vim'
+  " " Shows all yanks past
+  Plugin 'vim-scripts/YankRing.vim'
   " Ack integration with Vim
-  Bundle 'mileszs/ack.vim'
+  Plugin 'mileszs/ack.vim'
   " find matching delimiter with %
-  Bundle 'matchit.zip'
+  Plugin 'matchit.zip'
   " ctags-code navigation
-  Bundle 'taglist.vim'
+  Plugin 'taglist.vim'
   " User-defined text objects
-  Bundle 'textobj-user'
+  Plugin 'textobj-user'
   " ir/ar ruby block objects
-  Bundle 'textobj-rubyblock'
+  Plugin 'textobj-rubyblock'
   " text object with a_ / i_
-  Bundle 'lucapette/vim-textobj-underscore'
+  Plugin 'lucapette/vim-textobj-underscore'
   " indentation-based objects ii/ai/iI/aI
-  Bundle 'vim-indent-object'
+  Plugin 'vim-indent-object'
   " highlight trailing or inconsistent whitespace
-  Bundle 'bitc/vim-bad-whitespace'
+  Plugin 'bitc/vim-bad-whitespace'
   " set the current *args* based on the files listed in the QuickFix list
-  Bundle 'henrik/vim-qargs'
+  Plugin 'henrik/vim-qargs'
   "
-  Bundle 'vim-ruby/vim-ruby'
+  Plugin 'vim-ruby/vim-ruby'
   "
-  Bundle 'vim-scripts/blockle.vim'
-  Bundle 'tpope/vim-rails'
-  Bundle 'tpope/vim-rake'
-  Bundle 'tpope/vim-bundler'
-  Bundle "tpope/vim-cucumber"
-  Bundle "tpope/vim-endwise"
-  Bundle 'tpope/vim-haml'
-  Bundle 'tpope/vim-commentary'
-  Bundle 'tpope/vim-surround'
-  Bundle 'tpope/vim-fugitive'
-  Bundle "tpope/vim-unimpaired"
-  Bundle 'pangloss/vim-javascript'
-  Bundle 'kchmck/vim-coffee-script'
-  Bundle 'rizzatti/funcoo.vim'
-  Bundle 'rizzatti/dash.vim'
-  Bundle 'sjl/vitality.vim'
-  Bundle 'ekalinin/Dockerfile.vim'
-  Bundle 'jnwhiteh/vim-golang'
+  Plugin 'vim-scripts/blockle.vim'
+  Plugin 'tpope/vim-rails'
+  Plugin 'tpope/vim-rake'
+  " Plugin 'tpope/vim-bundler'
+  Plugin 'tpope/vim-cucumber'
+  Plugin 'tpope/vim-endwise'
+  Plugin 'tpope/vim-haml'
+  Plugin 'tpope/vim-commentary'
+  Plugin 'tpope/vim-surround'
+  Plugin 'tpope/vim-fugitive'
+  Plugin 'tpope/vim-unimpaired'
+  Plugin 'pangloss/vim-javascript'
+  Plugin 'kchmck/vim-coffee-script'
+  Plugin 'rizzatti/funcoo.vim'
+  Plugin 'rizzatti/dash.vim'
+  Plugin 'sjl/vitality.vim'
+  Plugin 'ekalinin/Dockerfile.vim'
+  Plugin 'fatih/vim-go'
+  Plugin 'benmills/vimux'
+  Plugin 'evanmiller/nginx-vim-syntax'
 
+  call vundle#end()
   filetype plugin indent on  " Automatically detect file types. (must turn on after Vundle)
 " }
 
@@ -69,7 +76,7 @@ set nocompatible
   let mapleader=' ' " leader key is <space>
 
   " <space><space> to go back to previous buffer
-  nnoremap <leader><leader> <c-^>
+  " nnoremap <leader><leader> <c-^>
 " }
 
 " Looks {
@@ -136,16 +143,16 @@ nnoremap <C-K>      :m-2<CR>==
 set wildmode=list:longest,list:full
 
 " Ignored filetypes/directories
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz,public/assets/*,public/uploads/*
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz,public/assets/*,public/uploads/*,vendor/bundle/*,*.orig,db/sphinx/*,node_modules/*
 
 " always show status line for all windows
 set laststatus=2
 
 " Windows {
   " Auto collapse/zoom panes based on focus
-  set winheight=7
-  set winminheight=5
-  set winheight=999
+  " set winheight=7
+  " set winminheight=5
+  " set winheight=999
 
   set winwidth=84
   set noequalalways
@@ -177,9 +184,8 @@ set autowrite
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" Use modeline overrides, check the first 10 lines of files for such directives
-set modeline
-set modelines=10
+" Disable modelines
+set nomodeline
 
 " Directories for swp files
 set backupdir=~/.vim/backup
@@ -187,7 +193,7 @@ set directory=~/.vim/backup
 
 " When on, the ":substitute" flag 'g' is default on.  This means that
 " all matches in a line are substituted instead of one.
-set gdefault
+" set gdefault
 
 " When a bracket is inserted, briefly jump to the matching one.  The
 " jump is only done if the match can be seen on the screen.  The time to
@@ -200,6 +206,8 @@ inoremap kj <esc>
 
 " Save with leader-W
 nmap <leader>w :w<cr>
+
+nmap <leader>E :Explore<cr>
 
 " Disable F1 for help
 map <F1> <nop>
@@ -216,9 +224,9 @@ map <F1> <nop>
   " Syntastic {
     let g:syntastic_enable_signs=1
     let g:syntastic_quiet_messages = {'level': 'warnings'}
-    let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
+    let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/Work/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
     let g:syntastic_ruby_checkers=['mri', 'rubocop']
-    let g:syntastic_go_checkers=['go', 'gofmt', 'govet']
+    let g:syntastic_go_checkers=['go']
   " }
 
   " Gundo {
@@ -228,7 +236,7 @@ map <F1> <nop>
 
   " YankRing {
     " Open Show yank ring buffer
-    nnoremap <Leader>y :YRShow<CR>
+    " nnoremap <Leader>y :YRShow<CR>
   " }
 
   " Commentary {
@@ -242,11 +250,11 @@ map <F1> <nop>
     nmap <leader>gd :Gdiff<CR>
     nmap <leader>gl :Glog<CR>
     nmap <leader>gc :Gcommit<CR>
-    nmap <leader>gp :Git push<CR>
   " }
 
   " Rails.vim {
-    nnoremap <leader>a :A<CR>  " Go to alternate file
+    " Go to alternate file
+    nnoremap <leader>a :A<CR>
   " }
 
   " Ruby {
@@ -278,11 +286,8 @@ map <F1> <nop>
   " }
 
   " Go {
-    autocmd FileType go autocmd BufWritePre <buffer> Fmt
   " }
 " }
-
-
 
 " CTags {
   " Retag all files in project
@@ -294,16 +299,13 @@ map <F1> <nop>
   au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 " }
 
-
-
-
 " Filetypes {
   augroup filetypedetect
     au! BufRead,BufNewFile *_spec.rb    set filetype=rspec.ruby
   augroup END
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-  au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+  au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Vagrantfile.*,Thorfile,config.ru}    set ft=ruby
 
   " Nginx config
   au BufRead,BufNewFile *.conf set ft=nginx
@@ -324,14 +326,16 @@ map <F1> <nop>
   augroup END
 " }
 
+" Fully unfold each file upon opening
 au BufRead,BufNewFile * normal zR
 
-" / for the current word in the current buffer
-nmap <Leader>n /<C-r><C-w><cr>
-" Ack for the current work
-nmap <Leader>f :Ack <C-r><C-w><cr>
+" Ack for the current word
+nmap <Leader>A :Ack <C-r><C-w><cr>
+
 " replace the current word in the buffer
 nmap <Leader>r :%s/<C-r><C-w>//gc<Left><Left><Left>
+
+nmap <Leader>e :edit %%
 
 
 " Add extra block object mods (eg ci/ ) {
@@ -355,3 +359,123 @@ nmap <Leader>r :%s/<C-r><C-w>//gc<Left><Left><Left>
     execute "nnoremap va".key." f".ekey."lvF".key
   endfor
 " }
+
+" Handle very large files nicely {
+  " Protect large files from sourcing and other overhead.
+  " Large files are > 10M
+  let g:LargeFile = 1024 * 1024 * 10
+  augroup LargeFile
+    " Set options:
+    " eventignore+=FileType (no syntax highlighting etc assumes FileType always on)
+    " noswapfile (save copy of file)
+    " bufhidden=unload (save memory when other file is viewed)
+    " undolevels=-1 (no undo possible)
+    " autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload undolevels=-1 | else | set eventignore-=FileType | endif
+  augroup END
+" }
+"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vimux
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open vimux on the side
+let g:VimuxOrientation = "h"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <Leader>ra :call RunAllSpecs()<CR>
+map <Leader>rf :call RunCurrentSpecFile()<CR>
+map <Leader>rs :call RunNearestSpec()<CR>
+map <Leader>rl :call RunLastSpec()<CR>
+
+function! RunAllSpecs()
+  let l:command = "bin/rspec"
+  call RunSpecs(l:command)
+endfunction
+
+function! RunCurrentSpecFile()
+  if InSpecFile()
+    let l:command = "bin/rspec -fd " . @%
+    call SetLastSpecCommand(l:command)
+    call RunSpecs(l:command)
+  elseif InSpecJSFile()
+    let l:command = "bin/teaspoon " . @%
+    call SetLastSpecCommand(l:command)
+    call RunSpecs(l:command)
+  endif
+endfunction
+
+function! RunNearestSpec()
+  if InSpecFile()
+    let l:command = "bin/rspec -fd " . " "  . @% . ":" . line(".")
+    call SetLastSpecCommand(l:command)
+    call RunSpecs(l:command)
+  endif
+endfunction
+
+function! RunLastSpec()
+  if exists("t:last_spec_command")
+    call RunSpecs(t:last_spec_command)
+  endif
+endfunction
+
+function! InSpecFile()
+  return match(expand("%"), "_spec.rb$") != -1
+endfunction
+
+function! InSpecJSFile()
+  return match(expand("%"), "_spec.js.coffee$") != -1
+endfunction
+
+function! SetLastSpecCommand(command)
+  let t:last_spec_command = a:command
+endfunction
+
+function! RunSpecs(command)
+  "execute ":w\|!clear && echo " . a:command . " && echo && " . a:command
+  call VimuxRunCommand("clear && echo " . a:command . " && echo && " . a:command)
+  " call VimuxRunCommand(a:command)
+endfunction
+
+function! s:ChangeHashSyntax(line1,line2)
+    let l:save_cursor = getpos(".")
+    silent! execute ':' . a:line1 . ',' . a:line2 . 's/\v:([a-z0-9_]+)\s*\=\>\s*/\1: /'
+    call setpos('.', l:save_cursor)
+endfunction
+
+command! -range=% ChangeHashSyntax call <SID>ChangeHashSyntax(<line1>,<line2>)
+
+command! -nargs=0 -bar Qargs execute 'args ' . s:QuickfixFilenames()
+
+" Contributed by "ib."
+" http://stackoverflow.com/questions/5686206/search-replace-using-quickfix-list-in-vim#comment8286582_5686810
+command! -nargs=1 -complete=command -bang Qdo call s:Qdo(<q-bang>, <q-args>)
+
+function! s:Qdo(bang, command)
+  if exists('w:quickfix_title')
+    let in_quickfix_window = 1
+    cclose
+  else
+    let in_quickfix_window = 0
+  endif
+
+  arglocal
+  exe 'args '.s:QuickfixFilenames()
+  exe 'argdo'.a:bang.' '.a:command
+  argglobal
+
+  if in_quickfix_window
+    copen
+  endif
+endfunction
+
+function! s:QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
