@@ -80,7 +80,7 @@ set nocompatible
 " }
 
 " Looks {
-  colorscheme Monokai
+  silent! colorscheme Monokai
   " set background=dark
   set showmode     " display the current mode
 

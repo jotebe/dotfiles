@@ -33,8 +33,16 @@ done
 
 create_link 'vim/vimrc' '.vimrc'
 if [[ ! -e "$HOME/.vim/bundle/vundle" ]]; then
-	git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle && \
-		vim +BundleInstall +qall
+	git clone https://github.com/gmarik/Vundle.git $HOME/.vim/bundle/Vundle.vim && \
+		vim +PluginInstall +qall
+fi
+
+if [[ -d ~/.vim/bundle/Command-T/ruby/command-t/ ]]; then
+  (
+    cd ~/.vim/bundle/Command-T/ruby/command-t/
+    ruby extconf.rb
+    make
+  )
 fi
 
 create_link 'tools/selecta/selecta' '.bin/selecta'
