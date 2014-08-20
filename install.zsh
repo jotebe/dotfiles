@@ -45,4 +45,5 @@ if [[ -d ~/.vim/bundle/Command-T/ruby/command-t/ ]]; then
   )
 fi
 
-create_link 'tools/selecta/selecta' '.bin/selecta'
+curl -L https://raw.githubusercontent.com/garybernhardt/selecta/master/selecta > $HOME/.bin/selecta
+chmod +x $HOME/.bin/selecta
