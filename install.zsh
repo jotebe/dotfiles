@@ -45,5 +45,6 @@ if [[ -d ~/.vim/bundle/Command-T/ruby/command-t/ ]]; then
   )
 fi
 
+mkdir -p $HOME/.bin
 curl -L https://raw.githubusercontent.com/garybernhardt/selecta/master/selecta > $HOME/.bin/selecta
 chmod +x $HOME/.bin/selecta
