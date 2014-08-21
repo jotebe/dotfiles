@@ -70,6 +70,9 @@ set nocompatible
 
   call vundle#end()
   filetype plugin indent on  " Automatically detect file types. (must turn on after Vundle)
+
+  " clear autocmds
+  autocmd!
 " }
 
 " Primary key setup {
@@ -114,7 +117,11 @@ set nocompatible
   set softtabstop=2
   set expandtab
   " remove trailing whitespace on save
-  autocmd BufWritePre * :%s/\s\+$//e
+  autocmd bufwritepre * :call FixTrailingWhitespace()
+  " autocmd bufwritepre * :%s/\v\s+$//e
+  " autocmd bufwritepre * execute "normal" "m'gg:%s/\_s+\%$//e<CR>''"
+
+
   set smartindent
 " }
 
@@ -149,11 +156,6 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,
 set laststatus=2
 
 " Windows {
-  " Auto collapse/zoom panes based on focus
-  " set winheight=7
-  " set winminheight=5
-  " set winheight=999
-
   set winwidth=84
   set noequalalways
 " }
@@ -191,17 +193,13 @@ set nomodeline
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-" When on, the ":substitute" flag 'g' is default on.  This means that
-" all matches in a line are substituted instead of one.
-" set gdefault
-
 " When a bracket is inserted, briefly jump to the matching one.  The
 " jump is only done if the match can be seen on the screen.  The time to
 " show the match can be set with 'matchtime'.
 set showmatch
 
 " Exit insert mode by mashing j and k
-inoremap jk <esc>
+" inoremap jk <esc>
 inoremap kj <esc>
 
 " Save with leader-W
@@ -236,7 +234,7 @@ map <F1> <nop>
 
   " YankRing {
     " Open Show yank ring buffer
-    " nnoremap <Leader>y :YRShow<CR>
+    nnoremap <Leader>y :YRShow<CR>
   " }
 
   " Commentary {
@@ -266,16 +264,9 @@ map <F1> <nop>
     autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
   " }
 
-  " IndentGuides {
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_default_mapping = 0
-    let g:indent_guides_auto_colors = 0
-    autocmd ColorScheme * hi IndentGuidesOdd  guibg=red   ctermbg=233
-    autocmd ColorScheme * hi IndentGuidesEven guibg=green ctermbg=234
-  " }
-
   " Dash.vim {
     nmap <silent> <leader>d <Plug>DashSearch
+    vmap <silent> <leader>d "dy:Dash <C-R>d<CR>
   " }
 
   " Coffeescript {
@@ -330,10 +321,12 @@ map <F1> <nop>
 au BufRead,BufNewFile * normal zR
 
 " Ack for the current word
-nmap <Leader>A :Ack <C-r><C-w><cr>
+nmap <Leader>A :Ack -w <C-r><C-w>
+vmap <Leader>A "dy:Ack <C-r>d
 
 " replace the current word in the buffer
 nmap <Leader>r :%s/<C-r><C-w>//gc<Left><Left><Left>
+vmap <Leader>r "dy:%s/<C-r>d//gc<Left><Left><Left>
 
 nmap <Leader>e :edit %%
 
@@ -478,4 +471,20 @@ function! s:QuickfixFilenames()
     let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
   endfor
   return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
+
+function! FixTrailingWhitespace()
+  let l:winview = winsaveview()
+  let l:folding = &foldenable
+  let &foldenable = 0
+
+  " Remove trailing whitespace on all lines
+  % substitute/\v\s+$//e
+
+  " Go to start of file and then delete <some whitespace> anchored by <end of file>
+  0 goto
+  % substitute/\_s*\%$//e
+
+  let &foldenable = l:folding
+  call winrestview(l:winview)
 endfunction
