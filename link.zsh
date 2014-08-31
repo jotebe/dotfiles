@@ -32,5 +32,6 @@ done
 mkdir -p $HOME/.vim
 mkdir -p $HOME/.vim/backup
 [ -e $HOME/.vim/bundle ] || ln -s $DOTFILES_PATH/vim/bundle $HOME/.vim/bundle
+[ -e $HOME/.vim/autoload ] || ln -s $DOTFILES_PATH/vim/autoload $HOME/.vim/autoload
 
 create_link 'vim/vimrc' '.vimrc'

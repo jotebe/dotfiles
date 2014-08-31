@@ -95,6 +95,7 @@ RUN cd $DOTFILES_PATH \
 RUN $DOTFILES_PATH/link.zsh
 
 # Install vim plugins
+RUN aptitude install -y python-dev
 RUN $DOTFILES_PATH/setup.sh
 
 ENV SHELL /usr/bin/zsh
