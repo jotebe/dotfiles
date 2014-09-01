@@ -222,6 +222,7 @@ map <F1> <nop>
   " }
 
   " Go {
+    let g:go_bin_path = expand("$GOPATH/bin")
   " }
 " }
 
