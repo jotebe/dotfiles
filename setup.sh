@@ -8,3 +8,6 @@ if [[ -d ~/.vim/bundle/ctrlp-cmatcher ]]; then
   ./install.sh
   cd -
 fi
+
+# auto-install required go binaries
+vim +GoUpdateBinaries +qall
