@@ -56,6 +56,15 @@ ENV GOROOT /usr/local/go
 ENV GOPATH /root/gopath
 RUN mkdir -p $GOPATH
 
+# Install some go tools
+RUN go get -u -v "github.com/nsf/gocode"
+RUN go get -u -v "code.google.com/p/go.tools/cmd/goimports"
+RUN go get -u -v "code.google.com/p/rog-go/exp/cmd/godef"
+RUN go get -u -v "code.google.com/p/go.tools/cmd/oracle"
+RUN go get -u -v "github.com/golang/lint/golint"
+RUN go get -u -v "github.com/kisielk/errcheck"
+RUN go get -u -v "github.com/jstemmer/gotags"
+
 # Install VIM
 RUN hg clone http://hg.debian.org/hg/pkg-vim/vim /opt/vim
 RUN cd /opt/vim \
@@ -68,7 +77,8 @@ RUN aptitude install -y \
       libacl1 \
       libgpm2 \
       libssl-dev \
-      libncurses5-dev
+      libncurses5-dev \
+      python-dev
 RUN cd /opt/vim \
  && ./configure --with-features=huge --with-compiledby='ryan@rtlong.com' \
  && make \
@@ -95,7 +105,6 @@ RUN cd $DOTFILES_PATH \
 RUN $DOTFILES_PATH/link.zsh
 
 # Install vim plugins
-RUN aptitude install -y python-dev
 RUN $DOTFILES_PATH/setup.sh
 
 ENV SHELL /usr/bin/zsh
