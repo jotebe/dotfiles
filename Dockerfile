@@ -99,8 +99,6 @@ RUN usermod -s /usr/bin/zsh root
 
 # Add actual config
 ADD . $DOTFILES_PATH
-RUN cd $DOTFILES_PATH \
- && git submodule update --init --recursive
 
 RUN $DOTFILES_PATH/link.zsh
 
