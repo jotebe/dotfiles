@@ -24,8 +24,6 @@ set nocompatible
 " }
 
 " Looks {
-  silent! colorscheme Monokai
-  " set background=dark
   set showmode     " display the current mode
 
   set nocursorline   " highlight current line
