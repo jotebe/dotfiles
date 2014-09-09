@@ -84,6 +84,16 @@ RUN cd /opt/vim \
  && make \
  && make install
 
+# Install tmux
+# RUN curl http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.9/tmux-1.9a.tar.gz?r=http%3A%2F%2Ftmux.sourceforge.net%2F&ts=1409547045&use_mirror=superb-dca3
+RUN curl -L http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.9/tmux-1.9a.tar.gz | tar xzf - -C /opt/
+RUN aptitude install -y \
+      libevent-dev
+RUN cd /opt/tmux-1.9a \
+ && ./configure \
+ && make \
+ && make install
+
 # Set up some environment
 ENV HOME /root
 ENV DOTFILES_PATH $HOME/dotfiles
