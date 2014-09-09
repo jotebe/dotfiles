@@ -27,6 +27,9 @@ set nocompatible
   nnoremap <Leader>c :set cursorline!<CR>
 
   set colorcolumn=80,100 " Show lines on 80 and 100 chars
+
+  set list
+  set listchars=eol:◁,tab:»\ ,trail:·,nbsp:␣
 " }
 
 " Colors {
@@ -100,7 +103,6 @@ set autowrite
 
 " Wrapping {
   set wrap linebreak " soft-wrap
-  set nolist " list disables linebreak
   " set cpoptions+=v
   let &showbreak="___ " " wrapped-line indicator
 
