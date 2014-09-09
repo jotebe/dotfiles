@@ -412,11 +412,12 @@ function! FixTrailingWhitespace()
   let &foldenable = 0
 
   " Remove trailing whitespace on all lines
-  % substitute/\v\s+$//e
+  keepjumps % substitute/\v\s+$//e
+  undojoin
 
   " Go to start of file and then delete <some whitespace> anchored by <end of file>
-  0 goto
-  % substitute/\_s*\%$//e
+  keepjumps 0 goto
+  keepjumps % substitute/\_s*\%$//e
 
   let &foldenable = l:folding
   call winrestview(l:winview)
