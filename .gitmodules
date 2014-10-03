@@ -118,3 +118,6 @@
 [submodule "vim/bundle/vim-hybrid"]
 	path = vim/bundle/vim-hybrid
 	url = https://github.com/w0ng/vim-hybrid.git
+[submodule "vim/bundle/vim-markdown"]
+	path = vim/bundle/vim-markdown
+	url = https://github.com/tpope/vim-markdown.git
