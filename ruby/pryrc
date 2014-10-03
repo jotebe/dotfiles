@@ -1,14 +1,14 @@
-load File.join(File.dirname(__FILE__), '.irbrc')
+load File.join(File.dirname(__FILE__), 'irbrc')
 
-environment = File.join(Dir.getwd, 'config', 'environment.rb')
+__rails_environment_rb = File.join(Dir.getwd, 'config', 'environment.rb')
 
-if !defined?(Rails) and File.exist?(environment) and ENV['SKIP_RAILS'].nil?
+if !defined?(Rails) and File.exist?(__rails_environment_rb) and ENV['SKIP_RAILS'].nil?
   if defined?(ANSI)
     warn ANSI.blue { '[pryrc] Loading Rails application...' }
   else
     warn '[pryrc] Loading Rails application'
   end
-  require environment
+  require __rails_environment_rb
 
   require 'rails/console/app'
   require 'rails/console/helpers'
