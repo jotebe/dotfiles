@@ -150,6 +150,7 @@ map <F1> <nop>
     " let g:ctrlp_match_func = { 'match' : 'matcher#cmatch' }
     let g:ctrlp_map = '<leader>t'
     let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_max_files = 10000
   " }
 
   " Syntastic {
@@ -227,6 +228,7 @@ map <F1> <nop>
 " Filetypes {
   augroup filetypedetect
     au! BufRead,BufNewFile *_spec.rb    set filetype=rspec.ruby
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   augroup END
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
@@ -368,11 +370,11 @@ endfunction
 
 function! s:RubyChangeHashSyntax(line1,line2)
     let l:save_cursor = getpos(".")
-    silent! execute ':' . a:line1 . ',' . a:line2 . 's/\v:([a-z0-9_]+)\s*\=\>\s*/\1: /'
+    silent! execute ':' . a:line1 . ',' . a:line2 . 's/\v:([a-z0-9_]+)\s*\=\>\s*/\1: /g'
     call setpos('.', l:save_cursor)
 endfunction
 
-command! -range=% RubyChangeHashSyntax call <SID>ChangeHashSyntax(<line1>,<line2>)
+command! -range=% RubyChangeHashSyntax call <SID>RubyChangeHashSyntax(<line1>,<line2>)
 noremap <leader>rh :RubyChangeHashSyntax<cr>
 
 command! -nargs=0 -bar Qargs execute 'args ' . s:QuickfixFilenames()
