@@ -15,7 +15,7 @@ function create_link() {
 	fi
 }
 
-echo "Installing to $DOTFILES_PATH..."
+echo "Installing to $HOME from ${DOTFILES_PATH}..."
 
 create_link 'git/gitconfig' '.gitconfig'
 create_link 'git/gitignore' '.gitignore'
@@ -38,7 +38,6 @@ create_link 'zsh/prezto/runcoms/zshrc' '.zshrc'
 create_link 'vim/bundle' '.vim/bundle'
 create_link 'vim/autoload' '.vim/autoload'
 create_link 'vim/vimrc' '.vimrc'
-
 mkdir -vp $HOME/.vim/backup
 
 for bin in bin/*; do
