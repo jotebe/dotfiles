@@ -1,3 +1,4 @@
+# vim: set expandtab tabstop=2 shiftwidth=0:
 FROM ubuntu:14.04
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -107,14 +108,16 @@ ENV DOTFILES_PATH $HOME/dotfiles
 # Set shell to zsh
 RUN usermod -s /usr/bin/zsh root
 
+RUN mkdir -p $HOME/.local/bin
+ADD https://github.com/zimbatm/direnv/releases/download/v2.5.0/direnv.linux-amd64 $HOME/.local/bin/direnv
+RUN chmod +x $HOME/.local/bin/direnv
+
 # Add actual config
 ADD . $DOTFILES_PATH
 
-RUN $DOTFILES_PATH/link.zsh
+RUN $DOTFILES_PATH/install.sh
 
-# Install vim plugins
-RUN $DOTFILES_PATH/setup.sh
-
+ENV PATH $HOME/.local/bin:$PATH
 ENV SHELL /usr/bin/zsh
 WORKDIR /root/
 VOLUME ["/root/code"]
