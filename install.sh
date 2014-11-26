@@ -17,8 +17,7 @@ fi
 
 cd "${DOTFILES_PATH}"
 
-git submodule init
-git submodule update
+git submodule update --init --recursive
 
 ./link.sh
 ./setup.sh
