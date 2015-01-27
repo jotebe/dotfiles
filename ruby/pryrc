@@ -1,7 +1,8 @@
 # vim: set filetype=ruby:
 
-__irbrc = File.join(File.dirname(File.readlink(__FILE__)), 'irbrc')
-load __irbrc if File.exist?(__irbrc)
+__this_file = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+__irbrc = File.join(File.dirname(__this_file), 'irbrc')
+Kernel.load __irbrc if File.exist?(__irbrc)
 
 __rails_environment_rb = File.join(Dir.getwd, 'config', 'environment.rb')
 
