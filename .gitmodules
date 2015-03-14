@@ -127,3 +127,6 @@
 [submodule "vim/bundle/speeddating"]
 	path = vim/bundle/speeddating
 	url = git@github.com:tpope/vim-speeddating.git
+[submodule "vim/bundle/vim-sexp"]
+	path = vim/bundle/vim-sexp
+	url = git@github.com:guns/vim-sexp.git
