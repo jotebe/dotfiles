@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>100737BB-0162-4164-BF11-9A9160AEF24C</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>githubr</string>
+			<key>plusSpaces</key>
+			<true/>
+			<key>text</key>
+			<string>Search GitHub for Repositories with '{query}'</string>
+			<key>url</key>
+			<string>https://github.com/search?q={query}&amp;type=Repositories</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>29D0C007-141B-462D-87C4-296F33F8565D</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gem</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Search for '{query}' at rubygems.org</string>
+			<key>url</key>
+			<string>https://rubygems.org/search?utf8=✓&amp;query={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>3492C9FB-7D8C-4245-BC80-417B6B59F933</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>githubc</string>
+			<key>plusSpaces</key>
+			<true/>
+			<key>text</key>
+			<string>Search GitHub for Code with '{query}'</string>
+			<key>url</key>
+			<string>https://github.com/search?q={query}&amp;type=Code</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>3F11F170-55D3-48B7-8D56-9410CC4410A2</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>dockerhub</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Search Docker Hub for '{query}'</string>
+			<key>url</key>
+			<string>https://registry.hub.docker.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>4E68BE18-DEA3-4F98-8322-21C5678CFEAA</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>tpb</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Search The Pirate Bay for '{query}'</string>
+			<key>url</key>
+			<string>http://thepiratebay.se/search/{query}/0/7/0</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>5E6ACCFA-8120-4569-B1E2-B859EC949B0E</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>githubu</string>
+			<key>plusSpaces</key>
+			<true/>
+			<key>text</key>
+			<string>Search GitHub for Users with '{query}'</string>
+			<key>url</key>
+			<string>https://github.com/search?q={query}&amp;type=Users</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>CDF7B8B9-8EE1-4BF2-9436-9FA8D64D92C9</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>ud</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Urban Dictionary</string>
+			<key>url</key>
+			<string>http://www.urbandictionary.com/define.php?term={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>DBEA627C-79D1-4AA7-A39C-A7F605BCB063</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>npmp</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Search for NPM package named {query}</string>
+			<key>url</key>
+			<string>https://www.npmjs.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>FA3771D4-00EF-4B5F-888B-7A4AE3BECD5C</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>githubi</string>
+			<key>plusSpaces</key>
+			<true/>
+			<key>text</key>
+			<string>Search GitHub for Issues with '{query}'</string>
+			<key>url</key>
+			<string>https://github.com/search?q={query}&amp;type=Issues</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
