@@ -1,5 +1,6 @@
 # vim: set filetype=ruby:
 
+__END__
 __this_file = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 __irbrc = File.join(File.dirname(__this_file), 'irbrc')
 Kernel.load __irbrc if File.exist?(__irbrc)

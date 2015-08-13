@@ -6,9 +6,7 @@ set nocompatible
 	filetype off " required by pathogen
 	filetype plugin indent off
 
-	" Add goroot to runtime path; FIXME: this only works on mac
-	set rtp+=/usr/local/Cellar/go/1.2.2/libexec/misc/vim
-
+  let g:pathogen_disabled = ['vim-nodejs-complete']
 	execute pathogen#infect()
 
 	filetype plugin indent on  " Automatically detect file types. (must turn on after pathogen)
@@ -25,6 +23,7 @@ set nocompatible
 	set showmode " display the current mode
 
 	set cursorline " highlight current line
+	set cursorcolumn
 	" toggle cursor highlighting
 	nnoremap <Leader>c :set cursorline!<CR>
 
@@ -51,6 +50,9 @@ set nocompatible
 
 	set encoding=utf-8
 	set clipboard=unnamed
+
+	" increase history length
+	set history=1000
 " }
 
 " Whitespace {
@@ -88,7 +90,12 @@ nnoremap <C-K> :m-2<CR>==
 set wildmode=list:longest,list:full
 
 " Ignored filetypes/directories
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.sassc,*.scssc,tmp/*,log/*,*.png,*.jpg,*.pdf,*.zip,*.gz,public/assets/*,public/uploads/*,vendor/bundle/*,*.orig,db/sphinx/*,node_modules/*
+set wildignore+=*.o,*.obj,*.rbc,*.class,*.sassc,*.scssc,*.png,*.jpg,*.pdf,*.zip,*.gz
+set wildignore+=tmp/*,log/*,public/assets/*,public/uploads/*
+set wildignore+=vendor/bundler/*,vendor/bundle/*,vendor/gems/*
+set wildignore+=**/coverage
+set wildignore+=*.orig,.git,.svn
+set wildignore+=db/sphinx/*
 
 " always show status line for all windows
 set laststatus=2
@@ -99,9 +106,9 @@ set laststatus=2
 " }
 
 " autosave
-au FocusLost * silent! wa
-au BufLeave * silent! wa
-set autowrite
+" au FocusLost * silent! wa
+" au BufLeave * silent! wa
+" set autowrite
 
 " Wrapping {
 	set wrap linebreak " soft-wrap
@@ -123,9 +130,6 @@ set autowrite
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" Disable modelines
-" set nomodeline
-
 " Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
@@ -136,7 +140,6 @@ set directory=~/.vim/backup
 set showmatch
 
 " Exit insert mode by mashing j and k
-" inoremap jk <esc>
 inoremap kj <esc>
 
 " Save with leader-W
@@ -144,23 +147,39 @@ nmap <leader>w :w<cr>
 
 nmap <leader>E :Explore<cr>
 
+nmap <leader>o :!open %<cr><cr>
+
 " Disable F1 for help
 map <F1> <nop>
 
 " Plugin configs {
 	" CTRL-P {
-		" let g:ctrlp_match_func = { 'match' : 'matcher#cmatch' }
 		let g:ctrlp_map = '<leader>t'
-		let g:ctrlp_working_path_mode = 'ra'
+		let g:ctrlp_working_path_mode = 0 "'ra'
+		" let g:ctrlp_root_markers += 'package.json'
 		let g:ctrlp_max_files = 10000
+		let g:ctrlp_custom_ignore = {
+			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp\|node_modules\|dist$',
+			\ 'file': '\.exe$\|\.so$\|\.dat$'
+			\ }
 	" }
 
 	" Syntastic {
 		let g:syntastic_enable_signs=1
-		let g:syntastic_quiet_messages = {'level': 'warnings'}
-		" let g:syntastic_coffee_coffeelint_args='--csv --file ~/Code/Work/GoodGuide/coffeescript-style-guide/coffeelint_config.json'
-		let g:syntastic_ruby_checkers=['mri', 'rubocop']
+		" let g:syntastic_quiet_messages = {'level': 'warnings'}
+		let g:syntastic_ruby_checkers=['mri']
+		" let g:syntastic_ruby_checkers=['rubocop']
 		let g:syntastic_go_checkers=['go']
+		let g:syntastic_javascript_checkers=['jsxhint', 'jscs']
+
+		set statusline=""
+		set statusline+=%#warningmsg#%{SyntasticStatuslineFlag()}%*
+		set statusline+=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %p%%
+
+		let g:syntastic_always_populate_loc_list = 1
+		let g:syntastic_auto_loc_list = 1
+		let g:syntastic_check_on_open = 0
+		let g:syntastic_check_on_wq = 0
 	" }
 
 	" Gundo {
@@ -206,21 +225,40 @@ map <F1> <nop>
 	" }
 
 	" Coffeescript {
+	augroup CoffeeScript
+		au!
 		map <leader>C :CoffeeCompile vert<CR>
 		vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
-		" command! -nargs=1 C CoffeeCompile | :<args>
 		au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
-	" }
+	augroup END
 
 	" Go {
 		let g:go_bin_path = expand("$GOPATH/bin")
 	" }
+	"
+	" JavaScript {
+		let g:javascript_conceal_function = "ƒ"
+		let g:javascript_conceal_null = "ø"
+		let g:javascript_conceal_this = "@"
+		let g:javascript_conceal_return = "⇚"
+		let g:javascript_conceal_undefined = "¿"
+		let g:javascript_conceal_NaN = "ℕ"
+		let g:javascript_conceal_prototype = "¶"
+		let g:javascript_conceal_static = "•"
+		let g:javascript_conceal_super = "Ω"
+
+    au FileType javascript noremap <Leader>f :call FormatBuffer()<cr>
+		let g:dash_map = {
+        \ 'javascript' : 'nodejs'
+			\ }
+
+		" }
 " }
 
 " CTags {
 	" Retag all files in project
-	map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
-	map <C-\> :tnext<CR>
+	" map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+	" map <C-\> :tnext<CR>
 
 	" au BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 	" au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
@@ -229,29 +267,33 @@ map <F1> <nop>
 
 " Filetypes {
 	augroup filetypedetect
-		au! BufRead,BufNewFile *_spec.rb set filetype=rspec.ruby
-		autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+		" au!
+		au BufRead,BufNewFile *_spec.rb set filetype=rspec.ruby
+		au BufNewFile,BufReadPost *.md set filetype=markdown
+		" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+		au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Vagrantfile.*,Thorfile,config.ru} set ft=ruby
+
+		" Nginx config
+		au BufRead,BufNewFile *.conf set ft=nginx
+
+		" AWS CloudFormation Templates
+		au BufRead,BufNewFile *.template set ft=json
+
+		" Force hamlc templates to syntax highlight (ghetto)
+		au BufRead,BufNewFile *.hamlc set ft=haml
+
+		au BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
 	augroup END
 
-	" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-	au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Vagrantfile.*,Thorfile,config.ru} set ft=ruby
-
-	" Nginx config
-	au BufRead,BufNewFile *.conf set ft=nginx
-
-	" Force hamlc templates to syntax highlight (ghetto)
-	au BufRead,BufNewFile *.hamlc set ft=haml
-
-	au BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
-
 	augroup vimrc
+		au!
 		au BufReadPre * setlocal foldmethod=indent
 	augroup END
 
 	" Autoreload when .vimrc files change
 	augroup myvimrc
 		au!
-		au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+		au BufWritePost .vimrc,_vimrc,vimrc so $MYVIMRC
 	augroup END
 " }
 
@@ -263,8 +305,8 @@ nmap <Leader>A :Ack -w <C-r><C-w>
 vmap <Leader>A "dy:Ack <C-r>d
 
 " replace the current word in the buffer
-nmap <Leader>r :%s/<C-r><C-w>//gc<Left><Left><Left>
-vmap <Leader>r "dy:%s/<C-r>d//gc<Left><Left><Left>
+nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
+vmap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
 
 nmap <Leader>e :edit %%
 
@@ -291,21 +333,6 @@ nmap <Leader>e :edit %%
 	endfor
 " }
 
-" Handle very large files nicely {
-	" Protect large files from sourcing and other overhead.
-	" Large files are > 10M
-	let g:LargeFile = 1024 * 1024 * 10
-	augroup LargeFile
-		" Set options:
-		" eventignore+=FileType (no syntax highlighting etc assumes FileType always on)
-		" noswapfile (save copy of file)
-		" bufhidden=unload (save memory when other file is viewed)
-		" undolevels=-1 (no undo possible)
-		" autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload undolevels=-1 | else | set eventignore-=FileType | endif
-	augroup END
-" }
-"
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimux
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -316,56 +343,31 @@ let g:VimuxOrientation = "h"
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-map <Leader>ra :call RunAllSpecs()<CR>
-map <Leader>rf :call RunCurrentSpecFile()<CR>
-map <Leader>rs :call RunNearestSpec()<CR>
-map <Leader>rl :call RunLastSpec()<CR>
+map <Leader>ra :call RunTestsSuite()<CR>
+map <Leader>rf :call RunTestsFile()<CR>
+map <Leader>rs :call RunTestsFileLine()<CR>
+map <Leader>rl :call RunTestsAgain()<CR>
 
-function! RunAllSpecs()
-	let l:command = "rspec"
-	call RunSpecs(l:command)
+function! RunTestsSuite()
+	call RunTests("run-tests suite")
 endfunction
 
-function! RunCurrentSpecFile()
-	if InSpecFile()
-		let l:command = "rspec -fd " . @%
-		call SetLastSpecCommand(l:command)
-		call RunSpecs(l:command)
-	elseif InSpecJSFile()
-		let l:command = "teaspoon " . @%
-		call SetLastSpecCommand(l:command)
-		call RunSpecs(l:command)
+function! RunTestsFile()
+		call RunTests("run-tests file " . @%)
+endfunction
+
+function! RunTestsFileLine()
+		call RunTests("run-tests file " . @% . ":" . line("."))
+endfunction
+
+function! RunTestsAgain()
+	if exists("t:run_test_last_command")
+		call RunTests(t:run_test_last_command)
 	endif
 endfunction
 
-function! RunNearestSpec()
-	if InSpecFile()
-		let l:command = "rspec -fd " . " " . @% . ":" . line(".")
-		call SetLastSpecCommand(l:command)
-		call RunSpecs(l:command)
-	endif
-endfunction
-
-function! RunLastSpec()
-	if exists("t:last_spec_command")
-		call RunSpecs(t:last_spec_command)
-	endif
-endfunction
-
-function! InSpecFile()
-	return match(expand("%"), "_spec.rb$") != -1
-endfunction
-
-function! InSpecJSFile()
-	return match(expand("%"), "_spec.js.coffee$") != -1
-endfunction
-
-function! SetLastSpecCommand(command)
-	let t:last_spec_command = a:command
-endfunction
-
-function! RunSpecs(command)
-	" call VimuxRunCommand("clear && echo " . a:command . " && echo && " . a:command)
+function! RunTests(command)
+	let t:run_test_last_command = a:command
 	call VimuxRunCommand(a:command)
 endfunction
 
@@ -424,6 +426,20 @@ function! FixTrailingWhitespace()
 		" Go to start of file and then delete <some whitespace> anchored by <end of file>
 		keepjumps 0 goto
 		keepjumps % substitute/\_s*\%$//e
+	catch
+	endtry
+
+	let &foldenable = l:folding
+	call winrestview(l:winview)
+endfunction
+
+function! FormatBuffer()
+	let l:winview = winsaveview()
+	let l:folding = &foldenable
+	let &foldenable = 0
+
+	try
+    %! js-beautify -f -
 	catch
 	endtry
 

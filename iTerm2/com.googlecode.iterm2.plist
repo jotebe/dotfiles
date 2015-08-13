@@ -46,6 +46,12 @@
 	<false/>
 	<key>FsTabDelay</key>
 	<real>1</real>
+	<key>GEOUsageSessionID</key>
+	<data>
+	CLS/rI+W4Z+iNBCo953C0/2T+BQ=
+	</data>
+	<key>GEOUsageSessionIDGenerationTime</key>
+	<real>452376058.04885799</real>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x71-0x100000</key>
@@ -248,9 +254,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>950 47 445 270 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>32 1092 924 485 0 0 2560 1577 </string>
+	<string>516 1092 924 485 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>764 900 3840 2138 764 900 3840 2137 </string>
+	<string>2560 0 2560 1578 2560 0 2560 1577 </string>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -815,7 +821,7 @@
 			<key>Log Directory</key>
 			<string></string>
 			<key>Minimum Contrast</key>
-			<real>0.29903647303581238</real>
+			<real>0.28015625476837158</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -986,22 +992,6 @@
 					<key>regex</key>
 					<string>fail</string>
 				</dict>
-				<dict>
-					<key>action</key>
-					<string>HighlightTrigger</string>
-					<key>parameter</key>
-					<integer>2</integer>
-					<key>regex</key>
-					<string>NewRelicPinger</string>
-				</dict>
-				<dict>
-					<key>action</key>
-					<string>HighlightTrigger</string>
-					<key>parameter</key>
-					<integer>0</integer>
-					<key>regex</key>
-					<string>manually_review</string>
-				</dict>
 			</array>
 			<key>Unlimited Scrollback</key>
 			<false/>
@@ -1095,7 +1085,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-01-20T18:21:06Z</date>
+	<date>2015-05-05T02:59:19Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>

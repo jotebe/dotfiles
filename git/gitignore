@@ -42,3 +42,10 @@ atlassian-ide-plugin.xml
 .__ctags
 
 *.orig
+
+scratch
+
+.run-tests.rc
+.envrc
+
+.node-history
