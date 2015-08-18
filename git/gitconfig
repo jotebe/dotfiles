@@ -24,6 +24,7 @@
   l = log
   lg = log --graph --pretty=custom --abbrev-commit --date=relative
   ll = log --graph --pretty=custom --abbrev-commit --date=relative
+  lla = log --graph --pretty=custom --abbrev-commit --date=relative --all
   log-json = log --pretty=json
   ls = ls-files
   mc = merge --no-ff
