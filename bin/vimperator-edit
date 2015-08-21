@@ -1,0 +1,11 @@
+#!/bin/bash
+
+file="$1"
+
+PATH=/usr/local/bin:$PATH
+
+window=$(tmux new-window -P "vim '$file'; tmux wait-for -S '$file'")
+growlnotify -m "Focus iterm to find the vim in tmux $window" vimperator-edit
+open -a iTerm
+tmux wait-for "$file"
+open -a Firefox
