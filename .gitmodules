@@ -1,6 +1,6 @@
 [submodule "zsh/prezto"]
 	path = zsh/prezto
-	url = git://github.com/rtlong/prezto.git
+	url = git@github.com:rtlong/prezto.git
 [submodule "vim/bundle/Dockerfile.vim"]
 	path = vim/bundle/Dockerfile.vim
 	url = https://github.com/ekalinin/Dockerfile.vim.git
@@ -123,13 +123,13 @@
 	url = https://github.com/tpope/vim-markdown.git
 [submodule "vim/bundle/todo.txt"]
 	path = vim/bundle/todo.txt
-	url = git@github.com:freitass/todo.txt-vim.git
+	url = https://github.com/freitass/todo.txt-vim.git
 [submodule "vim/bundle/speeddating"]
 	path = vim/bundle/speeddating
-	url = git@github.com:tpope/vim-speeddating.git
+	url = https://github.com/tpope/vim-speeddating.git
 [submodule "vim/bundle/vim-sexp"]
 	path = vim/bundle/vim-sexp
-	url = git@github.com:guns/vim-sexp.git
+	url = https://github.com/guns/vim-sexp.git
 [submodule "vim/bundle/vim-node"]
 	path = vim/bundle/vim-node
 	url = https://github.com/moll/vim-node.git
@@ -141,10 +141,10 @@
 	url = https://github.com/guileen/vim-node-dict.git
 [submodule "vim/bundle/vim-systemd-syntax"]
 	path = vim/bundle/vim-systemd-syntax
-	url = git@github.com:Matt-Deacalion/vim-systemd-syntax.git
+	url = https://github.com/Matt-Deacalion/vim-systemd-syntax.git
 [submodule "vim/bundle/vimperator"]
 	path = vim/bundle/vimperator
 	url = https://github.com/superbrothers/vim-vimperator.git
 [submodule "vim/bundle/vim-ace"]
 	path = vim/bundle/vim-ace
-	url = git@github.com:yosssi/vim-ace.git
+	url = https://github.com/yosssi/vim-ace.git
