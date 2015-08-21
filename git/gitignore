@@ -27,15 +27,9 @@ Dropbox
 
 *.sassc
 
-Notes
-Notes.*
-
 atlassian-ide-plugin.xml
 .idea/
 *.iws
-
-.rbenv-version
-.rbenv-vars
 
 # ctags config file
 .ctags
@@ -44,8 +38,5 @@ atlassian-ide-plugin.xml
 *.orig
 
 scratch
-
-.run-tests.rc
-.envrc
 
 .node-history

@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+DIRECTORY=`git rev-parse --show-toplevel 2>/dev/null || pwd`
+
+filepath="${DIRECTORY##$HOME}"
+[ -z "$filepath" ] && filepath="__ROOT__"
+NOTES_FILE="$HOME/Dropbox/Documents/Notes/${filepath}"
+
+NOTES_FILE_TXT="${NOTES_FILE}.txt"
+NOTES_FILE_MD="${NOTES_FILE}.md"
+
+if [ -f "$NOTES_FILE_TXT" ]; then
+  if [ -f "$NOTES_FILE_MD" ]; then
+    echo 'Both .txt and .md exist. Merging.' >&2
+    echo >> "$NOTES_FILE_MD"
+    cat "$NOTES_FILE_TXT" >> "$NOTES_FILE_MD"
+    rm "$NOTES_FILE_TXT"
+  else
+    echo 'Renaming .txt to .md' >&2
+    mv "$NOTES_FILE_TXT" "$NOTES_FILE_MD"
+  fi
+fi
+
+echo "Opening $NOTES_FILE_MD" >&2
+mkdir -vp $(dirname "$NOTES_FILE_MD")
+
+open "$NOTES_FILE_MD"
+$EDITOR "$NOTES_FILE_MD"
