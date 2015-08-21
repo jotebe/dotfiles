@@ -147,7 +147,7 @@ nmap <leader>w :w<cr>
 
 nmap <leader>E :Explore<cr>
 
-nmap <leader>o :!open %<cr><cr>
+nmap <leader>o :!open "%"<cr><cr>
 
 " Disable F1 for help
 map <F1> <nop>
@@ -190,6 +190,7 @@ map <F1> <nop>
 	" YankRing {
 		" Open Show yank ring buffer
 		nnoremap <Leader>y :YRShow<CR>
+		let g:yankring_history_dir = expand('$HOME').'/.vim'
 	" }
 
 	" Commentary {
