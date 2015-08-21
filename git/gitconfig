@@ -48,7 +48,7 @@
 [gui]
 
 [fetch]
-  recurseSubmodules = yes
+  ; recurseSubmodules = yes
   prune = yes
 
 [push]
