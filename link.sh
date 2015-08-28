@@ -107,4 +107,5 @@ done
 copy_if_missing 'ssh/config' '.ssh/config'
 copy_if_missing 'ssh/known_hosts' '.ssh/known_hosts'
 
-create_link 'vimperator' '.vimperator'
+create_link 'vimperator/info' '.vimperator/info'
+create_link 'vimperator/vimperatorrc' '.vimperatorrc'

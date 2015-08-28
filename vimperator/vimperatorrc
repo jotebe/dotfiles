@@ -1,0 +1,9 @@
+"3.9 (created: 2015/02/15 15:49:05)
+" vim: set ft=vimperator:
+
+source! /Users/ryanlong/.vimperatorrc.local
+
+noremap j 5j
+noremap k 5k
+
+set editor='/Users/ryanlong/.local/bin/vimperator-edit'
