@@ -96,6 +96,7 @@ create_link 'zsh/prezto/runcoms/zshrc' '.zshrc'
 
 create_link 'vim/bundle' '.vim/bundle'
 create_link 'vim/autoload' '.vim/autoload'
+create_link 'vim/spell' '.vim/spell'
 create_link 'vim/vimrc' '.vimrc'
 mkdir -vp "$HOME/.vim/backup"
 
