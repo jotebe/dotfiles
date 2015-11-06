@@ -159,7 +159,7 @@ map <F1> <nop>
 		" let g:ctrlp_root_markers += 'package.json'
 		let g:ctrlp_max_files = 10000
 		let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$',
+			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
 			\ 'file': '\.exe$\|\.so$\|\.dat$'
 			\ }
 	" }
