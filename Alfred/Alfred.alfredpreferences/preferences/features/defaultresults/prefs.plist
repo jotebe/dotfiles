@@ -11,7 +11,7 @@
 		<string>features.websearch.amazon.fallback</string>
 		<string>features.websearch.wiki.fallback</string>
 	</array>
-	<key>showContacts</key>
-	<false/>
+	<key>showBookmarks</key>
+	<true/>
 </dict>
 </plist>
