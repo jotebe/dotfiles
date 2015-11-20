@@ -115,7 +115,7 @@ set laststatus=2
 	" set cpoptions+=v
 	let &showbreak="___ " " wrapped-line indicator
 
-	set textwidth=80 " wrap things at 80 chars
+	set textwidth=0 " wrap things at 80 chars
 
 	set formatoptions+=l " don't break long lines in insert mode
 	set formatoptions-=c " don't auto-wrap comments
