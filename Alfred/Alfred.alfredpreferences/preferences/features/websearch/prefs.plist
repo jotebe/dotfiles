@@ -60,7 +60,7 @@
 			<key>text</key>
 			<string>Search Docker Hub for '{query}'</string>
 			<key>url</key>
-			<string>https://registry.hub.docker.com/search?q={query}</string>
+			<string>https://hub.docker.com/search/?q={query}&amp;page=1&amp;isAutomated=0&amp;isOfficial=0&amp;starCount=0&amp;pullCount=0</string>
 			<key>utf8</key>
 			<true/>
 		</dict>
