@@ -1,9 +1,6 @@
 #!/bin/bash
-# vim: set noexpandtab tabstop=4 shiftwidth=0:
+# vim: set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4:
 set -e -u
-
-DOTFILES_PATH="${DOTFILES_PATH:-"$HOME/.dotfiles"}"
-cd "$DOTFILES_PATH"
 
 function echo_red() {
 	echo -e "\x1b[31m$1\x1b[0m"
@@ -29,6 +26,9 @@ function create_link() {
 		local current="$(readlink "$destination")"
 		if [[ $current = $target ]]; then
 			echo_green "already exists correctly"
+		elif [[ ${CLOBBER:-unset} != unset ]]; then
+			rm -fv "$destination"
+			create_link "$1" "$2"
 		else
 			if [[ -r $current ]]; then
 				echo_red "already exists as a symlink but does not point to $target"
@@ -37,7 +37,12 @@ function create_link() {
 			fi
 		fi
 	elif [[ -e "$destination" ]]; then
-		echo_red "already exists"
+		if [[ ${CLOBBER:-unset} != unset ]]; then
+			rm -fv "$destination"
+			create_link "$1" "$2"
+		else
+			echo_red "already exists"
+		fi
 	else
 		mkdir -p "$(dirname "$destination")"
 		ln -sv "$target" "$destination"
