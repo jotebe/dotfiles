@@ -186,7 +186,7 @@
 	<key>HotKeyTogglesWindow</key>
 	<false/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
 	<integer>96</integer>
 	<key>HotkeyCode</key>
@@ -221,9 +221,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>4 56 924 485 0 0 1280 777 </string>
+	<string>-1655 970 924 485 -1673 800 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 -1 1280 778 0 0 1280 777 </string>
+	<string>-1673 800 2560 1418 -1673 800 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>152 47 570 451 0 0 1280 800 </string>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
@@ -987,7 +987,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>461569865.09369397</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>467152574.97317898</real>
+	<real>469683224.76908499</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1003,38 +1003,7 @@
 	<key>PasteFromClipboard</key>
 	<false/>
 	<key>PointerActions</key>
-	<dict>
-		<key>Button,1,1,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kContextMenuPointerAction</string>
-		</dict>
-		<key>Button,2,1,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kPasteFromClipboardPointerAction</string>
-		</dict>
-		<key>Gesture,ThreeFingerSwipeDown,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kPrevWindowPointerAction</string>
-		</dict>
-		<key>Gesture,ThreeFingerSwipeLeft,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kPrevTabPointerAction</string>
-		</dict>
-		<key>Gesture,ThreeFingerSwipeRight,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kNextTabPointerAction</string>
-		</dict>
-		<key>Gesture,ThreeFingerSwipeUp,,</key>
-		<dict>
-			<key>Action</key>
-			<string>kNextWindowPointerAction</string>
-		</dict>
-	</dict>
+	<dict/>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/ryan/.dotfiles/iTerm2</string>
 	<key>PromptOnQuit</key>
@@ -1056,7 +1025,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-10-21T20:36:02Z</date>
+	<date>2015-11-20T03:32:30Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1108,7 +1077,7 @@
 	<key>UseCompactLabel</key>
 	<true/>
 	<key>UseLionStyleFullscreen</key>
-	<true/>
+	<false/>
 	<key>WebKitDefaultFontSize</key>
 	<integer>11</integer>
 	<key>WebKitStandardFont</key>
