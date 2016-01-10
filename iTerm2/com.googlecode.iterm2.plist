@@ -43,7 +43,7 @@
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FocusFollowsMouse</key>
-	<false/>
+	<true/>
 	<key>FsTabDelay</key>
 	<real>1</real>
 	<key>GEOUsageSessionID</key>
@@ -221,9 +221,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>-1655 970 924 485 -1673 800 2560 1440 </string>
+	<string>4 56 924 485 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1673 800 2560 1418 -1673 800 2560 1417 </string>
+	<string>-1521 854 710 706 -1673 800 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>152 47 570 451 0 0 1280 800 </string>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
@@ -987,7 +987,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>461569865.09369397</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>469683224.76908499</real>
+	<real>470831477.22103399</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1025,7 +1025,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-11-20T03:32:30Z</date>
+	<date>2015-12-02T14:56:21Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1077,7 +1077,7 @@
 	<key>UseCompactLabel</key>
 	<true/>
 	<key>UseLionStyleFullscreen</key>
-	<false/>
+	<true/>
 	<key>WebKitDefaultFontSize</key>
 	<integer>11</integer>
 	<key>WebKitStandardFont</key>
