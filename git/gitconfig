@@ -44,6 +44,7 @@
 [core]
   autocrlf = input
   excludesfile = ~/.gitignore
+  whitespace = tab-in-indent
 
 [gui]
 
