@@ -1,70 +1,78 @@
+# vim: noexpandtab:shiftwidth=4:tabstop=4:softtabstop=4:filetype=gitconfig
+
 [color]
-  branch = auto
-  diff = auto
-  status = auto
-  ui = auto
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
 
 [alias]
-  a = add
-  aa = add -A
-  ae = add --edit
-  ap = add --patch
-  b = branch
-  br = branch
-  c = commit -v
-  ci = commit -v
-  co = checkout
-  com = checkout  master
-  d = diff --word-diff
-  dc = diff --word-diff --cached
-  di = diff --word-diff
-  f = fetch --all
-  fe = fetch --all
-  ff = merge --ff-only
-  l = log
-  lg = log --graph --pretty=custom --abbrev-commit --date=relative
-  ll = log --graph --pretty=custom --abbrev-commit --date=relative
-  lla = log --graph --pretty=custom --abbrev-commit --date=relative --all
-  log-json = log --pretty=json
-  ls = ls-files
-  mc = merge --no-ff
-  mt = mergetool
-  ps = push
-  rb = rebase
-  rbi = rebase -i
-  rbc = rebase --continue
-  rs = reset
-  s = status -sb
-  su = submodule update --init
+	a = add
+	aa = add -A
+	ae = add --edit
+	ap = add --patch
+	b = branch
+	br = branch
+	c = commit -v
+	ci = commit -v
+	co = checkout
+	com = checkout	master
+	d = diff --word-diff
+	dc = diff --word-diff --cached
+	di = diff --word-diff
+	f = fetch --all
+	fe = fetch --all
+	ff = merge --ff-only
+	l = log
+	lg = log --graph --pretty=custom --date=relative
+	ll = log --graph --pretty=custom --date=relative
+	lla = log --graph --pretty=custom --date=relative --all
+	log-json = log --pretty=json
+	ls = ls-files
+	mc = merge --no-ff
+	mt = mergetool
+	ps = push
+	rb = rebase
+	rbi = rebase -i
+	rbc = rebase --continue
+	rs = reset
+	s = status -sb
+	su = submodule update --init
 
 [pretty]
-  custom = "%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
-  json = '\"%h\": {%n  \"commit\": \"%H\",%n  \"author\": \"%an <%ae>\",%n  \"date\": \"%ad\",%n  \"message\": \"%s\"%n}'
+	custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset %C(blue)%G?%Creset"
+	json = {\"commit\": \"%H\",\"authorName\": \"%aN\",\"authorEmail\":\"%aE\",\"date\": \"%aI\",\"subject\": \"%s\", \"parents\":\"%P\"}
+
+[log]
+	abbrevCommit = true
 
 [core]
-  autocrlf = input
-  excludesfile = ~/.gitignore
-  whitespace = tab-in-indent
+	autocrlf = input
+	excludesfile = ~/.gitignore
+	whitespace = tab-in-indent
 
 [commit]
-  gpgsign = true
+	gpgSign = true
 
 [gui]
 
 [fetch]
-  ; recurseSubmodules = yes
-  prune = yes
+	recurseSubmodules = yes
+	prune = yes
+
+[diff]
+	mnemonicPrefix = true
 
 [push]
-  default = upstream
+	default = upstream
+
+[grep]
+	lineNumber = true
+	patternType = extended
 
 [merge]
-  defaultToUpstream = true
-  ; tool = diffmerge
-
-[mergetool "diffmerge"]
-  cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
-  trustExitCode = true
+	defaultToUpstream = true
+	; tool = diffmerge
 
 [include]
-  path = ~/.gitconfig.local ; include name/email/etc.
+	path = ~/.gitconfig.local ; include name/email/etc.
