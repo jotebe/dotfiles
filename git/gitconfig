@@ -16,7 +16,7 @@
 	c = commit -v
 	ci = commit -v
 	co = checkout
-	com = checkout	master
+	com = checkout master
 	d = diff --word-diff
 	dc = diff --word-diff --cached
 	di = diff --word-diff
