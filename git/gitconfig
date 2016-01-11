@@ -46,6 +46,9 @@
   excludesfile = ~/.gitignore
   whitespace = tab-in-indent
 
+[commit]
+  gpgsign = true
+
 [gui]
 
 [fetch]
