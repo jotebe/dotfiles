@@ -17,4 +17,10 @@ trap cleanup INT KILL EXIT
 
 home_dir=$(ssh $host pwd)
 
-ssh  -o 'ControlPath=none' -o 'ExitOnForwardFailure=yes' -o 'VisualHostKey=no' -R ${home_dir}/.gnupg/S.gpg-agent:${HOME}/.gnupg/S.gpg-agent.extra $host 'echo "GPG agent tunnel active. Press enter when finished."; read'
+ssh \
+  -o 'ControlPath=none' \
+  -o 'ExitOnForwardFailure=yes' \
+  -o 'VisualHostKey=no' \
+  -R ${home_dir}/.gnupg/S.gpg-agent:${HOME}/.gnupg/S.gpg-agent.extra \
+  $host \
+  'echo "GPG agent tunnel active. Press enter when finished."; read'
