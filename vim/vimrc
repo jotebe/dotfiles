@@ -254,7 +254,11 @@ map <F1> <nop>
         \ 'javascript' : 'nodejs'
 			\ }
 
-		" }
+	" }
+	" Shell {
+		au FileType sh set noexpandtab softtabstop=2 tabstop=2 shiftwidth=2
+	" }
+	"
 " }
 
 " CTags {
