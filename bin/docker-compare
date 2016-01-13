@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+set -e
+[[ $TRACE ]] && set -x
+
+assert_args() {
+	if (( $# < 3 )); then
+		echo "usage: $0 image_a image_b command [args...]"
+		exit 1
+	fi
+}
+
+create_tmp_dir() {
+	typeset -gr workdir="$(mktemp -d)"
+	cd "$workdir"
+	zshexit() { cleanup }
+	TRAPINT() { cleanup }
+}
+
+cleanup() {
+	wait
+	cd
+	[[ -d $workdir ]] && rm -rf "$workdir"
+}
+
+run_command_in_image() {
+	typeset -r img="$1" command="$2"
+	typeset -r outfile="$(echo "$img $cmd" | shasum | cut -d' ' -f 1)"
+	typeset -r jq_filter='.[0] | @text "Id: \(.Id)\nVirtualSize: \(.VirtualSize / 1024 / 1024 * 100 | floor / 100) MB"'
+
+	(
+		docker inspect "$img" | jq -r "$jq_filter" > "$outfile"
+    set +e
+		docker run --rm $img sh -c "$cmd[*]" >> "$outfile" 2>&1
+		echo "<< EXIT $? >>" >> "$outfile"
+	) &
+	echo "$outfile"
+}
+
+main() {
+	assert_args "$@"
+
+	local image_a=$1; shift
+	local image_b=$1; shift
+	local -a cmd; cmd=( $@ )
+	local -a filenames
+
+	create_tmp_dir
+	echo "Compare images $image_a and $image_b when running: $cmd"
+
+	for img in "$image_a" "$image_b"; do
+		outfile="$(run_command_in_image "$img" "$cmd")"
+		filenames+=($outfile)
+	done
+
+	wait
+
+	git diff -U100 --inter-hunk-context=100 --minimal --color-words $filenames[*] || true
+}
+
+main "$@"
