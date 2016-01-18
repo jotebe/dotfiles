@@ -49,7 +49,7 @@
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore
-	whitespace = tab-in-indent
+	whitespace = -tab-in-indent
 
 [commit]
 	gpgSign = true

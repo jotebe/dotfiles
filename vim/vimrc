@@ -30,7 +30,7 @@ set nocompatible
 	set colorcolumn=80,100 " Show lines on 80 and 100 chars
 
 	set list
-	set listchars=eol:◁,tab:»\ ,trail:·,nbsp:␣
+	set listchars=tab:»\ ,trail:·,nbsp:␣
 " }
 
 " Colors {
@@ -219,6 +219,7 @@ map <F1> <nop>
 		autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 		autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 		autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+		autocmd FileType ruby,eruby set expandtab shiftwidth=2 tabstop=2 softtabstop=2
 	" }
 
 	" Dash.vim {
