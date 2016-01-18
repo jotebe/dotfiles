@@ -4,12 +4,15 @@ set -eu
 
 host=$1
 if [ -z "$host" ]; then
-    echo "Supply a hostname"
-    exit 1
+	echo "Supply a hostname"
+	exit 1
 fi
 
+ssh() {
+	command ssh -o 'VisualHostKey=no' "$@"
+}
 cleanup() {
-  ssh $host 'rm -vf ~/.gnupg/S.gpg-agent'
+	ssh $host 'rm -vf ~/.gnupg/S.gpg-agent'
 }
 cleanup
 
@@ -18,9 +21,8 @@ trap cleanup INT KILL EXIT
 home_dir=$(ssh $host pwd)
 
 ssh \
-  -o 'ControlPath=none' \
-  -o 'ExitOnForwardFailure=yes' \
-  -o 'VisualHostKey=no' \
-  -R ${home_dir}/.gnupg/S.gpg-agent:${HOME}/.gnupg/S.gpg-agent.extra \
-  $host \
-  'echo "GPG agent tunnel active. Press enter when finished."; read'
+	-o 'ControlPath=none' \
+	-o 'ExitOnForwardFailure=yes' \
+	-R ${home_dir}/.gnupg/S.gpg-agent:${HOME}/.gnupg/S.gpg-agent.extra \
+	$host \
+	'echo "GPG agent tunnel active. Press enter when finished."; read'
