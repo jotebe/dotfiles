@@ -154,3 +154,6 @@
 [submodule "vim/bundle/colorsbox"]
 	path = vim/bundle/colorsbox
 	url = https://github.com/mkarmona/colorsbox.git
+[submodule "vim/bundle/auto-git-diff"]
+	path = vim/bundle/auto-git-diff
+	url = https://github.com/hotwatermorning/auto-git-diff.git
