@@ -248,12 +248,15 @@ map <F1> <nop>
 		let g:dash_map = {
 			\ 'javascript' : 'nodejs'
 		\ }
-
 	" }
+
 	" Shell {
 		autocmd FileType sh set noexpandtab
 	" }
-	"
+
+	" Tmux.conf {
+		autocmd FileType tmux set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
+	" }
 " }
 
 " CTags {
