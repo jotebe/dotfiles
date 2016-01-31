@@ -274,7 +274,7 @@ map <F1> <nop>
 
 		autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-		autocmd BufRead,BufNewFile *.conf set filetype=nginx
+		" autocmd BufRead,BufNewFile *.conf set filetype=nginx
 
 		" AWS CloudFormation Templates
 		autocmd BufRead,BufNewFile *.template set filetype=json
