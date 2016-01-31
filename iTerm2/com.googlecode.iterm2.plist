@@ -454,13 +454,15 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>149 1257 657 305 -2050 1050 3008 1692 </string>
+	<string>149 1258 657 171 -2050 1050 3008 1692 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>1810 1266 599 502 958 1050 1920 1200 </string>
+	<string>1810 1249 599 502 958 1050 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2050 1701 1266 1018 -2050 1050 3008 1669 </string>
+	<string>-2050 1547 1266 1169 -2050 1050 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1291 1071 514 465 958 1050 1920 1177 </string>
+	<key>NeverWarnAboutMeta</key>
+	<true/>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1094,11 +1096,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>FiraMonoForPowerline-Medium 14</string>
+			<string>DejaVuSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>InconsolataForPowerline-g 14</string>
+			<string>DejaVuSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
