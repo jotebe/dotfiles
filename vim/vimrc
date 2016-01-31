@@ -1,15 +1,11 @@
-" vim: set noexpandtab tabstop=2 shiftwidth=0:
+" vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4:
 
-set nocompatible
-
-" Plugin Load {
+let g:pathogen_disabled = ['vim-nodejs-complete']
+" Pathogen Load/Init {
 	filetype off " required by pathogen
 	filetype plugin indent off
-
-  let g:pathogen_disabled = ['vim-nodejs-complete']
 	execute pathogen#infect()
-
-	filetype plugin indent on  " Automatically detect file types. (must turn on after pathogen)
+	filetype plugin indent on " Automatically detect file types. (must turn on after pathogen)
 
 	" clear autocmds, to prevent compounding them when reloading this file
 	autocmd!
@@ -25,17 +21,17 @@ set nocompatible
 	set cursorline " highlight current line
 	set cursorcolumn
 	" toggle cursor highlighting
-	nnoremap <Leader>c :set cursorline!<CR>
+	nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-	set colorcolumn=80,100 " Show lines on 80 and 100 chars
+	set colorcolumn=100 " Show lines on 80 and 100 chars
 
 	set list
-	set listchars=tab:»\ ,trail:·,nbsp:␣
+	set listchars=tab:▸\ ,trail:·,nbsp:␣
 " }
 
 " Colors {
 	set background=dark
-	" colorscheme colorsbox-stbright
+	colorscheme colorsbox-stbright
 " }
 
 " Basic config {
@@ -46,8 +42,8 @@ set nocompatible
 
 	" Absolute line numbers in insert mode, and relative in normal mode
 	set number relativenumber
-	autocmd InsertEnter * :set number norelativenumber
-	autocmd InsertLeave * :set number relativenumber
+	autocmd InsertEnter * set number norelativenumber
+	autocmd InsertLeave * set number relativenumber
 
 	set encoding=utf-8
 	set clipboard=unnamed
@@ -57,10 +53,10 @@ set nocompatible
 " }
 
 " Whitespace {
-	set tabstop=2
-	set shiftwidth=2
-	set softtabstop=2
-	set expandtab
+	set tabstop=4
+	set shiftwidth=4
+	set softtabstop=4
+	set noexpandtab
 	set smartindent
 
 	" remove trailing whitespace on save
@@ -72,6 +68,7 @@ set nocompatible
 	set incsearch
 	set ignorecase
 	set smartcase
+	set magic
 	nnoremap N Nzz
 	nnoremap n nzz
 
@@ -92,7 +89,7 @@ set wildmode=list:longest,list:full
 
 " Ignored filetypes/directories
 set wildignore+=*.o,*.obj,*.rbc,*.class,*.sassc,*.scssc,*.png,*.jpg,*.pdf,*.zip,*.gz
-set wildignore+=tmp/*,log/*,public/assets/*,public/uploads/*
+set wildignore+=log/*,public/assets/*,public/uploads/*
 set wildignore+=vendor/bundler/*,vendor/bundle/*,vendor/gems/*
 set wildignore+=**/coverage
 set wildignore+=*.orig,.git,.svn
@@ -102,29 +99,29 @@ set wildignore+=db/sphinx/*
 set laststatus=2
 
 " Windows {
-	set winwidth=84
+	set winwidth=103
 	set noequalalways
 " }
 
-" autosave
-" au FocusLost * silent! wa
-" au BufLeave * silent! wa
-" set autowrite
+" autosave {
+	" autocmd FocusLost * silent! wa
+	" autocmd BufLeave * silent! wa
+	" set autowrite
+" }
 
 " Wrapping {
 	set wrap linebreak " soft-wrap
-	" set cpoptions+=v
-	let &showbreak="___ " " wrapped-line indicator
+	let &showbreak="◣ " " soft-wrapped-line indicator
+	set textwidth=0 " disable auto wrapping
 
-	set textwidth=0 " wrap things at 80 chars
-
+	set formatoptions+=j " remove comment leader in between joined lines
 	set formatoptions+=l " don't break long lines in insert mode
+	set formatoptions+=n " recognize numbered lists and use for autoindent
+	set formatoptions+=o " insert comment leader on 'o' or 'O'
+	set formatoptions+=q " allow formatting comments with 'gq'
+
 	set formatoptions-=c " don't auto-wrap comments
 	set formatoptions-=r " don't insert comment leader after <Enter> in insert mode
-	set formatoptions+=o " insert comment leader on 'o' or 'O'
-	set formatoptions+=j " remove comment leader in between joined lines
-	set formatoptions+=n " recognize numbered lists and use for autoindent
-	set formatoptions+=q " allow formatting comments with 'gq'
 	set formatoptions-=t " don't use textwidth to auto-wrap text
 " }
 
@@ -135,19 +132,14 @@ set backspace=indent,eol,start
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-" When a bracket is inserted, briefly jump to the matching one.  The
-" jump is only done if the match can be seen on the screen.  The time to
-" show the match can be set with 'matchtime'.
+" When a bracket is inserted, briefly jump to the matching one. The jump is only done if the match can be seen on the screen. The time to show the match can be set with 'matchtime'.
 set showmatch
 
 " Exit insert mode by mashing j and k
-inoremap kj <esc>
+" inoremap kj <esc>
 
-" Save with leader-W
-nmap <leader>w :w<cr>
-
+nmap <leader>w :wa!<cr>
 nmap <leader>E :Explore<cr>
-
 nmap <leader>o :!open "%"<cr><cr>
 
 " Disable F1 for help
@@ -162,7 +154,7 @@ map <F1> <nop>
 		let g:ctrlp_custom_ignore = {
 			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
 			\ 'file': '\.exe$\|\.so$\|\.dat$'
-			\ }
+		\ }
 	" }
 
 	" Syntastic {
@@ -207,38 +199,34 @@ map <F1> <nop>
 		nmap <leader>gc :Gcommit<CR>
 	" }
 
-	" Rails.vim {
-		" Go to alternate file
-		nnoremap <leader>a :A<CR>
-	" }
-
 	" Ruby {
+	augroup Ruby
 		" Alternate between do; end and { } blocks in ruby
 		let g:blockle_mapping = '<Leader>{'
+		autocmd!
 		autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 		autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 		autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 		autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 		autocmd FileType ruby,eruby set expandtab shiftwidth=2 tabstop=2 softtabstop=2
-	" }
+	augroup END
 
-	" Dash.vim {
+	" Dash {
 		nmap <silent> <leader>d <Plug>DashSearch
 		vmap <silent> <leader>d "dy:Dash <C-R>d<CR>
 	" }
 
-	" Coffeescript {
 	augroup CoffeeScript
-		au!
+		autocmd!
 		map <leader>C :CoffeeCompile vert<CR>
 		vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
-		au BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
+		autocmd BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
 	augroup END
 
 	" Go {
 		let g:go_bin_path = expand("$GOPATH/bin")
 	" }
-	"
+
 	" JavaScript {
 		let g:javascript_conceal_function = "ƒ"
 		let g:javascript_conceal_null = "ø"
@@ -250,14 +238,15 @@ map <F1> <nop>
 		let g:javascript_conceal_static = "•"
 		let g:javascript_conceal_super = "Ω"
 
-    au FileType javascript noremap <Leader>f :call FormatBuffer()<cr>
+		autocmd FileType javascript noremap <Leader>f :call FormatBuffer()<cr>
+
 		let g:dash_map = {
-        \ 'javascript' : 'nodejs'
-			\ }
+			\ 'javascript' : 'nodejs'
+		\ }
 
 	" }
 	" Shell {
-		au FileType sh set noexpandtab softtabstop=2 tabstop=2 shiftwidth=2
+		autocmd FileType sh set noexpandtab
 	" }
 	"
 " }
@@ -267,45 +256,48 @@ map <F1> <nop>
 	" map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 	" map <C-\> :tnext<CR>
 
-	" au BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
-	" au BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
-	" au BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+	" autocmd BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+	" autocmd BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
+	" autocmd BufWritePost *.js silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 " }
 
 " Filetypes {
 	augroup filetypedetect
-		" au!
-		au BufRead,BufNewFile *_spec.rb set filetype=rspec.ruby
-		au BufNewFile,BufReadPost *.md set filetype=markdown
-		" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-		au BufRead,BufNewFile {Capfile,Guardfile,Gemfile,Rakefile,Vagrantfile,Vagrantfile.*,Thorfile,config.ru} set ft=ruby
+		autocmd BufRead,BufNewFile *_spec.rb set filetype=rspec.ruby
+		autocmd BufRead,BufNewFile Capfile set filetype=ruby
+		autocmd BufRead,BufNewFile Gemfile set filetype=ruby
+		autocmd BufRead,BufNewFile Guardfile set filetype=ruby
+		autocmd BufRead,BufNewFile Rakefile set filetype=ruby
+		autocmd BufRead,BufNewFile Vagrantfile* set filetype=ruby
+		autocmd BufRead,BufNewFile Thorfile set filetype=ruby
+		autocmd BufRead,BufNewFile config.ru set filetype=ruby
 
-		" Nginx config
-		au BufRead,BufNewFile *.conf set ft=nginx
+		autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+		autocmd BufRead,BufNewFile *.conf set filetype=nginx
 
 		" AWS CloudFormation Templates
-		au BufRead,BufNewFile *.template set ft=json
+		autocmd BufRead,BufNewFile *.template set filetype=json
 
-		" Force hamlc templates to syntax highlight (ghetto)
-		au BufRead,BufNewFile *.hamlc set ft=haml
+		autocmd BufRead,BufNewFile *.hamlc set filetype=haml
 
-		au BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
+		autocmd BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
 	augroup END
 
 	augroup vimrc
-		au!
-		au BufReadPre * setlocal foldmethod=indent
+		autocmd!
+		autocmd BufReadPre * setlocal foldmethod=indent noexpandtab
 	augroup END
 
 	" Autoreload when .vimrc files change
 	augroup myvimrc
-		au!
-		au BufWritePost .vimrc,_vimrc,vimrc so $MYVIMRC
+		autocmd!
+		autocmd BufWritePost .vimrc,vimrc source $MYVIMRC
 	augroup END
 " }
 
 " Fully unfold each file upon opening
-au BufRead,BufNewFile * normal zR
+autocmd BufRead,BufNewFile * normal zR
 
 " Ack for the current word
 nmap <Leader>A :Ack -w <C-r><C-w>
@@ -316,7 +308,6 @@ nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
 vmap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
 
 nmap <Leader>e :edit %%
-
 
 " Add extra block object mods (eg ci/ ) {
 	let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]
@@ -341,15 +332,8 @@ nmap <Leader>e :edit %%
 " }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vimux
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open vimux on the side
-let g:VimuxOrientation = "h"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 map <Leader>ra :call RunTestsSuite()<CR>
 map <Leader>rf :call RunTestsFile()<CR>
 map <Leader>rs :call RunTestsFileLine()<CR>
@@ -360,11 +344,11 @@ function! RunTestsSuite()
 endfunction
 
 function! RunTestsFile()
-		call RunTests("run-tests file " . @%)
+	call RunTests("run-tests file " . @%)
 endfunction
 
 function! RunTestsFileLine()
-		call RunTests("run-tests file " . @% . ":" . line("."))
+	call RunTests("run-tests file " . @% . ":" . line("."))
 endfunction
 
 function! RunTestsAgain()
@@ -379,46 +363,13 @@ function! RunTests(command)
 endfunction
 
 function! s:RubyChangeHashSyntax(line1,line2)
-		let l:save_cursor = getpos(".")
-		silent! execute ':' . a:line1 . ',' . a:line2 . 's/\v:([a-z0-9_]+)\s*\=\>\s*/\1: /g'
-		call setpos('.', l:save_cursor)
+	let l:save_cursor = getpos(".")
+	silent! execute ':' . a:line1 . ',' . a:line2 . 's/\v:([a-z0-9_]+)\s*\=\>\s*/\1: /g'
+	call setpos('.', l:save_cursor)
 endfunction
 
 command! -range=% RubyChangeHashSyntax call <SID>RubyChangeHashSyntax(<line1>,<line2>)
 noremap <leader>rh :RubyChangeHashSyntax<cr>
-
-command! -nargs=0 -bar Qargs execute 'args ' . s:QuickfixFilenames()
-
-" Contributed by "ib."
-" http://stackoverflow.com/questions/5686206/search-replace-using-quickfix-list-in-vim#comment8286582_5686810
-command! -nargs=1 -complete=command -bang Qdo call s:Qdo(<q-bang>, <q-args>)
-
-function! s:Qdo(bang, command)
-	if exists('w:quickfix_title')
-		let in_quickfix_window = 1
-		cclose
-	else
-		let in_quickfix_window = 0
-	endif
-
-	arglocal
-	exe 'args '.s:QuickfixFilenames()
-	exe 'argdo'.a:bang.' '.a:command
-	argglobal
-
-	if in_quickfix_window
-		copen
-	endif
-endfunction
-
-function! s:QuickfixFilenames()
-	" Building a hash ensures we get each buffer only once
-	let buffer_numbers = {}
-	for quickfix_item in getqflist()
-		let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-	endfor
-	return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
-endfunction
 
 function! FixTrailingWhitespace()
 	let l:winview = winsaveview()
@@ -446,7 +397,7 @@ function! FormatBuffer()
 	let &foldenable = 0
 
 	try
-    %! js-beautify -f -
+		%! js-beautify -f -
 	catch
 	endtry
 
