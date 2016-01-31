@@ -157,3 +157,9 @@
 [submodule "vim/bundle/auto-git-diff"]
 	path = vim/bundle/auto-git-diff
 	url = https://github.com/hotwatermorning/auto-git-diff.git
+[submodule "vim/bundle/tmux"]
+	path = vim/bundle/tmux
+	url = https://github.com/keith/tmux.vim.git
+[submodule "vim/bundle/molokai"]
+	path = vim/bundle/molokai
+	url = https://github.com/tomasr/molokai.git
