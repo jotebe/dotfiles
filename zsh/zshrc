@@ -116,6 +116,10 @@ function json-preview-url {
 	curl -fsSL "$1" | jq -C . | less -R
 }
 
+function dot {
+	docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
+}
+
 ########################################################################
 # vi-mode (based on oh-my-zsh plugin)
 ########################################################################

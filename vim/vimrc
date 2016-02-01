@@ -313,8 +313,9 @@ map <F1> <nop>
 autocmd BufRead,BufNewFile * normal zR
 
 " Ack for the current word
-nmap <Leader>A :Ack -w <C-r><C-w>
 vmap <Leader>A "dy:Ack <C-r>d
+nmap <Leader>AA 0v$h"dy:Ack -Q '<C-r>d'
+vmap <Leader>A "dy:Ack -Q '<C-r>d'
 
 " replace the current word in the buffer
 nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
