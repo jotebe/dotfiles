@@ -40,3 +40,6 @@ atlassian-ide-plugin.xml
 scratch
 
 .node-history
+
+# vim plugin helptags
+doc/tags
