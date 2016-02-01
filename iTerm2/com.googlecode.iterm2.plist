@@ -460,7 +460,7 @@
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>-2050 1547 1266 1169 -2050 1050 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1291 1071 514 465 958 1050 1920 1177 </string>
+	<string>-1459 1050 810 729 -2050 1050 3008 1692 </string>
 	<key>NeverWarnAboutMeta</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_CB40A71D-9904-4655-9044-38BBBF39204F</key>
@@ -687,7 +687,7 @@
 			<key>Blink Allowed</key>
 			<true/>
 			<key>Blinking Cursor</key>
-			<true/>
+			<false/>
 			<key>Blur</key>
 			<false/>
 			<key>Blur Radius</key>
@@ -1273,7 +1273,7 @@
 			<key>Use Canonical Parser</key>
 			<false/>
 			<key>Use HFS Plus Mapping</key>
-			<false/>
+			<true/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -2098,7 +2098,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-01-30T23:24:30Z</date>
+	<date>2016-01-31T23:24:31Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
