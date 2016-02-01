@@ -1,6 +1,10 @@
 " vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4:
 
-let g:pathogen_disabled = ['vim-nodejs-complete']
+let g:pathogen_disabled = [
+	\'vim-nodejs-complete',
+	\'airline'
+\]
+
 " Pathogen Load/Init {
 	filetype off " required by pathogen
 	filetype plugin indent off
@@ -31,7 +35,8 @@ let g:pathogen_disabled = ['vim-nodejs-complete']
 
 " Colors {
 	set background=dark
-	colorscheme colorsbox-stbright
+	colorscheme Tomorrow-Night
+	let g:airline_theme='tomorrow'
 " }
 
 " Basic config {
