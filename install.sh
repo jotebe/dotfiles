@@ -4,6 +4,8 @@ set -e -u
 
 [[ ${DOTFILES_PATH:-} ]] || export DOTFILES_PATH="$HOME/.dotfiles"
 
+cd "${DOTFILES_PATH}"
+
 git submodule update --init --recursive
 
 echo -e "\n[ link.sh ]\n"
