@@ -1,6 +1,6 @@
 [submodule "zsh/prezto"]
 	path = zsh/prezto
-	url = git@github.com:rtlong/prezto.git
+	url = https://github.com/rtlong/prezto.git
 [submodule "vim/bundle/Dockerfile.vim"]
 	path = vim/bundle/Dockerfile.vim
 	url = https://github.com/ekalinin/Dockerfile.vim.git
