@@ -90,6 +90,7 @@ create_link 'ruby/pryrc' '.pryrc'
 
 create_link 'tmux/tmux.conf' '.tmux.conf'
 create_link 'ackrc' '.ackrc'
+create_link 'ctags' '.ctags'
 
 create_link 'zsh/prezto' '.zprezto'
 create_link 'zsh/prezto/runcoms/zlogin' '.zlogin'
