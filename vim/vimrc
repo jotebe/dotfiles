@@ -86,8 +86,8 @@ vnoremap > >gv
 vnoremap < <gv
 
 " move the current line up and down
-nnoremap <C-J> :m+<CR>==
-nnoremap <C-K> :m-2<CR>==
+nnoremap <C-J> ddp==zo
+nnoremap <C-K> ddkP==zo
 
 " Tab completion
 set wildmode=list:longest,list:full
