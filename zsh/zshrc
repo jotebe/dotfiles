@@ -156,28 +156,22 @@ function json-preview-url {
 # 	zle -N zle-keymap-select
 # fi
 
-# use Vi-style keys
-bindkey -v
-bindkey -v 'kj' vi-cmd-mode
+# bindings {
+	# use Vi-style keys
+	bindkey -v
 
-# bindings
+	# move through history
+	bindkey -a 'gg' beginning-of-buffer-or-history
+	bindkey -a 'g~' vi-oper-swap-case
+	bindkey -a G end-of-buffer-or-history
 
-# move through history
-bindkey -a 'gg' beginning-of-buffer-or-history
-bindkey -a 'g~' vi-oper-swap-case
-bindkey -a G end-of-buffer-or-history
+	# search history ('f'ind)
+	bindkey "^F" history-incremental-search-backward
 
-# search history ('f'ind)
-bindkey "^F" history-incremental-search-backward
-
-# undo/redo
-bindkey -a u undo
-bindkey -a '^r' redo
-# bindkey '^?' backward-delete-char
-# bindkey '^H' backward-delete-char
-
-# get cursor position (like vi)
-bindkey '^g' what-cursor-position
+	# undo/redo
+	bindkey -a u undo
+	bindkey -a '^r' redo
+# }
 
 [[ -f $HOME/.profile ]] && source $HOME/.profile
 
