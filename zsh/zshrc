@@ -1,0 +1,198 @@
+# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4 filetype=zsh:
+
+# Executes commands at the start of an interactive session.
+[[ $_zsh_trace ]] && echo ">> zshrc"
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+function can_exec {
+	command -v $1 2>&1 >/dev/null
+}
+
+alias ll='ls -laF'
+alias gopath='cd $(go env GOPATH)'
+alias goroot='cd $(go env GOROOT)'
+alias goproj='gopath; cd src/github.com/rtlong/'
+alias watch-rails-log='tail -f log/development.log'
+alias reload='source ~/.zshrc'
+can_exec hub && alias git='hub'
+alias ssh-coreos-forward-ports='ssh -L 8182:localhost:8182 -L 2379:localhost:2379 -l core -o "IdentitiesOnly no"'
+alias gg='cd ${CODE_WORKSPACE_GOODGUIDE:-$CODE_WORKSPACE_ROOT}'
+alias ggdep='gg; cd goodguide-deploy'
+alias ggpass='gg; cd shared-credentials'
+
+if can_exec caffeinate; then
+	# prevent OSX system sleep during active SSH connections
+	function ssh {
+		caffeinate -i ssh "$@"
+	}
+fi
+
+function cd-to-gem-source {
+	cd `bundle show $1`
+}
+
+function status-update {
+	slackline -c '#status' $@
+}
+
+function source-env {
+	[ -f env.sh ] && source env.sh
+}
+
+function set-window-title {
+	local title="${1:-$(basename "$PWD")}"
+	command tmux rename-window "$title"
+}
+function set-pane-title {
+	local title="${1:-$(basename "$PWD")}"
+	printf '\033]2;%s\033\\' "$title"
+}
+
+function set-iterm-tab-title {
+	printf '\033]0;%s\007' "$1"
+}
+
+function choose-code-project {
+	if ! can_exec pick; then
+		echo "WARN: Can't find 'pick' command" >&2
+		return 1
+	fi
+	cd "$CODE_WORKSPACE_ROOT"
+	find . -regextype posix-egrep -maxdepth 4 \( -type d -or -type l \) \( -not -iregex '.+\/\.git(\/.*)?$' \) | pick
+}
+
+function cdp {
+	cd "${CODE_WORKSPACE_ROOT}/$(choose-code-project)"
+	set-window-title
+	set-pane-title
+}
+
+function bridgefog-mode {
+	tmux-named-session bridgefog "${CODE_WORKSPACE_BRIDGEFOG:-$CODE_WORKSPACE_ROOT}"
+}
+
+function gg-mode {
+	tmux-named-session GG "${CODE_WORKSPACE_GOODGUIDE:-$CODE_WORKSPACE_ROOT}"
+}
+
+function tmux-named-session {
+	TMUX='' tmux new-session -d -s $1 -c $2 #2>/dev/null
+	if [[ -n $TMUX ]]; then
+		command tmux switch-client -t $1
+	else
+		command tmux attach -t $1
+	fi
+}
+
+# wrap tmux command on OSX to ensure tmux has access to clipboard
+if [[ $(uname -o) = 'Darwin' && ! ${TMUX:-} ]]; then
+	function tmux {
+		reattach-to-user-namespace tmux "$@"
+	}
+fi
+
+function newd {
+	mkdir -p "$1" && cd "$1" && set-window-title
+}
+
+function node_depcheck {
+	ack '(?:import .+ from |require\()['"'"'"]([a-zA-Z][^/]+).*['"'"'"]\)?' --nogroup -h --output '$1' \
+		^node_modules/ *.js \
+		| sort | uniq >! /tmp/deps_used
+	jq -r '.dependencies + .devDependencies | keys | .[]' < package.json \
+		| sort >! /tmp/deps_defined
+	command comm -1 -3 /tmp/deps_{used,defined}
+}
+
+function docker-inspect {
+	docker inspect "$1" | jq -r ".[0] ${2:+| $2}"
+}
+
+function json-preview-url {
+	curl -fsSL "$1" | jq -C . | less -R
+}
+
+########################################################################
+# vi-mode (based on oh-my-zsh plugin)
+########################################################################
+# function change-cursor-shape () {
+# 	local n=0 # block
+
+# 	if [[ -n $TMUX ]]; then
+# 		[[ $1 == line ]] && n=3
+# 		printf -- "\e[%s q" $n
+# 	else
+# 		[[ $1 == line ]] && n=1
+# 		printf -- "\e]50;CursorShape=%s\x7" $n
+# 	fi
+# }
+
+# if [ -z ${INSIDE_EMACS} ]; then
+# 	function zle-keymap-select zle-line-init {
+# 		# change cursor shape in iterm2
+# 		case $keymap in
+# 			vicmd)
+# 				change-cursor-shape block
+# 				;;
+# 			viins|main)
+# 				change-cursor-shape line
+# 				;;
+# 		esac
+
+# 		# zle reset-prompt
+# 		zle -r
+# 	}
+
+# 	function zle-line-finish {
+# 		change-cursor-shape block
+# 	}
+
+# 	zle -N zle-line-init
+# 	zle -N zle-line-finish
+# 	zle -N zle-keymap-select
+# fi
+
+# use Vi-style keys
+bindkey -v
+bindkey -v 'kj' vi-cmd-mode
+
+# bindings
+
+# move through history
+bindkey -a 'gg' beginning-of-buffer-or-history
+bindkey -a 'g~' vi-oper-swap-case
+bindkey -a G end-of-buffer-or-history
+
+# search history ('f'ind)
+bindkey "^F" history-incremental-search-backward
+
+# undo/redo
+bindkey -a u undo
+bindkey -a '^r' redo
+# bindkey '^?' backward-delete-char
+# bindkey '^H' backward-delete-char
+
+# get cursor position (like vi)
+bindkey '^g' what-cursor-position
+
+[[ -f $HOME/.profile ]] && source $HOME/.profile
+
+if command -v direnv >/dev/null 2>&1; then
+	eval "$(direnv hook zsh)"
+fi
+
+export NVM_DIR="${NVM_DIR:-"$HOME/.nvm"}"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+	source "$NVM_DIR/nvm.sh"
+else
+	unset NVM_DIR
+fi
+
+# set the tmux pane title to the basename of the working directory as a default
+set-pane-title
+
+[[ $_zsh_trace ]] && echo "<< zshrc" || :

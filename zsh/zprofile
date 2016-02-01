@@ -1,0 +1,62 @@
+# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4 filetype=zsh:
+
+[[ $_zsh_trace ]] && echo ">> zprofile" || :
+
+if [[ "$OSTYPE" == darwin* ]]; then
+	export BROWSER='open'
+fi
+
+export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='less'
+
+if [[ -z "$LANG" ]]; then
+	export LANG='en_US.UTF-8'
+fi
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the the list of directories that cd searches.
+# cdpath=(
+# 	$cdpath
+# )
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+	$HOME/.bin
+	$HOME/.local/bin
+	$HOME/node_modules/.bin
+	$HOME/.local/go/bin
+	${GOPATH}/bin
+	$path
+	/usr/local/sbin
+)
+
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X and -F (exit if the content fits on one screen) to enable it.
+export LESS='-F -g -i -M -R -w -X -z-4'
+
+# Set the Less input preprocessor.
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if (( $#commands[(i)lesspipe(|.sh)] )); then
+	export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+if [ -e /.dockerinit ] || [ -n "$TMUX" ]; then
+	export TERM="screen-256color"
+else
+	export TERM="xterm-256color"
+fi
+
+if [[ -z ${SSH_CLIENT} ]]; then
+	# export GPG_TTY=$(tty)
+	gpgconf --launch gpg-agent
+	export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+
+	# Add all SSH-keys stored in OSX Keychain to the agent
+	ssh-add -A >/dev/null 2>&1
+fi
+
+[[ $_zsh_trace ]] && echo "<< zprofile" || :

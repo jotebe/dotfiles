@@ -1,0 +1,13 @@
+# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4 filetype=zsh:
+[[ $_zsh_trace ]] && echo ">> zshenv"
+
+# Ensure that a non-login, non-interactive shell has a defined environment.
+if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+	source "${ZDOTDIR:-$HOME}/.zprofile"
+fi
+
+[[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
+
+export CODE_WORKSPACE_ROOT=${CODE_WORKSPACE_ROOT:-$HOME/Code}
+
+[[ $_zsh_trace ]] && echo "<< zshenv"
