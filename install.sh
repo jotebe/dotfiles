@@ -6,7 +6,7 @@ set -e -u
 
 cd "${DOTFILES_PATH}"
 
-git submodule update --init --recursive
+# git submodule update --init --recursive
 
 echo -e "\n[ link.sh ]\n"
 ./link.sh
