@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ $(uname) = 'Darwin' ]]; then
+	sysctl -n vm.loadavg | awk '{ print $2 " " $3 " " $4 }'
+elif [[ $(uname) = 'Linux' ]]; then
+	cat /proc/loadavg | awk '{ print $1 " " $2 " " $3 }'
+else
+	echo '??'
+	exit 1
+fi
