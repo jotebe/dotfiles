@@ -172,3 +172,12 @@
 [submodule "fonts/powerline"]
 	path = fonts/powerline
 	url = https://github.com/powerline/fonts.git
+[submodule "vim/bundle/airline-themes"]
+	path = vim/bundle/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "vim/bundle/colorschemes"]
+	path = vim/bundle/colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "vim/bundle/unite"]
+	path = vim/bundle/unite
+	url = https://github.com/Shougo/unite.vim.git
