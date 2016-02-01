@@ -2,13 +2,16 @@
 
 let g:pathogen_disabled = [
 	\'vim-nodejs-complete',
-	\'airline'
+	\'airline',
+	\'yankring',
+	\'ctrl-p',
 \]
 
 " Pathogen Load/Init {
 	filetype off " required by pathogen
 	filetype plugin indent off
 	execute pathogen#infect()
+	Helptags
 	filetype plugin indent on " Automatically detect file types. (must turn on after pathogen)
 
 	" clear autocmds, to prevent compounding them when reloading this file
@@ -25,7 +28,7 @@ let g:pathogen_disabled = [
 	set cursorline " highlight current line
 	set cursorcolumn
 	" toggle cursor highlighting
-	nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+	" nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 	set colorcolumn=100 " Show lines on 80 and 100 chars
 
@@ -145,21 +148,29 @@ set showmatch
 
 nmap <leader>w :wa!<cr>
 nmap <leader>E :Explore<cr>
-nmap <leader>o :!open "%"<cr><cr>
+nmap <leader>O :!open "%"<cr><cr>
 
 " Disable F1 for help
 map <F1> <nop>
 
 " Plugin configs {
 	" CTRL-P {
-		let g:ctrlp_map = '<leader>t'
-		let g:ctrlp_working_path_mode = 0 "'ra'
-		" let g:ctrlp_root_markers += 'package.json'
-		let g:ctrlp_max_files = 10000
-		let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
-			\ 'file': '\.exe$\|\.so$\|\.dat$'
-		\ }
+		" let g:ctrlp_map = '<leader>t'
+		" let g:ctrlp_working_path_mode = 0 "'ra'
+		" " let g:ctrlp_root_markers += 'package.json'
+		" let g:ctrlp_max_files = 10000
+		" let g:ctrlp_custom_ignore = {
+		" 	\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
+		" 	\ 'file': '\.exe$\|\.so$\|\.dat$'
+		" \ }
+	" }
+	" Unite {
+		let g:unite_source_history_yank_enable = 1
+		call unite#filters#matcher_default#use(['matcher_fuzzy'])
+		nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+		nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+		nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+		nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 	" }
 
 	" Syntastic {
@@ -192,8 +203,8 @@ map <F1> <nop>
 
 	" YankRing {
 		" Open Show yank ring buffer
-		nnoremap <Leader>y :YRShow<CR>
-		let g:yankring_history_dir = expand('$HOME').'/.vim'
+		" nnoremap <Leader>y :YRShow<CR>
+		" let g:yankring_history_dir = expand('$HOME').'/.vim'
 	" }
 
 	" Commentary {
@@ -222,8 +233,8 @@ map <F1> <nop>
 	augroup END
 
 	" Dash {
-		nmap <silent> <leader>d <Plug>DashSearch
-		vmap <silent> <leader>d "dy:Dash <C-R>d<CR>
+		nmap <silent> <leader>D <Plug>DashSearch
+		vmap <silent> <leader>D "dy:Dash <C-R>d<CR>
 	" }
 
 	augroup CoffeeScript
@@ -248,7 +259,7 @@ map <F1> <nop>
 		let g:javascript_conceal_static = "•"
 		let g:javascript_conceal_super = "Ω"
 
-		autocmd FileType javascript noremap <Leader>f :call FormatBuffer()<cr>
+		autocmd FileType javascript noremap <Leader>F :call FormatBuffer()<cr>
 
 		let g:dash_map = {
 			\ 'javascript' : 'nodejs'
@@ -321,7 +332,7 @@ vmap <Leader>A "dy:Ack -Q '<C-r>d'
 nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
 vmap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
 
-nmap <Leader>e :edit %%
+" nmap <Leader>e :edit %%
 
 " Add extra block object mods (eg ci/ ) {
 	let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]

@@ -9,3 +9,10 @@ if [[ -d vim/bundle/ctrlp-cmatcher ]]; then
 		./install.sh
 	)
 fi
+if [[ -d vim/bundle/vimproc ]]; then
+	echo "[ building vimproc ]"
+	(
+		cd vim/bundle/vimproc
+		make
+	)
+fi
