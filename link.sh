@@ -94,7 +94,7 @@ create_link 'ackrc' '.ackrc'
 create_link 'agignore' '.agignore'
 create_link 'ctags' '.ctags'
 create_link 'dir_colors' '.dir_colors'
-create_link 'htoprc' '.htoprc'
+copy_if_missing 'htoprc' '.htoprc'
 create_link 'tmux/tmux.conf' '.tmux.conf'
 
 create_link 'zsh/prezto/' '.zprezto'
