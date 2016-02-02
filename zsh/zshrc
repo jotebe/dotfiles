@@ -89,7 +89,7 @@ function tmux-named-session {
 }
 
 # wrap tmux command on OSX to ensure tmux has access to clipboard
-if [[ $(uname -o) = 'Darwin' && ! ${TMUX:-} ]]; then
+if [[ $(uname) = 'Darwin' && ! ${TMUX:-} ]]; then
 	function tmux {
 		reattach-to-user-namespace tmux "$@"
 	}

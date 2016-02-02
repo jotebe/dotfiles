@@ -122,7 +122,9 @@ set laststatus=2
 	let &showbreak="◣ " " soft-wrapped-line indicator
 	set textwidth=0 " disable auto wrapping
 
-	set formatoptions+=j " remove comment leader in between joined lines
+	if v:version >= 704
+		set formatoptions+=j " remove comment leader in between joined lines
+	endif
 	set formatoptions+=l " don't break long lines in insert mode
 	set formatoptions+=n " recognize numbered lists and use for autoindent
 	set formatoptions+=o " insert comment leader on 'o' or 'O'
@@ -164,6 +166,7 @@ map <F1> <nop>
 		" 	\ 'file': '\.exe$\|\.so$\|\.dat$'
 		" \ }
 	" }
+	"
 	" Unite {
 		let g:unite_source_history_yank_enable = 1
 		call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -273,6 +276,22 @@ map <F1> <nop>
 	" Tmux.conf {
 		autocmd FileType tmux set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 	" }
+
+	" Ack.vim {
+		if executable('ag')
+			let g:ackprg = 'ag --vimgrep'
+		endif
+		let g:ackhighlight = 1
+		" let g:ackpreview = 0
+		let g:ack_mappings = {
+			\"o": "<CR>zz",
+			\"go": "<CR>zz<C-W>j",
+		\}
+
+		nmap <Leader>A :Ack! -w <C-r><C-w>
+		nmap <Leader>AA 0v$h"dy:Ack! -Q '<C-r>d'
+		vmap <Leader>A "dy:Ack! -Q '<C-r>d'
+	" }
 " }
 
 " CTags {
@@ -323,10 +342,6 @@ map <F1> <nop>
 " Fully unfold each file upon opening
 autocmd BufRead,BufNewFile * normal zR
 
-" Ack for the current word
-vmap <Leader>A "dy:Ack <C-r>d
-nmap <Leader>AA 0v$h"dy:Ack -Q '<C-r>d'
-vmap <Leader>A "dy:Ack -Q '<C-r>d'
 
 " replace the current word in the buffer
 nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
