@@ -40,7 +40,8 @@
 	su = submodule update --init
 
 [pretty]
-	custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset %C(blue)%G?%Creset"
+	; custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset %C(blue)%G?%Creset"
+	custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset"
 	json = {\"commit\": \"%H\",\"authorName\": \"%aN\",\"authorEmail\":\"%aE\",\"date\": \"%aI\",\"subject\": \"%s\", \"parents\":\"%P\"}
 
 [log]

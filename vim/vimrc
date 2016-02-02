@@ -210,8 +210,8 @@ noremap <F1> <nop>
 	" }
 
 	" Commentary {
-		nnoremap <leader>/ <plug>CommentaryLine<CR>
-		vnoremap <leader>/ <plug>Commentary<CR>
+		" nnoremap <leader>/ <plug>CommentaryLine<CR>
+		" vnoremap <leader>/ <plug>Commentary<CR>
 	" }
 
 	" Fugitve {
@@ -268,14 +268,6 @@ noremap <F1> <nop>
 		\ }
 	" }
 
-	" Shell {
-		autocmd FileType sh set noexpandtab
-	" }
-
-	" Tmux.conf {
-		autocmd FileType tmux set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-	" }
-
 	" Ack.vim {
 		if executable('ag')
 			let g:ackprg = 'ag --vimgrep'
@@ -324,6 +316,10 @@ noremap <F1> <nop>
 		autocmd BufRead,BufNewFile *.hamlc set filetype=haml
 
 		autocmd BufRead,BufNewFile,BufWritePost *.{scss,sass} set foldmethod=indent foldignore=""
+
+		autocmd FileType sh set noexpandtab
+		autocmd FileType tmux set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
+		autocmd FileType yaml set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	augroup END
 
 	augroup vimrc
@@ -334,7 +330,7 @@ noremap <F1> <nop>
 	" Autoreload when .vimrc files change
 	augroup myvimrc
 		autocmd!
-		" autocmd BufWritePost .vimrc,vimrc source $MYVIMRC
+		autocmd BufWritePost .vimrc,vimrc source $MYVIMRC
 	augroup END
 " }
 
