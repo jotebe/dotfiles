@@ -13,6 +13,7 @@ function can_exec {
 }
 
 alias ll='ls -laF'
+alias dotfiles='cd ${DOTFILES_PATH:-$HOME/.dotfiles}'
 alias gopath='cd $(go env GOPATH)'
 alias goroot='cd $(go env GOROOT)'
 alias goproj='gopath; cd src/github.com/rtlong/'
@@ -33,6 +34,15 @@ fi
 
 function cd-to-gem-source {
 	cd `bundle show $1`
+}
+
+function dotfiles-update {
+	dotfiles
+	git fetch --recurse-submodules=on-demand
+	git stash
+	git merge --ff-only
+	git submodule update --init
+	./install.sh
 }
 
 function status-update {
