@@ -3,8 +3,6 @@
 let g:pathogen_disabled = [
 	\'vim-nodejs-complete',
 	\'airline',
-	\'yankring',
-	\'ctrl-p',
 \]
 
 " Pathogen Load/Init {
@@ -25,8 +23,8 @@ let g:pathogen_disabled = [
 " Looks {
 	set showmode " display the current mode
 
-	set cursorline " highlight current line
-	set cursorcolumn
+	" set cursorline " highlight current line
+	" set cursorcolumn
 	" toggle cursor highlighting
 	" nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
@@ -107,8 +105,9 @@ set wildignore+=db/sphinx/*
 set laststatus=2
 
 " Windows {
-	set winwidth=103
+	set winwidth=84
 	set noequalalways
+	set splitbelow splitright
 " }
 
 " autosave {
@@ -148,32 +147,23 @@ set showmatch
 " Exit insert mode by mashing j and k
 " inoremap kj <esc>
 
-nmap <leader>w :wa!<cr>
-nmap <leader>E :Explore<cr>
-nmap <leader>O :!open "%"<cr><cr>
+nnoremap <leader>w :wa!<cr>
+nnoremap <leader>E :Explore<cr>
+nnoremap <leader>O :!open "%"<cr><cr>
 
 " Disable F1 for help
-map <F1> <nop>
+noremap <F1> <nop>
 
 " Plugin configs {
 	" CTRL-P {
-		" let g:ctrlp_map = '<leader>t'
-		" let g:ctrlp_working_path_mode = 0 "'ra'
-		" " let g:ctrlp_root_markers += 'package.json'
-		" let g:ctrlp_max_files = 10000
-		" let g:ctrlp_custom_ignore = {
-		" 	\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
-		" 	\ 'file': '\.exe$\|\.so$\|\.dat$'
-		" \ }
-	" }
-	"
-	" Unite {
-		let g:unite_source_history_yank_enable = 1
-		call unite#filters#matcher_default#use(['matcher_fuzzy'])
-		nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-		nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-		nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-		nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+		let g:ctrlp_map = '<leader>t'
+		let g:ctrlp_working_path_mode = 0 "'ra'
+		" let g:ctrlp_root_markers += 'package.json'
+		let g:ctrlp_max_files = 10000
+		let g:ctrlp_custom_ignore = {
+			\ 'dir':  '\.git$|vendor\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|log\|tmp\|node_modules\|dist$\|pkg',
+			\ 'file': '\.exe$\|\.so$\|\.dat$'
+		\ }
 	" }
 
 	" Syntastic {
@@ -206,21 +196,21 @@ map <F1> <nop>
 
 	" YankRing {
 		" Open Show yank ring buffer
-		" nnoremap <Leader>y :YRShow<CR>
-		" let g:yankring_history_dir = expand('$HOME').'/.vim'
+		nnoremap <Leader>y :YRShow<CR>
+		let g:yankring_history_dir = expand('$HOME').'/.vim'
 	" }
 
 	" Commentary {
-		nmap <leader>/ <plug>CommentaryLine<CR>
-		vmap <leader>/ <plug>Commentary<CR>
+		nnoremap <leader>/ <plug>CommentaryLine<CR>
+		vnoremap <leader>/ <plug>Commentary<CR>
 	" }
 
 	" Fugitve {
-		nmap <leader>gb :Gblame<CR>
-		nmap <leader>gs :Gstatus<CR>
-		nmap <leader>gd :Gdiff<CR>
-		nmap <leader>gl :Glog<CR>
-		nmap <leader>gc :Gcommit<CR>
+		nnoremap <leader>gb :Gblame<CR>
+		nnoremap <leader>gs :Gstatus<CR>
+		nnoremap <leader>gd :Gdiff<CR>
+		nnoremap <leader>gl :Glog<CR>
+		nnoremap <leader>gc :Gcommit<CR>
 	" }
 
 	" Ruby {
@@ -236,14 +226,14 @@ map <F1> <nop>
 	augroup END
 
 	" Dash {
-		nmap <silent> <leader>D <Plug>DashSearch
-		vmap <silent> <leader>D "dy:Dash <C-R>d<CR>
+		nnoremap <silent> <leader>D <Plug>DashSearch
+		vnoremap <silent> <leader>D "dy:Dash <C-R>d<CR>
 	" }
 
 	augroup CoffeeScript
 		autocmd!
-		map <leader>C :CoffeeCompile vert<CR>
-		vmap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
+		nnoremap <leader>C :CoffeeCompile vert<CR>
+		vnoremap <leader>C <esc>:'<,'>:CoffeeCompile vert<CR>
 		autocmd BufNewFile,BufReadPost,BufWritePost *.coffee set foldmethod=indent
 	augroup END
 
@@ -262,7 +252,7 @@ map <F1> <nop>
 		let g:javascript_conceal_static = "•"
 		let g:javascript_conceal_super = "Ω"
 
-		autocmd FileType javascript noremap <Leader>F :call FormatBuffer()<cr>
+		autocmd FileType javascript nnoremap <Leader>F :call FormatBuffer()<cr>
 
 		let g:dash_map = {
 			\ 'javascript' : 'nodejs'
@@ -288,16 +278,16 @@ map <F1> <nop>
 			\"go": "<CR>zz<C-W>j",
 		\}
 
-		nmap <Leader>A :Ack! -w <C-r><C-w>
-		nmap <Leader>AA 0v$h"dy:Ack! -Q '<C-r>d'
-		vmap <Leader>A "dy:Ack! -Q '<C-r>d'
+		nnoremap <Leader>A :Ack! -w <C-r><C-w>
+		nnoremap <Leader>AA 0v$h"dy:Ack! -Q '<C-r>d'
+		vnoremap <Leader>A "dy:Ack! -Q '<C-r>d'
 	" }
 " }
 
 " CTags {
 	" Retag all files in project
-	" map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
-	" map <C-\> :tnext<CR>
+	" nnoremap <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+	" nnoremap <C-\> :tnext<CR>
 
 	" autocmd BufWritePost *.rb silent! !ctags --extra=+f -R > /dev/null 2>&1 &
 	" autocmd BufWritePost *.coffee silent! !ctags --extra=+f -R > /dev/null 2>&1 &
@@ -335,19 +325,18 @@ map <F1> <nop>
 	" Autoreload when .vimrc files change
 	augroup myvimrc
 		autocmd!
-		autocmd BufWritePost .vimrc,vimrc source $MYVIMRC
+		" autocmd BufWritePost .vimrc,vimrc source $MYVIMRC
 	augroup END
 " }
 
 " Fully unfold each file upon opening
 autocmd BufRead,BufNewFile * normal zR
 
-
 " replace the current word in the buffer
-nmap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
-vmap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
+nnoremap <Leader>r :%s:\V\<<C-r><C-w>\>::gc<Left><Left><Left>
+vnoremap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
 
-" nmap <Leader>e :edit %%
+" nnoremap <Leader>e :edit %%
 
 " Add extra block object mods (eg ci/ ) {
 	let pairs = [ ".", ":", ",", ";", "<bar>", "/", "<bslash>", "*", "( )", "{ }", "< >"]
@@ -374,10 +363,10 @@ vmap <Leader>r "dy:%s:\V<C-r>d::gc<Left><Left><Left>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Leader>ra :call RunTestsSuite()<CR>
-map <Leader>rf :call RunTestsFile()<CR>
-map <Leader>rs :call RunTestsFileLine()<CR>
-map <Leader>rl :call RunTestsAgain()<CR>
+nnoremap <Leader>ra :call RunTestsSuite()<CR>
+nnoremap <Leader>rf :call RunTestsFile()<CR>
+nnoremap <Leader>rs :call RunTestsFileLine()<CR>
+nnoremap <Leader>rl :call RunTestsAgain()<CR>
 
 function! RunTestsSuite()
 	call RunTests("run-tests suite")

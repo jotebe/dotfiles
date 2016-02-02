@@ -41,5 +41,5 @@ scratch
 
 .node-history
 
-# vim plugin helptags
-doc/tags
+# vim plugin helptags or any vim tags files
+tags
