@@ -90,10 +90,12 @@ create_link 'ruby/irbrc' '.irbrc'
 create_link 'ruby/gemrc' '.gemrc'
 create_link 'ruby/pryrc' '.pryrc'
 
-create_link 'tmux/tmux.conf' '.tmux.conf'
 create_link 'ackrc' '.ackrc'
+create_link 'agignore' '.agignore'
 create_link 'ctags' '.ctags'
 create_link 'dir_colors' '.dir_colors'
+create_link 'htoprc' '.htoprc'
+create_link 'tmux/tmux.conf' '.tmux.conf'
 
 create_link 'zsh/prezto/' '.zprezto'
 create_link 'zsh/zlogin' '.zlogin'
