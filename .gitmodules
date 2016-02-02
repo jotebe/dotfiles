@@ -18,7 +18,7 @@
 	url = https://github.com/vim-scripts/blockle.vim.git
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/bundle/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
 [submodule "vim/bundle/dash.vim"]
 	path = vim/bundle/dash.vim
 	url = https://github.com/rizzatti/dash.vim.git
