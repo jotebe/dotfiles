@@ -79,6 +79,8 @@ copy_if_missing(){
 	fi
 }
 
+: ${DOTFILES_PATH:="${HOME}/.dotfiles"}
+
 echo -e "Installing to $HOME from ${DOTFILES_PATH}...\n"
 
 create_link 'git/gitconfig' '.gitconfig'
