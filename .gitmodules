@@ -7,9 +7,6 @@
 [submodule "vim/bundle/IndexedSearch"]
 	path = vim/bundle/IndexedSearch
 	url = https://github.com/vim-scripts/IndexedSearch.git
-[submodule "vim/bundle/Vundle.vim"]
-	path = vim/bundle/Vundle.vim
-	url = https://github.com/gmarik/Vundle.vim.git
 [submodule "vim/bundle/YankRing.vim"]
 	path = vim/bundle/YankRing.vim
 	url = https://github.com/vim-scripts/YankRing.vim.git
@@ -103,9 +100,6 @@
 [submodule "vim/bundle/vim-unimpaired"]
 	path = vim/bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "vim/bundle/vimux"]
-	path = vim/bundle/vimux
-	url = https://github.com/benmills/vimux.git
 [submodule "vim/bundle/vitality.vim"]
 	path = vim/bundle/vitality.vim
 	url = https://github.com/sjl/vitality.vim.git
@@ -175,9 +169,3 @@
 [submodule "vim/bundle/colorschemes"]
 	path = vim/bundle/colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "vim/bundle/unite"]
-	path = vim/bundle/unite
-	url = https://github.com/Shougo/unite.vim.git
-[submodule "vim/bundle/vimproc"]
-	path = vim/bundle/vimproc
-	url = https://github.com/Shougo/vimproc.vim.git
