@@ -13,17 +13,13 @@ function can_exec {
 }
 
 alias ll='ls -laF'
-alias dotfiles='cd ${DOTFILES_PATH:-$HOME/.dotfiles}'
+alias dotfiles='cd ${DOTFILES_PATH}'
 alias gopath='cd $(go env GOPATH)'
 alias goroot='cd $(go env GOROOT)'
 alias goproj='gopath; cd src/github.com/rtlong/'
-alias watch-rails-log='tail -f log/development.log'
-alias reload='source ~/.zshrc'
-can_exec hub && alias git='hub'
+alias reload-zshrc='source ~/.zshrc'
 alias ssh-coreos-forward-ports='ssh -L 8182:localhost:8182 -L 2379:localhost:2379 -l core -o "IdentitiesOnly no"'
-alias gg='cd ${CODE_WORKSPACE_GOODGUIDE:-$CODE_WORKSPACE_ROOT}'
-alias ggdep='gg; cd goodguide-deploy'
-alias ggpass='gg; cd shared-credentials'
+can_exec hub && alias git='hub'
 
 if can_exec caffeinate; then
 	# prevent OSX system sleep during active SSH connections
@@ -32,9 +28,11 @@ if can_exec caffeinate; then
 	}
 fi
 
-function cd-to-gem-source {
-	cd `bundle show $1`
-}
+if can_exec bundle; then
+	function cd-to-gem-source {
+		cd `bundle show $1`
+	}
+fi
 
 function dotfiles-update {
 	dotfiles
@@ -45,38 +43,56 @@ function dotfiles-update {
 	./install.sh
 }
 
-function status-update {
-	slackline -c '#status' $@
-}
+if can_exec slackline; then
+	function status-update {
+		slackline -c '#status' $@
+	}
+fi
 
 function source-env {
-	[ -f env.sh ] && source env.sh
+	[[ -f env.sh ]] && source env.sh
 }
 
 function set-window-title {
+	[[ $TMUX ]] || return
 	local title="${1:-$(basename "$PWD")}"
 	command tmux rename-window "$title"
 }
+alias swt='set-window-title'
+
 function set-pane-title {
+	[[ $TMUX ]] || return
 	local title="${1:-$(basename "$PWD")}"
 	printf '\033]2;%s\033\\' "$title"
 }
+alias spt='set-pane-title'
+
+if [[ $TMUX ]]; then
+	function ssh-fix-auth-sock {
+		[[ -r $SSH_AUTH_SOCK ]] && return
+		eval $(tmux show-environment SSH_AUTH_SOCK | grep SSH_AUTH_SOCK=)
+		[[ -r $SSH_AUTH_SOCK ]] && export SSH_AUTH_SOCK
+	}
+fi
 
 function set-iterm-tab-title {
 	printf '\033]0;%s\007' "$1"
 }
 
+function list-all-code-projects {
+	echo "$DOTFILES_PATH"
+	find "${CODE_WORKSPACE_ROOT}" -maxdepth 6 -name .git -print | sed 's:/.git::'
+}
 function choose-code-project {
 	if ! can_exec pick; then
-		echo "WARN: Can't find 'pick' command" >&2
+		echo "FATAL: Can't find 'pick' command" >&2
 		return 1
 	fi
-	cd "$CODE_WORKSPACE_ROOT"
-	find . -regextype posix-egrep -maxdepth 4 \( -type d -or -type l \) \( -not -iregex '.+\/\.git(\/.*)?$' \) | pick
+	list-all-code-projects | pick
 }
 
 function cdp {
-	cd "${CODE_WORKSPACE_ROOT}/$(choose-code-project)"
+	cd "$(choose-code-project)"
 	set-window-title
 	set-pane-title
 }
@@ -99,7 +115,7 @@ function tmux-named-session {
 }
 
 # wrap tmux command on OSX to ensure tmux has access to clipboard
-if [[ $(uname) = 'Darwin' && ! ${TMUX:-} ]]; then
+if [[ $(uname) = 'Darwin' && -z $TMUX ]]; then
 	function tmux {
 		reattach-to-user-namespace tmux "$@"
 	}
@@ -126,9 +142,11 @@ function json-preview-url {
 	curl -fsSL "$1" | jq -C . | less -R
 }
 
-function dot {
-	docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
-}
+if ! can_exec dot; then
+	function dot {
+		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
+	}
+fi
 
 ########################################################################
 # vi-mode (based on oh-my-zsh plugin)

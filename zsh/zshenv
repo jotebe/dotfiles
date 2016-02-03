@@ -6,6 +6,8 @@ if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
 	source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+[[ ${DOTFILES_PATH:-} ]] || export DOTFILES_PATH="${HOME}/.dotfiles"
+
 [[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
 
 export CODE_WORKSPACE_ROOT=${CODE_WORKSPACE_ROOT:-$HOME/Code}
