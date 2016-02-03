@@ -35,12 +35,14 @@ if can_exec bundle; then
 fi
 
 function dotfiles-update {
-	dotfiles
+	pushd "${DOTFILES_PATH}"
 	git fetch --recurse-submodules=on-demand
 	git stash
 	git merge --ff-only
 	git submodule update --init
+	git stash pop
 	./install.sh
+	popd
 }
 
 if can_exec slackline; then
