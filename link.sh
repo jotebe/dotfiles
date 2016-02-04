@@ -105,6 +105,9 @@ create_link 'zsh/zprofile' '.zprofile'
 create_link 'zsh/zshenv' '.zshenv'
 create_link 'zsh/zshrc' '.zshrc'
 
+create_link 'bash/bashrc' '.bashrc'
+create_link 'bash/bash_profile' '.bash_profile'
+
 create_link 'vim/bundle' '.vim/bundle'
 create_link 'vim/autoload' '.vim/autoload'
 create_link 'vim/spell' '.vim/spell'

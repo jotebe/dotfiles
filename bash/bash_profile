@@ -1,0 +1,6 @@
+# ~/.bash_profile: executed by bash for login shells
+
+# include .bashrc if it exists
+if [ -f "$HOME/.bashrc" ]; then
+	source "$HOME/.bashrc"
+fi

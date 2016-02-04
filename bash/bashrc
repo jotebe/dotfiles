@@ -1,0 +1,57 @@
+# .bashrc: executed by bash for non-login shells AND SSH shells
+
+# if not running interactively, don't do anything
+[[ -z "$PS1" ]] && return
+
+# Include the /bin/ folder from ~/.local, where software may be installed
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+
+# Include alias definitions.
+[[ -f "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
+
+# don't put duplicate lines in the history. don't save lines that begin with space. erase previous duplicate lines oupon adding a line.
+export HISTCONTROL="ignoreboth"
+# save up to 2000 entries
+export HISTSIZE="2000"
+# Bash attempts to save all lines of a multiple-line command in the same history entry. This allows easy re-editing of multi-line commands.
+shopt -s cmdhist
+# Bash attempts spelling correction on directory names during word completion if the directory name initially supplied does not exist.
+shopt -s dirspell
+# the pattern ‘**’ used in a filename expansion context will match a files and zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match
+shopt -s globstar
+# the history list is appended to the file named by the value of the HISTFILE variable when the shell exits, rather than overwriting the file.
+shopt -s histappend
+# Bash matches filenames in a case-insensitive fashion when performing filename expansion.
+shopt -s nocaseglob
+
+# check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# enable programmable completion features (you don't need to enable this, if it's already enabled in /etc/bash.bashrc and /etc/profile sources /etc/bash.bashrc).
+if [[ -f /etc/bash_completion ]]; then
+	source /etc/bash_completion
+fi
+
+if [[ -f $HOME/.bash_completion ]]; then
+	source $HOME/.bash_completion
+fi
+
+if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
+	PS1="\n\[\e[35m\]\u\[\e[0m\]@\[\e[33m\]\h:\[\e[32m\]\w \[\e[31m\]\D{%y-%m-%d %H:%M:%S}\[\e[0m\]\nbash\$ "
+	PS2="bash\$ "
+else
+	PS1="\n\u@\h:\w \D{%y-%m-%d %H:%M:%S}\nbash\$ "
+	PS2="bash\$ "
+fi
+
+# aliases
+alias ll='ls -lFa'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# include .bash_local if it exists
+if [ -f "$HOME/.bash_local" ]; then
+	source "$HOME/.bash_local"
+fi
