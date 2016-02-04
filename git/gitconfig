@@ -15,6 +15,7 @@
 	br = branch
 	c = commit -v
 	ci = commit -v
+	ci-retry = commit -F .git/COMMIT_EDITMSG
 	co = checkout
 	com = checkout master
 	d = diff --word-diff
