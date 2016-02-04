@@ -149,6 +149,7 @@ if ! can_exec dot; then
 		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
 	}
 fi
+
 if ! can_exec tred; then
 	function tred {
 		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 tred "$@"
@@ -161,18 +162,20 @@ if [[ -f ~/.local/lib/jenkins-cli.jar ]]; then
 	}
 fi
 
+NVM_DIR="${NVM_DIR:-"$HOME/.nvm"}"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+	export NVM_DIR
+	function load-nvm {
+		source "$NVM_DIR/nvm.sh"
+	}
+else
+	unset NVM_DIR
+fi
 
 [[ -f $HOME/.profile ]] && source $HOME/.profile
 
 if command -v direnv >/dev/null 2>&1; then
 	eval "$(direnv hook zsh)"
-fi
-
-export NVM_DIR="${NVM_DIR:-"$HOME/.nvm"}"
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-	source "$NVM_DIR/nvm.sh"
-else
-	unset NVM_DIR
 fi
 
 # set the tmux pane title to the basename of the working directory as a default
