@@ -155,6 +155,13 @@ if ! can_exec tred; then
 	}
 fi
 
+if [[ -f ~/.local/lib/jenkins-cli.jar ]]; then
+	function jenkins {
+		java -jar ~/.local/lib/jenkins-cli.jar "$@"
+	}
+fi
+
+
 [[ -f $HOME/.profile ]] && source $HOME/.profile
 
 if command -v direnv >/dev/null 2>&1; then
