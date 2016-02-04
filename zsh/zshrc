@@ -149,6 +149,11 @@ if ! can_exec dot; then
 		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
 	}
 fi
+if ! can_exec tred; then
+	function tred {
+		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 tred "$@"
+	}
+fi
 
 ########################################################################
 # vi-mode (based on oh-my-zsh plugin)

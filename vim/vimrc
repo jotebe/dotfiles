@@ -158,8 +158,9 @@ noremap <F1> <nop>
 	" CTRL-P {
 		let g:ctrlp_map = '<leader>t'
 
-		let g:ctrlp_regexp = 1
-		let g:ctrlp_default_input = '\v'
+		let g:ctrlp_regexp = 0
+		" let g:ctrlp_default_input = '\v'
+		let g:ctrlp_default_input = ''
 
 		let g:ctrlp_working_path_mode = 'ra'
 		let g:ctrlp_reuse_window = 'netrw'
@@ -212,6 +213,10 @@ noremap <F1> <nop>
 	" Commentary {
 		" nnoremap <leader>/ <plug>CommentaryLine<CR>
 		" vnoremap <leader>/ <plug>Commentary<CR>
+
+		nnoremap <Leader>/ <nop>
+		vnoremap <Leader>/ <nop>
+		nnoremap / :/\v
 	" }
 
 	" Fugitve {
