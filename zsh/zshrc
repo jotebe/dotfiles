@@ -155,63 +155,6 @@ if ! can_exec tred; then
 	}
 fi
 
-########################################################################
-# vi-mode (based on oh-my-zsh plugin)
-########################################################################
-# function change-cursor-shape () {
-# 	local n=0 # block
-
-# 	if [[ -n $TMUX ]]; then
-# 		[[ $1 == line ]] && n=3
-# 		printf -- "\e[%s q" $n
-# 	else
-# 		[[ $1 == line ]] && n=1
-# 		printf -- "\e]50;CursorShape=%s\x7" $n
-# 	fi
-# }
-
-# if [ -z ${INSIDE_EMACS} ]; then
-# 	function zle-keymap-select zle-line-init {
-# 		# change cursor shape in iterm2
-# 		case $keymap in
-# 			vicmd)
-# 				change-cursor-shape block
-# 				;;
-# 			viins|main)
-# 				change-cursor-shape line
-# 				;;
-# 		esac
-
-# 		# zle reset-prompt
-# 		zle -r
-# 	}
-
-# 	function zle-line-finish {
-# 		change-cursor-shape block
-# 	}
-
-# 	zle -N zle-line-init
-# 	zle -N zle-line-finish
-# 	zle -N zle-keymap-select
-# fi
-
-# bindings {
-	# use Vi-style keys
-	bindkey -v
-
-	# move through history
-	bindkey -a 'gg' beginning-of-buffer-or-history
-	bindkey -a 'g~' vi-oper-swap-case
-	bindkey -a G end-of-buffer-or-history
-
-	# search history ('f'ind)
-	bindkey "^F" history-incremental-search-backward
-
-	# undo/redo
-	bindkey -a u undo
-	bindkey -a '^r' redo
-# }
-
 [[ -f $HOME/.profile ]] && source $HOME/.profile
 
 if command -v direnv >/dev/null 2>&1; then
