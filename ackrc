@@ -1,6 +1,8 @@
 --type-add=ruby:ext:haml,builder,rake,cucumber
 --type-add=ruby:is:Gemfile,Rakefile
 
+--type-set=dockerfile:match:/^Dockerfile.*/
+
 --type-add=css:ext:sass,scss,less
 
 --type-add=js:ext:coffee
