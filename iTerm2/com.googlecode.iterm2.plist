@@ -1090,9 +1090,9 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>-266 1541 606 456 -2050 1050 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2050 1348 810 729 -2050 1050 3008 1669 </string>
+	<string>0 298 810 729 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-1163 1549 810 729 -2050 1050 3008 1692 </string>
+	<string>351 166 810 729 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>191 129 810 729 0 0 1680 1027 </string>
 	<key>NeverWarnAboutMeta</key>
@@ -1861,19 +1861,6 @@
 			</array>
 			<key>Sync Title</key>
 			<false/>
-			<key>Tab Color</key>
-			<dict>
-				<key>Alpha Component</key>
-				<real>1</real>
-				<key>Blue Component</key>
-				<real>0.2104092538356781</real>
-				<key>Color Space</key>
-				<string>Calibrated</string>
-				<key>Green Component</key>
-				<real>0.19700661301612854</real>
-				<key>Red Component</key>
-				<real>0.56982558965682983</real>
-			</dict>
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
@@ -3535,7 +3522,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-02-02T05:20:15Z</date>
+	<date>2016-02-03T21:27:18Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
