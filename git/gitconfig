@@ -56,7 +56,8 @@
 [commit]
 	gpgSign = true
 
-[gui]
+[stash]
+	showPatch = true
 
 [fetch]
 	recurseSubmodules = yes
