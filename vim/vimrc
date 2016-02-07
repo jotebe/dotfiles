@@ -325,6 +325,7 @@ noremap <F1> <nop>
 		autocmd FileType sh set noexpandtab
 		autocmd FileType tmux set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 		autocmd FileType yaml set expandtab tabstop=2 softtabstop=2 shiftwidth=2
+		autocmd FileType Dockerfile set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	augroup END
 
 	augroup vimrc
