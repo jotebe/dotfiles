@@ -3,6 +3,7 @@
 let g:pathogen_disabled = [
 	\'vim-nodejs-complete',
 	\'airline',
+	\'gitgutter',
 \]
 
 " Pathogen Load/Init {
