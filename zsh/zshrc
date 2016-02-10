@@ -117,13 +117,6 @@ function tmux-named-session {
 	fi
 }
 
-# wrap tmux command on OSX to ensure tmux has access to clipboard
-if [[ $(uname) = 'Darwin' && -z $TMUX ]]; then
-	function tmux {
-		reattach-to-user-namespace tmux "$@"
-	}
-fi
-
 function newd {
 	mkdir -p "$1" && cd "$1" && set-window-title
 }
