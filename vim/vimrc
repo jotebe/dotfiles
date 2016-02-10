@@ -296,9 +296,9 @@ noremap <F1> <nop>
 	nnoremap <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 	nnoremap <C-\> :tnext<CR>
 
-	autocmd BufWritePost *.rb silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
-	autocmd BufWritePost *.coffee silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
-	autocmd BufWritePost *.js silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
+	" autocmd BufWritePost *.rb silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
+	" autocmd BufWritePost *.coffee silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
+	" autocmd BufWritePost *.js silent! !ctags --extra=+f -R > ~/.ctags.log 2>&1 &
 " }
 
 " Filetypes {
