@@ -1,0 +1,10 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("floobits-rtlong-243688"
+ (filename . "~/Code/Work/GoodGuide/platform/.envrc")
+ (front-context-string)
+ (rear-context-string . " Man I'm typing ")
+ (position . 116))
+)
