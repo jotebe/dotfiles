@@ -18,10 +18,16 @@ files_are_identical() {
 }
 
 function create_link() {
-	echo -n "  ~/$2 : "
-	[[ -e "$DOTFILES_PATH/$1" ]] || (echo_red "ERROR: Source does not exist"; exit 1)
-	local destination="$HOME/$2"
-	local target="$DOTFILES_PATH/$1"
+	local target="$DOTFILES_PATH/$1"; shift
+	local destination="$1"; shift
+	
+	if [[ ! $destination =~ '^[~/]' ]]; then
+		destination="$HOME/$destination"
+	fi
+	
+	echo -n "  $destination : "
+	[[ -e "$target" ]] || (echo_red "ERROR: Source does not exist"; exit 1)
+
 	if [[ -h "$destination" ]]; then
 		local current="$(readlink "$destination")"
 		if [[ $current = $target ]]; then
@@ -107,6 +113,10 @@ create_link 'zsh/zshrc' '.zshrc'
 
 create_link 'bash/bashrc' '.bashrc'
 create_link 'bash/bash_profile' '.bash_profile'
+
+create_link 'osx_default_key_binding.dict' '~/Library/KeyBindings/DefaultKeyBinding.dict'
+
+create_link 'emacs.d' '.emacs.d'
 
 create_link 'vim/bundle' '.vim/bundle'
 create_link 'vim/autoload' '.vim/autoload'
