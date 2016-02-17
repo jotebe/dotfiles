@@ -26,11 +26,11 @@ typeset -gU cdpath fpath mailpath path
 path=(
 	$HOME/.bin
 	$HOME/.local/bin
-	$HOME/node_modules/.bin
 	$HOME/.local/go/bin
 	${GOPATH}/bin
-	$path
+	/usr/local/bin
 	/usr/local/sbin
+	$path
 )
 
 # Set the default Less options.
@@ -46,6 +46,8 @@ fi
 
 if [ -e /.dockerinit ] || [ -n "$TMUX" ]; then
 	export TERM="screen-256color"
+elif [[ ${INSIDE_EMACS} ]]; then
+	export TERM='eterm-color'
 else
 	export TERM="xterm-256color"
 fi
