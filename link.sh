@@ -2,12 +2,19 @@
 # vim: set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4:
 set -e -u
 
+function onoes() {
+	local message="$1"; shift
+	local exit_code="${1:1}"; shift
+	echo_red "ERROR: $message"
+	exit "$exit_code"
+}
+
 function echo_red() {
-	echo -e "\x1b[31m$1\x1b[0m"
+	printf "\x1b[31m%s\x1b[0m\n" "$1"
 }
 
 function echo_green() {
-	echo -e "\x1b[32m$1\x1b[0m"
+	printf "\x1b[32m%s\x1b[0m\n" "$1"
 }
 
 files_are_identical() {
@@ -17,16 +24,30 @@ files_are_identical() {
 	[[ $hash_1 == $hash_2 ]]
 }
 
-function create_link() {
-	local target="$DOTFILES_PATH/$1"; shift
+function resolve_source() {
+	local source_path="$1"; shift
+
+	local resolved="${DOTFILES_PATH}/${source_path}"
+	[[ -e $resolved ]] || onoes "Source does not exist"
+	echo "$resolved"
+}
+
+function resolve_destination() {
 	local destination="$1"; shift
-	
-	if [[ ! $destination =~ '^[~/]' ]]; then
-		destination="$HOME/$destination"
+
+	if [[ $destination =~ ^/ ]]; then
+		echo "$destination"
+		return
 	fi
-	
-	echo -n "  $destination : "
-	[[ -e "$target" ]] || (echo_red "ERROR: Source does not exist"; exit 1)
+
+	echo "${HOME}/${destination}"
+}
+
+function create_link() {
+	local target="$(resolve_source "$1")"; shift
+	local destination="$(resolve_destination "$1")"; shift
+
+	echo -n "LINK  $destination : "
 
 	if [[ -h "$destination" ]]; then
 		local current="$(readlink "$destination")"
@@ -37,9 +58,9 @@ function create_link() {
 			create_link "$1" "$2"
 		else
 			if [[ -r $current ]]; then
-				echo_red "already exists as a symlink but does not point to $target"
+				echo_red "already exists as a symlink to '${current}' instead of '${target}'"
 			else
-				echo_red "already exists as a broken symlink"
+				echo_red "already exists as a broken symlink: '${current}'"
 			fi
 		fi
 	elif [[ -e "$destination" ]]; then
@@ -47,38 +68,39 @@ function create_link() {
 			rm -fv "$destination"
 			create_link "$1" "$2"
 		else
-			echo_red "already exists"
+			echo_red "already exists -- is not symlink"
 		fi
 	else
-		mkdir -p "$(dirname "$destination")"
+		mkdir -pv "$(dirname "$destination")"
 		ln -sv "$target" "$destination"
 	fi
 }
 
 copy_if_missing(){
-	echo -n "  ~/$2 : "
-	[[ -e "$DOTFILES_PATH/$1" ]] || (echo_red "ERROR: Source does not exist"; exit 1)
-	local destination="$HOME/$2"
-	local target="$DOTFILES_PATH/$1"
+	local target="$(resolve_source "$1")"; shift
+	local destination="$(resolve_destination "$1")"; shift
+
+	echo -n "COPY  $destination : "
+
 	if [[ -h "$destination" ]]; then
 		local current="$(readlink "$destination")"
 		if [[ $current = $target ]]; then
 			echo_green "already exists as a symlink"
 		else
 			if [[ -r $current ]]; then
-				echo_red "already exists as a symlink but does not point to $target"
+				echo_red "already exists as a symlink to '${current}' instead of '${target}'"
 			else
-				echo_red "already exists as a broken symlink"
+				echo_red "already exists as a broken symlink: '${current}'"
 			fi
 		fi
 	elif [[ -f "$destination" ]]; then
 		if files_are_identical "$destination" "$target"; then
-			echo_green "file aready exists but its content matches the source"
+			echo_green "aready exists -- content identical"
 		else
-			echo_red "skipping; already exists"
+			echo_red "already exists -- content differs!"
 		fi
 	elif [[ -e "$destination" ]]; then
-		echo_red "skipping; already exists"
+		echo_red "already exists"
 	else
 		mkdir -p "$(dirname "$destination")"
 		cp -v "$target" "$destination"
@@ -114,7 +136,7 @@ create_link 'zsh/zshrc' '.zshrc'
 create_link 'bash/bashrc' '.bashrc'
 create_link 'bash/bash_profile' '.bash_profile'
 
-create_link 'osx_default_key_binding.dict' '~/Library/KeyBindings/DefaultKeyBinding.dict'
+copy_if_missing 'osx_default_key_binding.dict' "${HOME}/Library/KeyBindings/DefaultKeyBinding.dict"
 
 create_link 'emacs.d' '.emacs.d'
 
