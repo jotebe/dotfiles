@@ -1016,7 +1016,7 @@
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
-	<false/>
+	<true/>
 	<key>HideTabCloseButton</key>
 	<true/>
 	<key>HideTabNumber</key>
@@ -1088,11 +1088,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>149 1258 657 171 -2050 1050 3008 1692 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>-266 1541 606 456 -2050 1050 3008 1669 </string>
+	<string>1810 1403 606 456 958 1050 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 298 810 729 0 0 1680 1027 </string>
+	<string>0 0 2250 1251 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>351 166 810 729 0 0 1680 1050 </string>
+	<string>-1163 1548 810 729 -2050 1050 3008 1692 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>191 129 810 729 0 0 1680 1027 </string>
 	<key>NeverWarnAboutMeta</key>
@@ -3501,6 +3501,8 @@
 	<dict/>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/ryan/.dotfiles/iTerm2</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<true/>
 	<key>QuickPasteBytesPerCall</key>
@@ -3522,7 +3524,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-02-03T21:27:18Z</date>
+	<date>2016-02-10T01:18:03Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
