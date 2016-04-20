@@ -52,6 +52,7 @@
 	autocrlf = input
 	excludesfile = ~/.gitignore
 	whitespace = -tab-in-indent
+	editor = emacsclient
 
 [commit]
 	gpgSign = true

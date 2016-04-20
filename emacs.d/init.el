@@ -30,16 +30,16 @@
 (global-set-key (kbd "s-=") 'zoom-in)
 (global-set-key (kbd "s--") 'zoom-out)
 
-(add-hook 'sh-mode-hook (lambda () ((setq indent-tabs-mode t)
-                                    (setq-default tab-width 4))))
+(add-hook 'sh-mode-hook (lambda ()
+						  (setq indent-tabs-mode t)
+						  (setq tab-width 2)
+              (setq sh-basic-offset 2)))
 
 (global-set-key (kbd "C-@") 'er/expand-region)
 
-(eval-after-load 'multi-term '(progn
-								(setq multi-term-program "/usr/local/bin/zsh")))
+(eval-after-load 'multi-term '(progn (setq multi-term-program "/usr/local/bin/zsh")))
 
 (mapc (lambda (hook)
-		(message "LISP!")
 		(add-hook hook 'enable-paredit-mode)
 		(add-hook hook 'evil-paredit-mode)
 		(add-hook hook 'rainbow-delimiters-mode))
@@ -66,12 +66,16 @@
 						  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
 
 (require 'ace-jump-mode)
-;; (autoload 'ace-jump-mode "ace-jump-mode" "Ace jump mode" t)
-(eval-after-load 'evil-normal-state-map '(progn
-										   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)))
+(define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 
 (ace-link-setup-default)
 
 (global-evil-surround-mode 1)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(add-hook 'flyspell-mode (lambda () (define-key evil-normal-state-map (kbd "] s") 'flyspell-goto-next-error)))
+
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
