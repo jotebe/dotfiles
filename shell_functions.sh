@@ -99,11 +99,15 @@ function gg-mode {
 }
 
 function tmux-named-session {
-	TMUX='' tmux new-session -d -s $1 -c $2 #2>/dev/null
-	if [[ -n $TMUX ]]; then
-		command tmux switch-client -t $1
+	emulate -L zsh
+	set -u
+	local name="$1"; shift
+	local dir="$1"; shift
+	TMUX='' tmux new-session -d -s "$name" -c "$dir" #2>/dev/null
+	if [[ ${TMUX:-} ]]; then
+		command tmux switch-client -t "$name"
 	else
-		command tmux attach -t $1
+		command tmux attach -t "$name"
 	fi
 }
 
@@ -142,7 +146,11 @@ fi
 
 if [[ -f ~/.local/lib/jenkins-cli.jar ]]; then
 	function jenkins {
-		java -jar ~/.local/lib/jenkins-cli.jar "$@"
+		args=()
+		if [[ ${JENKINS_PRIV_KEY} ]]; then
+			args+=( -i ${JENKINS_PRIV_KEY} )
+		fi
+		java -jar ~/.local/lib/jenkins-cli.jar "${args[@]}" "$@"
 	}
 fi
 
