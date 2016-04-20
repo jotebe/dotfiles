@@ -1,4 +1,6 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
+set -euo pipefail
 
 DIRECTORY=`git rev-parse --show-toplevel 2>/dev/null || pwd`
 
@@ -25,4 +27,4 @@ echo "Opening $NOTES_FILE_MD" >&2
 mkdir -vp $(dirname "$NOTES_FILE_MD")
 
 open "$NOTES_FILE_MD"
-$EDITOR "$NOTES_FILE_MD"
+exec $EDITOR "$NOTES_FILE_MD"
