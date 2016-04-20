@@ -175,3 +175,7 @@ function inspect-args() {
 		printf 'ARG[%d] = "%s"\n' $i "$arg"
 	done
 }
+
+function edit() {
+	eval "$EDITOR $@"
+}
