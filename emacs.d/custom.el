@@ -93,7 +93,7 @@ static char *gnus-pointer[] = {
      ("melpa-stable" . "https://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-paredit evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term evil-magit magit magit-filenotify ggtags evil expand-region sx flx-ido slim-mode paredit password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters helm helm-ag markdown-mode)))
+    (tidy json-mode toml-mode go-mode go-playground sass-mode graphviz-dot-mode terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-paredit evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term evil-magit magit magit-filenotify ggtags evil expand-region sx flx-ido slim-mode paredit password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters helm helm-ag markdown-mode)))
  '(ring-bell-function
    (lambda nil
      (invert-face
