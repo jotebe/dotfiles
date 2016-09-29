@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -eu
+set -euo pipefail
 
-host=$1
-if [ -z "$host" ]; then
+host="${1:-unset}"; shift || :
+if [[ $host = unset ]]; then
 	echo "Supply a hostname"
 	exit 1
 fi
@@ -18,7 +18,7 @@ cleanup
 
 trap cleanup INT KILL EXIT
 
-home_dir=$(ssh $host pwd)
+home_dir=$(ssh -v $host pwd)
 
 timeout=3600
 

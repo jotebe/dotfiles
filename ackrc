@@ -1,5 +1,6 @@
 --type-add=ruby:ext:haml,builder,rake,cucumber
 --type-add=ruby:is:Gemfile,Rakefile
+--type-add=terraform:ext:tf
 
 --type-set=dockerfile:match:/^Dockerfile.*/
 
@@ -24,6 +25,8 @@
 --ignore-dir=vendor/plugins
 --ignore-dir=dist
 --ignore-dir=pkg
+--ignore-dir=.git
+--ignore-dir=.bundle
 --ignore-dir=node_modules
 --ignore-file=is:.__ctags
 --ignore-file=is:tags

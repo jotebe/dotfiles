@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 set -euo pipefail
 
 NOTES_DIR="$HOME/Dropbox/Documents/Notes/"
@@ -31,6 +32,7 @@ edit_note() {
 	fi
 
 	if [[ ! -f "$NOTES_FILE_MD" ]]; then
+			mkdir -p "$(dirname "$NOTES_FILE_MD")"
 			touch "$NOTES_FILE_MD"
 	fi
 
@@ -42,7 +44,7 @@ edit_note() {
 }
 
 main() {
-	local cmd="${1:-}"; shift
+	local cmd="${1:-}"; shift || :
 
 	if [[ $cmd = 'ls' ]]; then
 			exec tree "$NOTES_DIR"

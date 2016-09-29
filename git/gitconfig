@@ -40,6 +40,9 @@
 	s = status -sb
 	su = submodule update --init
 
+[rebase]
+    autoSquash = yes
+
 [pretty]
 	; custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset %C(blue)%G?%Creset"
 	custom = "%C(red)%h%C(yellow)%d%Creset %s %C(green)(%ar) %C(bold blue)%aN%Creset"
@@ -78,5 +81,14 @@
 	defaultToUpstream = true
 	; tool = diffmerge
 
+[mailmap]
+    file = ~/.mailmap
+
 [include]
 	path = ~/.gitconfig.local ; include name/email/etc.
+[gui]
+	recentrepo = /Users/ryan/Code/Work/GoodGuide/iOS
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true

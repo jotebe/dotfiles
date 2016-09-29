@@ -8,6 +8,7 @@
  '(ansi-term-color-vector
    [unspecified "#101010" "#7c7c7c" "#8e8e8e" "#a0a0a0" "#686868" "#747474" "#686868" "#b9b9b9"])
  '(column-number-mode t)
+ '(css-indent-offset 2)
  '(custom-enabled-themes (quote (cyberpunk)))
  '(custom-safe-themes
    (quote
@@ -42,6 +43,7 @@ static char *note[] = {
 \"######....\",
 \"#######..#\" };")))
  '(evil-shift-width 2)
+ '(explicit-shell-file-name "/bin/sh")
  '(flx-ido-mode t)
  '(frame-background-mode (quote dark))
  '(global-hl-line-mode t)
@@ -71,12 +73,15 @@ static char *gnus-pointer[] = {
 \"###....####.######\",
 \"###..######.######\",
 \"###########.######\" };")) t)
+ '(ido-auto-merge-work-directories-length -1)
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
  '(ido-mode (quote both) nil (ido))
  '(ido-ubiquitous-mode t)
  '(ido-vertical-mode t)
  '(indent-tabs-mode nil)
+ '(js-indent-level 2)
+ '(jsx-indent-level 2)
  '(markdown-asymmetric-header t)
  '(markdown-footnote-location (quote end))
  '(markdown-hr-strings
@@ -93,7 +98,7 @@ static char *gnus-pointer[] = {
      ("melpa-stable" . "https://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (tidy json-mode toml-mode go-mode go-playground sass-mode graphviz-dot-mode terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-paredit evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term evil-magit magit magit-filenotify ggtags evil expand-region sx flx-ido slim-mode paredit password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters helm helm-ag markdown-mode)))
+    (pass stylus-mode jsx-mode tidy json-mode toml-mode go-mode go-playground sass-mode graphviz-dot-mode terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-paredit evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term evil-magit magit magit-filenotify ggtags evil expand-region sx flx-ido slim-mode paredit password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters helm helm-ag markdown-mode)))
  '(ring-bell-function
    (lambda nil
      (invert-face
@@ -101,8 +106,12 @@ static char *gnus-pointer[] = {
      (run-with-timer 0.1 nil
                      (quote invert-face)
                      (quote mode-line))))
+ '(shell-file-name "/bin/sh")
  '(smex-save-file "~/.emacs.d/smex-items")
+ '(standard-indent 2)
  '(tab-width 4)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(uniquify-min-dir-content 2)
  '(vc-annotate-background "#222222")
  '(vc-annotate-color-map
    (quote
@@ -133,4 +142,6 @@ static char *gnus-pointer[] = {
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ace-jump-face-foreground ((t (:foreground "orange"))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#75715e")))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#75715e"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "gray94"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "OliveDrab2")))))

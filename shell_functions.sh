@@ -9,7 +9,11 @@ alias goroot='cd $(go env GOROOT)'
 alias goproj='gopath; cd src/github.com/rtlong/'
 alias reload-zshrc='source ~/.zshrc'
 alias ssh-coreos-forward-ports='ssh -L 8182:localhost:8182 -L 2379:localhost:2379 -l core -o "IdentitiesOnly no"'
-can_exec hub && alias git='hub'
+can_exec hub \
+		&& alias git='hub'
+can_exec pygmentize \
+		&& alias ccat='pygmentize -g -O style=colorful,linenos=1'
+
 
 if can_exec caffeinate; then
 	# prevent OSX system sleep during active SSH connections
@@ -132,6 +136,10 @@ function json-preview-url {
 	curl -fsSL "$1" | jq -C . | less -R
 }
 
+function json_pp {
+	jq -C . | less -R
+}
+
 if ! can_exec dot; then
 	function dot {
 		docker run --rm -i quay.io/goodguide/graphviz:alpine-3.2-0 dot "$@"
@@ -162,7 +170,9 @@ NVM_DIR="${NVM_DIR:-"$HOME/.nvm"}"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
 	export NVM_DIR
 	function load-nvm {
+		printf "Loading NVM..."
 		source "$NVM_DIR/nvm.sh"
+		# printf "done!\n"
 	}
 else
 	unset NVM_DIR
@@ -177,5 +187,16 @@ function inspect-args() {
 }
 
 function edit() {
-	eval "$EDITOR $@"
+	eval "$EDITOR '$1'"
+}
+
+function edit-tramp() {
+	eval "$EDITOR '/ssh:${TRAMP_HOSTNAME}:$PWD/$1'"
+}
+
+function cdtfroot() {
+	d="$(tfjump)"
+	if [[ $? -eq 0 ]]; then
+			cd "$d"
+	fi
 }

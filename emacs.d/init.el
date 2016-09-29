@@ -31,9 +31,24 @@
 (global-set-key (kbd "s--") 'zoom-out)
 
 (add-hook 'sh-mode-hook (lambda ()
-						  (setq indent-tabs-mode t)
-						  (setq tab-width 2)
-              (setq sh-basic-offset 2)))
+                          (setq indent-tabs-mode t)
+                          (setq tab-width 2)
+                          (setq sh-basic-offset 2)))
+(add-hook 'css-mode-hook (lambda ()
+                          (setq indent-tabs-mode f)
+                          (setq tab-width 2)
+                          (setq sh-basic-offset 2)))
+(add-hook 'ruby-mode-hook (lambda ()
+                          (setq indent-tabs-mode f)
+                          (setq tab-width 2)
+                          (setq sh-basic-offset 2)))
+(add-hook 'javascript-mode-hook (lambda ()
+                          (setq indent-tabs-mode f)
+                          (setq tab-width 2)
+                          (setq sh-basic-offset 2)))
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'js-mode-hook #'rainbow-delimiters-mode)
 
 (global-set-key (kbd "C-@") 'er/expand-region)
 
@@ -41,8 +56,7 @@
 
 (mapc (lambda (hook)
 		(add-hook hook 'enable-paredit-mode)
-		(add-hook hook 'evil-paredit-mode)
-		(add-hook hook 'rainbow-delimiters-mode))
+		(add-hook hook 'evil-paredit-mode))
 
 	  '(emacs-lisp-mode-hook
 		eval-expression-minibuffer-setup-hook
@@ -91,3 +105,6 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)       ; use versioned backups
+
+; disable asking to follow symlinks
+(setq vc-follow-symlinks nil)

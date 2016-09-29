@@ -54,8 +54,9 @@ fi
 
 if [[ -z ${SSH_CLIENT} ]]; then
 	# export GPG_TTY=$(tty)
-	gpgconf --launch gpg-agent
-	export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+	# gpgconf --launch gpg-agent
+	# export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+	eval $(gpg-agent --daemon 2>/dev/null)
 
 	# Add all SSH-keys stored in OSX Keychain to the agent
 	ssh-add -A >/dev/null 2>&1
