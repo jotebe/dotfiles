@@ -202,3 +202,15 @@ function cdtfroot() {
 			cd "$d"
 	fi
 }
+
+function load-encrypted-credentials-file(){
+	source <(cat $1 | gpg -d)
+}
+
+function my-creds() {
+  load-encrypted-credentials-file ~/.dotfiles/credentials/mine.gpg
+}
+
+function gg-creds() {
+  load-encrypted-credentials-file ~/.dotfiles/credentials/goodguide.gpg
+}
