@@ -13,6 +13,8 @@ can_exec hub \
 		&& alias git='hub'
 can_exec pygmentize \
 		&& alias ccat='pygmentize -g -O style=colorful,linenos=1'
+can_exec docker-compose \
+		&& alias dc=docker-compose
 
 
 if can_exec caffeinate; then

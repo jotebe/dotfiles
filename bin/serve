@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# set -x
+
+killContainer() {
+	[[ ${cid} ]] || return
+	docker rm -f $cid > /dev/null
+	cid=
+}
+
+vhost="$(ruby -e 'print (ARGV[0] || File.basename(Dir.pwd)).downcase.gsub(/[^a-z0-9]+/, "-")' ${1:-}).local.dev"
+
+cid=$(docker run -d -v $PWD:/var/www:ro -e VIRTUAL_HOST="$vhost" kdalma/docker_fileserver_h5ai:master)
+stat=$?
+[[ $stat -eq 0 ]] || exit $stat
+
+sleep 1
+open "https://${vhost}"
+
+trap killContainer SIGINT SIGTERM
+
+echo "Serving current directory as http://$vhost ... Press Ctrl-C to stop serving"
+docker logs -f $cid
+
+killContainer

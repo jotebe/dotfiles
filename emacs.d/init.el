@@ -21,7 +21,7 @@
 ;; always try to run the server from this process (will fail noisily if another is running -- this is good)
 (server-start)
 
-;(show-paren-mode t)
+(show-paren-mode t)
 (global-hl-line-mode t)
 
 (autoload 'zoom-in "zoom-frm" "zoom-frm/zoom-in" t)
@@ -49,6 +49,10 @@
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'js-mode-hook #'rainbow-delimiters-mode)
+
+;; fix handling of 'word-chars'
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol))
 
 (global-set-key (kbd "C-@") 'er/expand-region)
 
