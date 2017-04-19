@@ -23,6 +23,7 @@
 --ignore-dir=vendor/bundler
 --ignore-dir=vendor/rails
 --ignore-dir=vendor/plugins
+--ignore-dir=spec/cassettes
 --ignore-dir=dist
 --ignore-dir=pkg
 --ignore-dir=.terraform

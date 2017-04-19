@@ -11,5 +11,7 @@
 		<key>string</key>
 		<string></string>
 	</dict>
+	<key>persistFor</key>
+	<integer>0</integer>
 </dict>
 </plist>

@@ -52,16 +52,20 @@ function source-env {
 	[[ -f env.sh ]] && source env.sh
 }
 
+function _default_title_from_pwd {
+	basename "$PWD" | sed 's:goodguide:GG:'
+}
+
 function set-window-title {
 	[[ $TMUX ]] || return
-	local title="${1:-$(basename "$PWD")}"
+	local title="${1:-$(_default_title_from_pwd)}"
 	command tmux rename-window "$title"
 }
 alias swt='set-window-title'
 
 function set-pane-title {
 	[[ $TMUX ]] || return
-	local title="${1:-$(basename "$PWD")}"
+	local title="${1:-$(_default_title_from_pwd)}"
 	printf '\033]2;%s\033\\' "$title"
 }
 alias spt='set-pane-title'
@@ -87,11 +91,15 @@ function choose-code-project {
 		echo "FATAL: Can't find 'pick' command" >&2
 		return 1
 	fi
-	list-all-code-projects | pick
+	local query="${1:-}"
+	declare -a args
+	local args=()
+	[[ "${query:-}" ]] && args+=( -q "${query}" )
+	list-all-code-projects | pick "${args[@]}"
 }
 
 function cdp {
-	cd "$(choose-code-project)"
+	cd "$(choose-code-project "$@")"
 	set-window-title
 	set-pane-title
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+# set -x
 set -euo pipefail
 
 NOTES_DIR="$HOME/Dropbox/Documents/Notes/"
