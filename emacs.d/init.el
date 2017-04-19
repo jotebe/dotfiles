@@ -1,3 +1,6 @@
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+
 ;; tweak GC settings (mostly for flx-ido)
 (setq gc-cons-threshold 20000000)
 
@@ -112,3 +115,10 @@
 
 ; disable asking to follow symlinks
 (setq vc-follow-symlinks nil)
+
+;; Set font used for unicode chars like emoji
+(when (member "Menlo" (font-family-list))
+  (set-fontset-font t 'unicode "Menlo" nil 'prepend))
+
+(require 'epa-file)
+(epa-file-enable)
