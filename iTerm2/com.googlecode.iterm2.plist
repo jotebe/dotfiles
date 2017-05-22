@@ -1100,7 +1100,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>532 476 620 392 0 0 1680 1027 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>143 243 796 473 0 0 1680 1028 </string>
+	<string>281 306 796 473 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>446 321 810 707 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -1136,8 +1136,12 @@
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
 				<real>0.0</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
 				<real>0.0</real>
 				<key>Red Component</key>
@@ -1262,12 +1266,16 @@
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<real>0.077523812651634216</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.0</real>
+				<real>0.077522493898868561</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.077524803578853607</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -1716,7 +1724,7 @@
 			<key>Log Directory</key>
 			<string></string>
 			<key>Minimum Contrast</key>
-			<real>0.0</real>
+			<real>0.26124901107594939</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -1745,21 +1753,29 @@
 			<true/>
 			<key>Selected Text Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.91648769378662109</real>
+				<real>0.0</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.91671288013458252</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.91654461622238159</real>
+				<real>0.0</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.26020613312721252</real>
+				<real>0.58658289909362793</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.26027005910873413</real>
+				<real>0.57791811227798462</real>
 				<key>Red Component</key>
-				<real>0.26022228598594666</real>
+				<real>0.9053422212600708</real>
 			</dict>
 			<key>Semantic History</key>
 			<dict>
@@ -5196,7 +5212,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-16T21:26:41Z</date>
+	<date>2017-05-16T19:15:34Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>

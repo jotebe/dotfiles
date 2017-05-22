@@ -92,20 +92,16 @@ function choose-code-project {
 		return 1
 	fi
 	local query="${1:-}"
-	declare -a args
-	local args=()
-	[[ "${query:-}" ]] && args+=( -q "${query}" )
-	list-all-code-projects | pick "${args[@]}"
+	# declare -a args
+	# local args=()
+	# [[ "${query:-}" ]] && args+=( -q "${query}" )
+	list-all-code-projects | grep "${query}" | pick # "${args[@]}"
 }
 
 function cdp {
 	cd "$(choose-code-project "$@")"
 	set-window-title
 	set-pane-title
-}
-
-function bridgefog-mode {
-	tmux-named-session bridgefog "${CODE_WORKSPACE_BRIDGEFOG:-$CODE_WORKSPACE_ROOT}"
 }
 
 function gg-mode {
@@ -221,4 +217,17 @@ function my-creds() {
 
 function gg-creds() {
   load-encrypted-credentials-file ~/.dotfiles/credentials/goodguide.gpg
+}
+
+function tf-review-apply() {
+	# logfile="$(mktemp -t terraform-log-XXXXX)"
+	tf plan -out=.terraform/plan #| tee "$logfile"
+	# if grep -qF 'No changes. Infrastructure is up-to-date.' "$logfile"; then
+	[[ $? -eq 0 ]] || return
+	print "Apply? (yes|NO)"
+	read foo
+	if [[ $foo =~ "y.*" ]]; then
+			tf apply .terraform/plan
+	fi
+	# fi
 }

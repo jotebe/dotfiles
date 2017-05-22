@@ -44,10 +44,22 @@ static char *note[] = {
 \"#######..#\" };")))
  '(enh-ruby-bounce-deep-indent t)
  '(enh-ruby-deep-indent-paren (quote f))
+ '(evil-buffer-regexps (quote (("^ \\*load\\*") ("^\\*Customize"))))
+ '(evil-emacs-state-modes
+   (quote
+    (help-mode Info-mode man-mode archive-mode bbdb-mode bookmark-bmenu-mode bookmark-edit-annotation-mode browse-kill-ring-mode bzr-annotate-mode calc-mode cfw:calendar-mode completion-list-mode Custom-mode debugger-mode delicious-search-mode desktop-menu-blist-mode desktop-menu-mode doc-view-mode dvc-bookmarks-mode dvc-diff-mode dvc-info-buffer-mode dvc-log-buffer-mode dvc-revlist-mode dvc-revlog-mode dvc-status-mode dvc-tips-mode ediff-mode ediff-meta-mode efs-mode Electric-buffer-menu-mode emms-browser-mode emms-mark-mode emms-metaplaylist-mode emms-playlist-mode etags-select-mode fj-mode gc-issues-mode gdb-breakpoints-mode gdb-disassembly-mode gdb-frames-mode gdb-locals-mode gdb-memory-mode gdb-registers-mode gdb-threads-mode gist-list-mode git-commit-mode gnus-article-mode gnus-browse-mode gnus-group-mode gnus-server-mode gnus-summary-mode google-maps-static-mode ibuffer-mode jde-javadoc-checker-report-mode magit-cherry-mode magit-diff-mode magit-log-mode magit-log-select-mode magit-popup-mode magit-popup-sequence-mode magit-process-mode magit-reflog-mode magit-refs-mode magit-revision-mode magit-stash-mode magit-stashes-mode magit-status-mode magit-mode magit-branch-manager-mode magit-commit-mode magit-key-mode magit-rebase-mode magit-wazzup-mode mh-folder-mode monky-mode mu4e-main-mode mu4e-headers-mode mu4e-view-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode occur-mode org-agenda-mode package-menu-mode proced-mode rcirc-mode rebase-mode recentf-dialog-mode reftex-select-bib-mode reftex-select-label-mode reftex-toc-mode sldb-mode slime-inspector-mode slime-thread-control-mode slime-xref-mode sr-buttons-mode sr-mode sr-tree-mode sr-virtual-mode tar-mode tetris-mode tla-annotate-mode tla-archive-list-mode tla-bconfig-mode tla-bookmarks-mode tla-branch-list-mode tla-browse-mode tla-category-list-mode tla-changelog-mode tla-follow-symlinks-mode tla-inventory-file-mode tla-inventory-mode tla-lint-mode tla-logs-mode tla-revision-list-mode tla-revlog-mode tla-tree-lint-mode tla-version-list-mode twittering-mode urlview-mode vc-annotate-mode vc-dir-mode vc-git-log-view-mode vc-hg-log-view-mode vc-svn-log-view-mode vm-mode vm-summary-mode w3m-mode wab-compilation-mode xgit-annotate-mode xgit-changelog-mode xgit-diff-mode xgit-revlog-mode xhg-annotate-mode xhg-log-mode xhg-mode xhg-mq-mode xhg-mq-sub-mode xhg-status-extra-mode)))
+ '(evil-lisp-state-enter-lisp-state-on-command nil)
+ '(evil-lisp-state-global t)
+ '(evil-mode t)
+ '(evil-motion-state-modes
+   (quote
+    (apropos-mode Buffer-menu-mode calendar-mode color-theme-mode command-history-mode compilation-mode dictionary-mode ert-results-mode speedbar-mode undo-tree-visualizer-mode view-mode woman-mode)))
+ '(evil-move-cursor-back nil)
  '(evil-shift-width 2)
  '(explicit-shell-file-name "/bin/sh")
  '(flx-ido-mode t)
  '(frame-background-mode (quote dark))
+ '(global-evil-surround-mode t)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag nil)
  '(global-visual-line-mode t)
@@ -100,7 +112,7 @@ static char *gnus-pointer[] = {
      ("melpa-stable" . "https://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (evil-lispy cider-hydra clojure-mode clojure-mode-extra-font-locking clojure-quick-repls unicode-fonts rspec-mode nginx-mode pass stylus-mode jsx-mode tidy json-mode toml-mode go-mode go-playground sass-mode graphviz-dot-mode terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term evil-magit magit magit-filenotify ggtags evil expand-region sx flx-ido slim-mode password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters helm helm-ag markdown-mode)))
+    (vue-mode vue-html-mode evil-paredit evil-cleverparens evil-smartparens evil-numbers paredit which-key smartparens cider-hydra clojure-mode clojure-mode-extra-font-locking clojure-quick-repls unicode-fonts rspec-mode nginx-mode pass stylus-mode jsx-mode tidy json-mode toml-mode go-mode sass-mode graphviz-dot-mode terraform-mode enh-ruby-mode yaml-mode darkroom ace-link abyss-theme alect-themes ample-zen-theme cyberpunk-theme spacemacs-theme ample-theme ace-jump-mode evil-indent-textobject evil-matchit evil-org evil-surround evil-textobj-anyblock smex ido-ubiquitous ido-vertical-mode multi-term ggtags evil expand-region flx-ido slim-mode password-store dockerfile-mode draft-mode adoc-mode sicp smooth-scrolling projectile rainbow-delimiters markdown-mode)))
  '(ring-bell-function
    (lambda nil
      (invert-face
@@ -137,7 +149,8 @@ static char *gnus-pointer[] = {
      (360 . "#e353b9"))))
  '(vc-annotate-very-old-color "#e353b9")
  '(visible-bell t)
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow))))
+ '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(which-key-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
