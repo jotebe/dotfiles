@@ -169,3 +169,6 @@
 [submodule "vim/bundle/colorschemes"]
 	path = vim/bundle/colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "spacemacs"]
+	path = emacs.d-spacemacs/.spacemacs-repo
+	url = https://github.com/syl20bnr/spacemacs

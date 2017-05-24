@@ -138,7 +138,7 @@ create_link 'bash/bash_profile' '.bash_profile'
 
 copy_if_missing 'osx_default_key_binding.dict' "${HOME}/Library/KeyBindings/DefaultKeyBinding.dict"
 
-create_link 'emacs.d' '.emacs.d'
+create_link 'emacs.d-spacemacs' '.emacs.d'
 
 create_link 'vim/bundle' '.vim/bundle'
 create_link 'vim/autoload' '.vim/autoload'

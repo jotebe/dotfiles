@@ -1,0 +1,1 @@
+../../../emacs.d-spacemacs/.spacemacs-repo/private/snippets/README.md
