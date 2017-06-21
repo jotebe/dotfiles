@@ -31,29 +31,44 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     html
-     javascript
-     helm
-     auto-completion
-     better-defaults
+     (auto-completion :variables
+                      ;; auto-completion-return-key-behavior 'complete
+                      ;; auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence "jk"
+                      ;; auto-completion-complete-with-key-sequence-delay 0.1
+                      ;; auto-completion-privates-snippets-directory nil ;; nil means use `~/.emacs.d/private/snippets/'
+                      auto-completion-enable-snippets-in-popup t)
+     ;; better-defaults
+     dash
+     docker
      emacs-lisp
      git
+     helm
+     html
+     javascript
      markdown
      org
+     rtlong
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
      syntax-checking
-     version-control
-     rtlong
+     terraform
      themes-megapack
-     )
+     (typescript :variables
+                 typescript-fmt-on-save t)
+     version-control)
+
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     mark-multiple
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -308,6 +323,68 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (require 'rename-sgml-tag (expand-file-name "~/.emacs.d/private/local/rename-sgml-tag.el"))
+
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  (add-hook 'flycheck-mode-hook
+            (lambda ()
+              (let* ((root (locate-dominating-file
+                            (or (buffer-file-name) default-directory)
+                            "node_modules"))
+                     (tslint (and root
+                                  (expand-file-name "node_modules/.bin/tslint" root)))
+                     (eslint (and root
+                                  (expand-file-name "node_modules/.bin/eslint" root))))
+                (cond
+                 ((and eslint (print (file-executable-p eslint)))
+                  (setq-local flycheck-javascript-eslint-executable eslint))
+
+                 ((and tslint (file-executable-p tslint))
+                  (setq-local flycheck-typescript-tslint-executable tslint))))))
+
+  (eval-after-load 'flycheck
+    '(progn
+       (defconst flycheck-error-list-format
+         `[("Line" 5 flycheck-error-list-entry-< :right-align t)
+           ("Col" 3 nil :right-align t)
+           ("Lvl" 4 flycheck-error-list-entry-level-<)
+           ("ID" 16 t)
+           (,(flycheck-error-list-make-last-column "Message" 'Checker) 0 t)]
+         "Table format for the error list.")
+
+       (defvar flycheck-typescript-tslint-project "tsconfig.json")
+
+       (flycheck-define-checker typescript-tslint
+         "Redefine the tslint checker to handle --type-check."
+         :command ("tslint" "--format" "json"
+                   (config-file "--config" flycheck-typescript-tslint-config)
+                   (option "--rules-dir" flycheck-typescript-tslint-rulesdir)
+                   (config-file "--project" flycheck-typescript-tslint-project)
+                   (eval flycheck-tslint-args)
+                   source-inplace)
+         :error-parser flycheck-parse-tslint
+         :modes (typescript-mode))
+       ))
+
+
+
+  ;; (add-to-list 'display-buffer-alist
+  ;;              `(,(rx bos "*Flycheck errors*" eos)
+  ;;                (display-buffer-reuse-window
+  ;;                 display-buffer-in-side-window)
+  ;;                (side            . bottom)
+  ;;                (reusable-frames . visible)
+  ;;                (window-height   . 5)))
+
+  (eval-after-load 'sgml-mode
+    '(progn
+       (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)))
+
+  ;; use normal vim-surround S binding
+  (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
+  (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -319,11 +396,34 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
+ '(clean-aindent-mode t)
+ '(css-indent-offset 2)
+ '(dired-use-ls-dired nil)
+ '(display-buffer-alist
+   (quote
+    ((popwin:display-buffer-condition popwin:display-buffer-action))))
  '(evil-want-Y-yank-to-eol nil)
  '(exec-path-from-shell-check-startup-files nil)
+ '(flycheck-checkers
+   (quote
+    (tsx-tide typescript-tide typescript-tslint ada-gnat asciidoctor asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint css-stylelint d-dmd dockerfile-hadolint elixir-dogma emacs-lisp emacs-lisp-checkdoc erlang-rebar3 erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test go-errcheck go-unconvert groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy javascript-eslint javascript-jshint javascript-jscs javascript-standard json-jsonlint json-python-json less less-stylelint lua-luacheck lua perl perl-perlcritic php php-phpmd php-phpcs processing protobuf-protoc pug puppet-parser puppet-lint python-flake8 python-pylint python-pycompile r-lintr racket rpm-rpmlint markdown-mdl nix rst-sphinx rst ruby-rubocop ruby-reek ruby-rubylint ruby ruby-jruby rust-cargo rust scala scala-scalastyle scheme-chicken scss-lint scss-stylelint sass/scss-sass-lint sass scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim slim-lint sql-sqlint systemd-analyze tex-chktex tex-lacheck texinfo verilog-verilator xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby javascript-tide jsx-tide)))
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(flycheck-display-errors-delay 0.1)
+ '(flycheck-highlighting-mode (quote columns))
+ '(flycheck-standard-error-navigation t)
+ '(flycheck-tslint-args nil)
+ '(flycheck-typescript-tslint-config "tslint.js")
+ '(helm-ag-insert-at-point (quote \'symbol))
+ '(helm-buffers-fuzzy-matching t)
+ '(indent-tabs-mode nil)
+ '(js-indent-level 2)
+ '(js2-ignored-warnings (quote ("msg.no.paren.arg")))
  '(js2-missing-semi-one-line-override t)
+ '(js2-mode-assume-strict t)
+ '(js2-mode-show-parse-errors nil)
  '(js2-strict-missing-semi-warning nil)
+ '(js2-strict-trailing-comma-warning nil)
+ '(json-reformat:indent-width 2)
  '(notmuch-search-line-faces
    (quote
     (("unread" :foreground "#aeee00")
@@ -332,7 +432,23 @@ you should place your code here."
  '(org-directory "~/Dropbox/Org")
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme request-deferred deferred web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download multi-term htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct eshell-z eshell-prompt-extras esh-help diff-hl auto-dictionary packed helm helm-core dash vue-mode ssass-mode vue-html-mode evil-unimpaired unfill smeargle orgit mwim mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-key auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (smartparens evil async tide typescript-mode dockerfile-mode docker tablist docker-tramp terraform-mode hcl-mode mark-multiple helm-dash dash-at-point web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme request-deferred deferred web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download multi-term htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct eshell-z eshell-prompt-extras esh-help diff-hl auto-dictionary packed helm helm-core dash vue-mode ssass-mode vue-html-mode evil-unimpaired unfill smeargle orgit mwim mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-key auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+ '(projectile-file-exists-local-cache-expire 120)
+ '(projectile-project-root-files
+   (quote
+    ("rebar.config" "project.clj" "build.boot" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS")))
+ '(projectile-project-root-files-functions
+   (quote
+    (projectile-root-local projectile-root-bottom-up projectile-root-top-down projectile-root-top-down-recurring)))
+ '(projectile-project-root-files-top-down-recurring (quote (".svn" "CVS" "Makefile" ".projectile")))
+ '(projectile-track-known-projects-automatically nil)
+ '(standard-indent 2)
+ '(tab-always-indent (quote complete))
+ '(tide-tsserver-executable "node_modules/.bin/tsserver")
+ '(tide-tsserver-process-environment
+   (quote
+    ("TSS_LOG=-level verbose -logToFile true -file tsserver.log")))
+ '(typescript-indent-level 2)
  '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

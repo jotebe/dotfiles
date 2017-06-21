@@ -1,6 +1,7 @@
 --type-add=ruby:ext:haml,builder,rake,cucumber
 --type-add=ruby:is:Gemfile,Rakefile
 --type-add=terraform:ext:tf
+--type-add=typescript:ext:ts
 
 --type-set=dockerfile:match:/^Dockerfile.*/
 
@@ -32,5 +33,6 @@
 --ignore-dir=node_modules
 --ignore-file=is:.__ctags
 --ignore-file=is:tags
+--ignore-file=is:yarn.lock
 
 --smart-case

@@ -95,7 +95,7 @@ function choose-code-project {
 	# declare -a args
 	# local args=()
 	# [[ "${query:-}" ]] && args+=( -q "${query}" )
-	list-all-code-projects | grep "${query}" | pick # "${args[@]}"
+	list-all-code-projects | grep -i "${query}" | pick # "${args[@]}"
 }
 
 function cdp {
@@ -230,4 +230,11 @@ function tf-review-apply() {
 			tf apply .terraform/plan
 	fi
 	# fi
+}
+
+renderDot() {
+    inputFile="$1"; shift
+    for T in png svg pdf; do
+        dot "-T${T}" "$inputFile" -O "$@"
+    done
 }

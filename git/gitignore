@@ -46,3 +46,6 @@ tags
 
 \#*\#
 .\#*
+
+# Hint file for Emacs/projectile indicating explicit project roots.
+.projectile

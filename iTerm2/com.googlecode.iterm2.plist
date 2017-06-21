@@ -887,6 +887,8 @@
 	<true/>
 	<key>EnableRendezvous</key>
 	<false/>
+	<key>FindUrlsRegex</key>
+	<string>(chrome-devtools|https?)://([a-z0-9A-Z]+(:[a-zA-Z0-9]+)?@)?[-a-z0-9A-Z\-]+(\.[-a-z0-9A-Z\-]+)*((:[0-9]+)?)(/[a-zA-Z0-9;:/\.\-_+%~?&amp;amp;@=#\(\)]*)?</string>
 	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>FsTabDelay</key>
@@ -1100,9 +1102,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>532 476 620 392 0 0 1680 1027 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>281 306 796 473 0 0 1680 1050 </string>
+	<string>281 202 918 512 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>446 321 810 707 0 0 1680 1028 </string>
+	<string>446 321 810 707 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>4 320 810 707 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1902,8 +1904,20 @@
 				<dict>
 					<key>action</key>
 					<string>BounceTrigger</string>
+					<key>parameter</key>
+					<integer>1</integer>
 					<key>regex</key>
-					<string>fail</string>
+					<string>error</string>
+				</dict>
+				<dict>
+					<key>action</key>
+					<string>ScriptTrigger</string>
+					<key>parameter</key>
+					<string>open -b '\0'</string>
+					<key>partial</key>
+					<true/>
+					<key>regex</key>
+					<string>chrome-devtools://[^ \n\s]+</string>
 				</dict>
 			</array>
 			<key>Unlimited Scrollback</key>
@@ -5212,7 +5226,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-05-16T19:15:34Z</date>
+	<date>2017-05-31T19:59:46Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
