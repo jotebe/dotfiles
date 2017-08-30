@@ -4,28 +4,28 @@ set -euo pipefail
 
 host="${1:-unset}"; shift || :
 if [[ $host = unset ]]; then
-	echo "Supply a hostname"
-	exit 1
+        echo "Supply a hostname"
+        exit 1
 fi
 
 ssh() {
-	command ssh -o 'VisualHostKey=no' "$@"
+        command ssh -o 'VisualHostKey=no' "$@"
 }
 cleanup() {
-	ssh $host 'rm -vf ~/.gnupg/S.gpg-agent'
+        ssh $host 'rm -vf ~/.gnupg/S.gpg-agent'
 }
 cleanup
 
 trap cleanup INT KILL EXIT
 
-home_dir=$(ssh -v $host pwd)
+uid_dir=$(ssh -v $host "echo $UID")
 
 timeout=3600
 
 echo "connecting to $host"
 ssh \
-	-o 'ControlPath=none' \
-	-o 'ExitOnForwardFailure=yes' \
-	-R ${home_dir}/.gnupg/S.gpg-agent:${HOME}/.gnupg/S.gpg-agent.extra \
-	$host \
-	"echo 'GPG agent tunnel active for $timeout seconds. Interrupt (^C) when finished.'; sleep $timeout"
+        -o 'ControlPath=none' \
+        -o 'ExitOnForwardFailure=yes' \
+        -R /run/user/${uid_dir}/gnupg/S.gpg-agent:/run/user/${UID}/gnupg/S.gpg-agent.extra \
+        $host \
+        "echo 'GPG agent tunnel active for $timeout seconds. Interrupt (^C) when finished.'; sleep $timeout"
